@@ -4,11 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
+import com.yinp.proappkotlin.R
+import com.yinp.proappkotlin.utils.StatusBarUtil
 
-abstract class BaseFragmentActivity<TT : ViewBinding> : FragmentActivity() {
+abstract class BaseActivity<TT : ViewBinding> : FragmentActivity() {
     protected lateinit var bd: TT
     protected val mContext: Context
     protected val mActivity: Activity
@@ -20,7 +23,30 @@ abstract class BaseFragmentActivity<TT : ViewBinding> : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        bd = getBinding() as TT
         setContentView(bd.root)
+
+        StatusBarUtil.setTranslucentStatus(this)
+    }
+
+    /**
+     * 设置占位View的高度，主要是用于浸入式状态栏
+     *
+     * @param height 状态栏高度
+     */
+    protected open fun setStatusBarHeight(height: Int) {
+        val view: View = findViewById(R.id.view_status)
+        val params = view.layoutParams
+        params.height = height
+    }
+
+    /**
+     * 初始化点击事件
+     */
+    protected fun initClick(listener: View.OnClickListener, vararg views: View) {
+        for (element in views) {
+            element.setOnClickListener(listener)
+        }
     }
 
     fun goToActivity(intent: Intent) {

@@ -1,4 +1,4 @@
-package com.yinp.proappkotlin
+package com.yinp.proappkotlin.utils
 
 import android.os.Build
 import android.view.Window

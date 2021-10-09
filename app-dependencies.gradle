@@ -14,7 +14,7 @@ dependencies {
 
 //     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
 
-//     implementation 'com.google.android.material:material:1.2.1'
+     implementation 'com.google.android.material:material:1.2.1'
 //     /**
 //      * rxjava+retrofit+转换器+Gson
 //      */
