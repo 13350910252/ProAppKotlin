@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="white">#fff</color>
+    <color name="red">#ff0000</color>
+    <color name="blue">#0000ff</color>
+    <color name="green">#00ff00</color>
+    <color name="black">#000</color>
+
+    <color name="_333">#333333</color>
+    <color name="_666">#666</color>
+    <color name="_999">#999</color>
+    <color name="fafafa">#fafafa</color>
+    <color name="ff8080">#ff8080</color>
+    <color name="ffcccc">#ffcccc</color>
+    <color name="ff3333">#ff3333</color>
+    <color name="ff4d4d">#ff4d4d</color><!--主题色-->
+    <color name="_8a8a8a">#8a8a8a</color>
+    <color name="f0f0f0">#f0f0f0</color>
+    <color name="e6e6e6">#e6e6e6</color>
+    <color name="e8e8e8">#e8e8e8</color>
+    <color name="_01a6fd">#01a6fd</color>
+    <color name="b8b8b8">#b8b8b8</color>
+    <color name="f39c97">#f39c97</color>
+    <color name="f8c7c4">#f8c7c4</color>
+    <color name="ff6200">#ff6200</color>
+    <color name="fbedeb">#fbedeb</color>
+    <color name="f4f4f4">#f4f4f4</color>
+    <color name="bga_pp_eighteen_maskColor">#00000000</color>
+    <color name="gray_e5e5e5">#e5e5e5</color>
+    <color name="blue_start">#5691fd</color>
+    <color name="_15ff4d4d">#15ff4d4d</color>
+    <color name="fb5c5c">#fb5c5c</color>
+    <color name="_15fb5c5c">#15fb5c5c</color>
+    <color name="_59d281">#59d281</color>
+    <color name="_1559d281">#1559d281</color>
+</resources>
