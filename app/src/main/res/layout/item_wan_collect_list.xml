@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yinp.tools.shap_view.ShapeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_14dp"
+    android:layout_marginTop="@dimen/_10dp"
+    android:layout_marginEnd="@dimen/_14dp"
+    android:layout_marginBottom="@dimen/_10dp"
+    android:orientation="vertical"
+    app:oneBg="@color/white"
+    app:radius="16"
+    app:state="pressed">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_10dp"
+            android:textColor="@color/_666"
+            android:textSize="@dimen/textSize_14sp"
+            tools:text="张三" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2020-10-10 10:10" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/_333"
+        android:textSize="@dimen/textSize_16sp"
+        tools:text="每日一问 | Dialog 的构造方法的 context 必须传入 Activity吗？" />
+
+    <org.sufficientlysecure.htmltextview.HtmlTextView
+        android:id="@+id/htv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/_10dp"
+        android:maxLines="3"
+        android:paddingLeft="@dimen/_16dp"
+        android:paddingTop="@dimen/_8dp"
+        android:paddingRight="@dimen/_16dp"
+        android:paddingBottom="@dimen/_8dp"
+        android:textColor="@color/_333"
+        android:textSize="14sp"
+        tools:text=" 各镇(街道): 为贯彻落实四川省应对新型冠状病毒肺炎疫情应急指 挥部《关于印发四川省2021 年春节期间农村地区新冠肺炎 疫情防控工作指南的通知》(川疫指发(2021)4号)相关部. 署安排以及刘旭光副市长在成都市进口冷链食品和进口高 风险非冷链集装箱货物疫情防控工作调度会上的讲话精神, 进一步做好农村地区疫情防控工作，现将有关事项通知如下:
+一、禁止开展各类群体性聚餐活动。各镇疏导群众情绪，正面引导群众自觉暂停举办群体性聚" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_chapter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10dp"
+            android:textColor="@color/_666"
+            android:textSize="@dimen/textSize_14sp"
+            tools:text="chapterName" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/_10dp"
+            android:src="@drawable/selector_collected" />
+    </LinearLayout>
+</com.yinp.tools.shap_view.ShapeLinearLayout>

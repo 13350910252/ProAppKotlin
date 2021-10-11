@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_10dp"
+    android:layout_marginEnd="@dimen/_8dp"
+    android:orientation="horizontal">
+
+    <com.yinp.tools.shap_view.ShapeTextView
+        android:id="@+id/stv_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSize_14sp"
+        android:textColor="@color/_666"
+        android:paddingStart="@dimen/_10dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="@dimen/_10dp"
+        android:paddingBottom="3dp"
+        app:oneBg="@color/f0f0f0"
+        app:radius="16"
+        app:state="pressed"
+        tools:text="handler" />
+</LinearLayout>

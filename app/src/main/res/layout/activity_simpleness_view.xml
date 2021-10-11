@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_40dp"
+                android:layout_marginTop="@dimen/_20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.yinp.showview.view.ColorCircleView
+                    android:id="@+id/ccv_point"
+                    android:layout_width="@dimen/_10dp"
+                    android:layout_height="@dimen/_10dp"
+                    app:bgColor="@color/ff4d4d" />
+
+                <TextView
+                    android:id="@+id/tv_change_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:text="改变颜色为蓝色"
+                    android:textColor="@color/_333"
+                    android:textSize="@dimen/textSize_16sp" />
+            </LinearLayout>
+
+            <com.yinp.showview.view.ColorCircleLinearLayout
+                android:id="@+id/ccll_point"
+                android:layout_width="@dimen/_40dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_marginStart="@dimen/_40dp"
+                android:layout_marginTop="@dimen/_20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:ccll_bgColor="@color/ff4d4d">
+
+                <TextView
+                    android:id="@+id/tv_change_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_18sp" />
+            </com.yinp.showview.view.ColorCircleLinearLayout>
+
+            <com.yinp.proapp.module.customview.simpleness_view.view.WuJiaoXingView
+                android:layout_width="@dimen/_100dp"
+                android:layout_height="@dimen/_100dp"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

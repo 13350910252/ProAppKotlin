@@ -11,8 +11,8 @@ import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.utils.StatusBarUtil
 
-abstract class BaseActivity<TT : ViewBinding> : FragmentActivity() {
-    protected lateinit var bd: TT
+abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClickListener {
+    protected lateinit var bd: VB
     protected val mContext: Context
     protected val mActivity: Activity
 
@@ -23,7 +23,7 @@ abstract class BaseActivity<TT : ViewBinding> : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bd = getBinding() as TT
+        bd = getBinding() as VB
         setContentView(bd.root)
 
         StatusBarUtil.setTranslucentStatus(this)
@@ -47,6 +47,10 @@ abstract class BaseActivity<TT : ViewBinding> : FragmentActivity() {
         for (element in views) {
             element.setOnClickListener(listener)
         }
+    }
+
+    override fun onClick(v: View?) {
+
     }
 
     fun goToActivity(intent: Intent) {
@@ -95,5 +99,8 @@ abstract class BaseActivity<TT : ViewBinding> : FragmentActivity() {
         }
     }
 
-    abstract fun getBinding(): ViewBinding
+    /**
+     * 获取布局
+     */
+    protected abstract fun getBinding(): ViewBinding
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".module.wanandroid.activity.WandroidActivity">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header_img"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/material_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48dp"
+            android:layout_marginBottom="@dimen/_10dp"
+            android:paddingTop="@dimen/_8dp"
+            android:paddingBottom="@dimen/_4dp" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:visibility="visible"
+            android:id="@+id/material_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/material_indicator" />
+
+        <ImageView
+            android:id="@+id/iv_me"
+            android:layout_width="@dimen/_32dp"
+            android:layout_height="@dimen/_32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/_20dp"
+            android:layout_marginBottom="@dimen/_20dp"
+            android:background="@mipmap/me_2"
+            android:scaleType="centerCrop" />
+    </RelativeLayout>
+
+</LinearLayout>

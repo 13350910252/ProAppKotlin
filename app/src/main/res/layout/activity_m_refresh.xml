@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <com.yinp.proapp.module.customview.view.PullRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.yinp.proapp.module.customview.view.PullRefreshHeaderView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_14dp"
+            android:layout_marginEnd="@dimen/_14dp"
+            android:background="@color/ff4d4d"
+            android:text="目前还没有做完，上拉加载还没有做，还没有兼容RecyclerView,细节也没有优化"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="testtest" />
+    </com.yinp.proapp.module.customview.view.PullRefreshLayout>
+</LinearLayout>

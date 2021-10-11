@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f0f0f0"
+    android:orientation="vertical">
+
+    <com.yinp.tools.shap_view.ShapeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_14dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginEnd="@dimen/_14dp"
+        android:orientation="vertical"
+        app:oneBg="@color/white"
+        app:radius="16">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_14dp"
+            android:layout_marginTop="@dimen/_14dp"
+            android:text="Android学习"
+            android:textColor="@color/_333"
+            android:textSize="@dimen/textSize_18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:id="@+id/stv_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="wanAndroid"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:oneBg="@color/white"
+                app:state="pressed" />
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:id="@+id/stv_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="学习内容总结"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:oneBg="@color/white"
+                app:state="pressed" />
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:id="@+id/stv_three"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="视频"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:oneBg="@color/white"
+                app:state="pressed" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:id="@+id/stv_four"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="自定义view"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:lb_radius="16"
+                app:oneBg="@color/white"
+                app:state="pressed" />
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:id="@+id/stv_five"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="工作中的通用"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:oneBg="@color/white"
+                app:state="pressed" />
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:id="@+id/stv_six"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="极光登录和分享"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:oneBg="@color/white"
+                app:rb_radius="16"
+                app:state="pressed" />
+        </LinearLayout>
+    </com.yinp.tools.shap_view.ShapeLinearLayout>
+
+    <com.yinp.tools.shap_view.ShapeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_14dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginEnd="@dimen/_14dp"
+        android:orientation="vertical"
+        app:oneBg="@color/white"
+        app:radius="16">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_14dp"
+            android:layout_marginTop="@dimen/_14dp"
+            android:text="Java学习"
+            android:textColor="@color/_333"
+            android:textSize="@dimen/textSize_18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="测试"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:oneBg="@color/white"
+                app:state="pressed" />
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="测试"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:oneBg="@color/white"
+                app:state="pressed" />
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="测试"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:oneBg="@color/white"
+                app:state="pressed" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="测试"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:lb_radius="16"
+                app:oneBg="@color/white"
+                app:state="pressed" />
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="测试"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:oneBg="@color/white"
+                app:state="pressed" />
+
+            <com.yinp.tools.shap_view.ShapeTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/_12dp"
+                android:paddingBottom="@dimen/_12dp"
+                android:text="测试"
+                android:textColor="@color/black666"
+                android:textSize="@dimen/textSize_16sp"
+                app:oneBg="@color/white"
+                app:rb_radius="16"
+                app:state="pressed" />
+        </LinearLayout>
+    </com.yinp.tools.shap_view.ShapeLinearLayout>
+
+</LinearLayout>

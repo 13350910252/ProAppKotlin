@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".module.study.dialog.activity.SystemDialogActivity">
+    <include layout="@layout/layout_header" android:id="@+id/header"/>
+    <TextView
+        android:layout_marginTop="@dimen/_12dp"
+        android:layout_marginStart="@dimen/_14dp"
+        android:layout_marginEnd="@dimen/_14dp"
+        android:textColor="@color/_333"
+        android:textSize="@dimen/textSize_16sp"
+        android:text="更改dialog中按钮的颜色，通过getButton可以直接更改"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_one"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="one"
+        android:textColor="@color/_333"
+        android:textSize="@dimen/textSize_16sp" />
+    <TextView
+        android:layout_marginTop="@dimen/_12dp"
+        android:layout_marginStart="@dimen/_14dp"
+        android:layout_marginEnd="@dimen/_14dp"
+        android:textColor="@color/_333"
+        android:textSize="@dimen/textSize_16sp"
+        android:text="更改dialog中内容的颜色，必须通过反射来实现"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_two"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="two"
+        android:textColor="@color/_333"
+        android:textSize="@dimen/textSize_16sp" />
+</LinearLayout>

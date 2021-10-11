@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_14dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_14dp"
+        android:text="处理嵌套滑动问题，默认情况下，内层recyclerview是不会滑动的
+        ，利用requestDisallowInterceptTouchEvent来更改事件，让内部可滑动,再增加内部view的监听（是否滑动到底部或者顶部），最后就是逻辑的事儿了"
+        android:textColor="@color/_333"
+        android:textSize="@dimen/textSize_16sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

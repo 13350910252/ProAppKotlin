@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".module.customview.activity.TestTriangleActivity">
+
+    <com.yinp.proapp.view.TriangleLinearLayout
+        android:layout_width="@dimen/_100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:layout_marginBottom="@dimen/_40dp"
+        android:orientation="vertical"
+        app:content_color="@color/ff6200"
+        app:content_corners="4"
+        app:distance="16"
+        app:triangle_height="8"
+        app:triangle_position="top_right"
+        app:triangle_width="11">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingBottom="@dimen/_10dp"
+            android:text="第一行类容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingBottom="@dimen/_10dp"
+            android:text="第二行类容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingBottom="@dimen/_10dp"
+            android:text="第三行类容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingBottom="@dimen/_10dp"
+            android:text="第四行类容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+    </com.yinp.proapp.view.TriangleLinearLayout>
+    <com.yinp.proapp.view.TriangleLinearLayout
+        android:layout_width="@dimen/_100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:layout_marginBottom="@dimen/_40dp"
+        android:orientation="vertical"
+        app:content_color="@color/ff6200"
+        app:content_corners="4"
+        app:distance="16"
+        app:triangle_height="8"
+        app:triangle_position="top_left"
+        app:triangle_width="11">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingBottom="@dimen/_10dp"
+            android:text="第一行类容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingBottom="@dimen/_10dp"
+            android:text="第二行类容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingBottom="@dimen/_10dp"
+            android:text="第三行类容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingBottom="@dimen/_10dp"
+            android:text="第四行类容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+    </com.yinp.proapp.view.TriangleLinearLayout>
+</LinearLayout>

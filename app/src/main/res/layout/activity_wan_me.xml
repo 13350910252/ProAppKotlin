@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ff4d4d"
+    android:orientation="vertical"
+    tools:context=".module.wanandroid.activity.WanMeActivity">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_60dp"
+        android:orientation="horizontal">
+
+        <com.yinp.proapp.view.CustomUserAvatar
+            android:id="@+id/cua_user_head"
+            android:layout_width="@dimen/_72dp"
+            android:layout_height="@dimen/_72dp"
+            android:layout_marginStart="@dimen/_14dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_14dp"
+            android:layout_marginEnd="@dimen/_14dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_nick_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_16sp"
+                android:textStyle="bold"
+                tools:text="请先登录~" />
+
+            <TextView
+                android:id="@+id/tv_integral_ranking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_14sp"
+                tools:text="积分:-- 排名:--" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_40dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_integral_rank"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_24dp"
+                android:layout_height="@dimen/_24dp"
+                android:src="@mipmap/integral" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2dp"
+                android:gravity="center"
+                android:text="积分排行"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_collect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_24dp"
+                android:layout_height="@dimen/_24dp"
+                android:src="@mipmap/collect" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2dp"
+                android:gravity="center"
+                android:text="我的收藏"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_24dp"
+                android:layout_height="@dimen/_24dp"
+                android:src="@mipmap/me_article" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2dp"
+                android:gravity="center"
+                android:text="我的文章"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_24dp"
+                android:layout_height="@dimen/_24dp"
+                android:src="@mipmap/todo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2dp"
+                android:gravity="center"
+                android:text="代办清单"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.yinp.tools.shap_view.ShapeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_10dp"
+        android:orientation="vertical"
+        app:lt_radius="10"
+        app:oneBg="@color/white"
+        app:rt_radius="10">
+
+        <com.yinp.tools.shap_view.ShapeLinearLayout
+            android:id="@+id/ll_open_source_web"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_14dp"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/_12dp"
+            android:paddingBottom="@dimen/_12dp"
+            app:oneBg="@color/white"
+            app:state="pressed">
+
+            <ImageView
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_14dp"
+                android:src="@mipmap/kaiyuan_web" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_14dp"
+                android:text="开源网站"
+                android:textColor="@color/_333"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="@dimen/_16dp"
+                android:layout_height="@dimen/_16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/_14dp"
+                android:src="@mipmap/ic_right" />
+        </com.yinp.tools.shap_view.ShapeLinearLayout>
+
+        <com.yinp.tools.shap_view.ShapeLinearLayout
+            android:id="@+id/ll_join_open_source"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/_12dp"
+            android:paddingBottom="@dimen/_12dp"
+            app:oneBg="@color/white"
+            app:state="pressed">
+
+            <ImageView
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_14dp"
+                android:src="@mipmap/join_open_source" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_14dp"
+                android:text="加入开源"
+                android:textColor="@color/_333"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="@dimen/_16dp"
+                android:layout_height="@dimen/_16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/_14dp"
+                android:src="@mipmap/ic_right" />
+        </com.yinp.tools.shap_view.ShapeLinearLayout>
+
+        <com.yinp.tools.shap_view.ShapeLinearLayout
+            android:id="@+id/ll_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/_12dp"
+            android:paddingBottom="@dimen/_12dp"
+            app:oneBg="@color/white"
+            app:state="pressed">
+
+            <ImageView
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_14dp"
+                android:src="@mipmap/setting" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_14dp"
+                android:text="系统设置"
+                android:textColor="@color/_333"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="@dimen/_16dp"
+                android:layout_height="@dimen/_16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/_14dp"
+                android:src="@mipmap/ic_right" />
+        </com.yinp.tools.shap_view.ShapeLinearLayout>
+
+        <com.yinp.tools.shap_view.ShapeLinearLayout
+            android:id="@+id/sll_login_out"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_52dp"
+            android:layout_marginTop="@dimen/_40dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:oneBg="@color/fbedeb"
+            app:state="pressed">
+
+            <ImageView
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_marginStart="@dimen/_14dp"
+                android:src="@mipmap/login_out" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10dp"
+                android:text="退出登录"
+                android:textColor="@color/_333"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </com.yinp.tools.shap_view.ShapeLinearLayout>
+    </com.yinp.tools.shap_view.ShapeLinearLayout>
+</LinearLayout>

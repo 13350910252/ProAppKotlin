@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fafafa"
+    android:orientation="vertical"
+    tools:context=".activity.LoginActivity">
+
+    <include
+        layout="@layout/layout_header"
+        android:visibility="visible" />
+
+    <com.yinp.tools.shap_view.ShapeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="14dp"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        app:oneBg="@color/ff8080"
+        app:radius="10">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_login_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp"
+            android:textColorHint="@color/white"
+            android:textSize="16sp"
+            app:hintTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_login_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="账号"
+                android:paddingBottom="16dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:theme="@style/LoginEditText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:textColorHint="@color/white"
+            android:textSize="16sp"
+            app:hintTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="密码"
+                android:inputType="textPassword"
+                android:paddingBottom="16dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:theme="@style/LoginEditText" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </com.yinp.tools.shap_view.ShapeLinearLayout>
+
+    <com.yinp.tools.shap_view.ShapeTextView
+        android:id="@+id/stv_login"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="登录"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:radius="10"
+        app:oneBg="@color/ff4d4d" />
+</LinearLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="目前只支持0以上的数据，可以加减每次一个，可以直接输入数值，
+        可以长按加减，可以控制数据的最大长度,可以设置初始值"
+        android:layout_marginStart="@dimen/_24dp"
+        android:layout_marginEnd="@dimen/_24dp"
+        android:textSize="@dimen/textSize_16sp"
+        android:textColor="@color/_333"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.yinp.proapp.module.customview.view.AddSubtractView
+        android:layout_marginTop="@dimen/_40dp"
+        android:id="@+id/jjv_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:addLeftRightPd="8"
+        app:addTextColor="@color/ff4d4d"
+        app:addTextSize="16"
+        app:defaultValue="99"
+        app:mRadius="6"
+        app:mStrokeColor="@color/ff4d4d"
+        app:mStrokeWidth="2"
+        app:maxEms="4"
+        app:subtractLeftRightPd="8"
+        app:subtractTextColor="@color/ff4d4d"
+        app:subtractTextSize="16"
+        app:topBottomPad="10"
+        app:valueLeftRightPd="8"
+        app:valueTextColor="@color/ff4d4d"
+        app:valueTextSize="16" />
+</LinearLayout>

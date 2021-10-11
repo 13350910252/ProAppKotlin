@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".module.study.recycler.activity.MoreListTwoActivity">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <TextView
+        style="@style/OneTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="网上看到的目前来看，没有明显问题"
+        android:textColor="@color/_333" />
+
+    <com.yinp.proapp.module.study.recycler.MRecyclerView
+        android:id="@+id/rv_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

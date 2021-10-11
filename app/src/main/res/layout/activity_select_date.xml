@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.yinp.tools.shap_view.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_14dp"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_16dp"
+                app:oneBg="@color/white"
+                app:radius="10"
+                app:state="pressed">
+
+                <Button
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:id="@+id/btn_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginEnd="@dimen/_20dp"
+                    android:gravity="center"
+                    android:text="年月"
+                    android:textColor="@color/_333"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginEnd="@dimen/_20dp"
+                    android:gravity="center"
+                    android:text="年月日"
+                    android:textColor="@color/_333"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginEnd="@dimen/_20dp"
+                    android:gravity="center"
+                    android:text="时分"
+                    android:textColor="@color/_333"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_four"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginEnd="@dimen/_20dp"
+                    android:gravity="center"
+                    android:text="年月日时分"
+                    android:textColor="@color/_333"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/btn_five"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginEnd="@dimen/_20dp"
+                    android:gravity="center"
+                    android:text="年月日时分"
+                    android:textColor="@color/_333"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_marginStart="@dimen/_14dp"
+                    android:layout_marginEnd="@dimen/_14dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:text="      可以通过type参数控制显示的dialog，可以控制开始时间和结束时间，可以控制
+选中的是当前选中，还是一直保持当前时间,可后续添加新的功能"
+                    android:textColor="@color/_333"
+                    android:textSize="@dimen/textSize_14sp"
+                    android:textStyle="bold" />
+            </com.yinp.tools.shap_view.ShapeLinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

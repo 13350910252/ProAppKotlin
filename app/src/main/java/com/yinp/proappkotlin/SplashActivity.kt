@@ -3,8 +3,11 @@ package com.yinp.proappkotlin
 import android.animation.Animator
 import android.os.Bundle
 import androidx.viewbinding.ViewBinding
+import com.airbnb.lottie.LottieAnimationView
+//import com.airbnb.lottie.LottieAnimationView
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.databinding.ActivitySplashBinding
+import com.yinp.proappkotlin.major.MajorActivity
 import com.yinp.proappkotlin.utils.AppUtils
 
 /**

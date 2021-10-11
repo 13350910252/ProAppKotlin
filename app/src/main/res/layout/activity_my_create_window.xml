@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_20dp"
+                android:text="two"
+                android:textColor="@color/_333"
+                android:textSize="@dimen/textSize_16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14dp"
+                android:layout_marginTop="@dimen/_12dp"
+                android:layout_marginEnd="@dimen/_14dp"
+                android:text="CustomDialogView对内部的两个子类布局和控制，第一个子类主要是表示背景,颜色的透明度变化。
+第二个子类表示要弹出的内容，主要注意的是需要拦截点击事件。一个透明度变化的动画，一个唯一变化动画。目前还未完善具有较强的局限性"
+                android:textColor="@color/_333"
+                android:textSize="@dimen/textSize_16sp" />
+
+            <Button
+                android:id="@+id/btn_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_20dp"
+                android:text="one"
+                android:textColor="@color/_333"
+                android:textSize="@dimen/textSize_16sp" />
+
+            <com.yinp.proapp.module.study.dialog.view.CustomDialogView
+                android:id="@+id/cdv_test"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/rl_dialog_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/tv_one"
+                    android:alpha="0.0"
+                    android:background="@color/_333"
+                    android:visibility="visible" />
+
+                <com.yinp.proapp.module.study.dialog.view.CustomDialogContentView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_40dp"
+                    android:layout_marginEnd="@dimen/_40dp"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvtwo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:text="teset1"
+                            android:textColor="@color/_333" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:text="teset2"
+                            android:textColor="@color/_333" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:text="teset3"
+                            android:textColor="@color/_333" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:text="teset4"
+                            android:textColor="@color/_333" />
+                    </LinearLayout>
+                </com.yinp.proapp.module.study.dialog.view.CustomDialogContentView>
+
+            </com.yinp.proapp.module.study.dialog.view.CustomDialogView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yinp.tools.shap_view.ShapeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_14dp"
+    android:layout_marginTop="@dimen/_10dp"
+    android:layout_marginEnd="@dimen/_14dp"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    app:oneBg="@color/white"
+    app:radius="10"
+    app:state="pressed">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginBottom="@dimen/_10dp"
+        android:textColor="@color/_333"
+        android:textSize="@dimen/textSize_16sp"
+        android:textStyle="bold"
+        tools:text="点击屏幕显示点击范围的图片，可以滑动，显示范围随着滑动改变" />
+
+    <com.yinp.tools.shap_view.ShapeTextView
+        android:id="@+id/stv_go"
+        android:layout_width="@dimen/_48dp"
+        android:layout_height="@dimen/_28dp"
+        android:text="GO"
+        android:layout_marginEnd="@dimen/_14dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_16sp"
+        app:oneBg="@color/ff4d4d"
+        app:radius="5"
+        app:state="pressed" />
+</com.yinp.tools.shap_view.ShapeLinearLayout>

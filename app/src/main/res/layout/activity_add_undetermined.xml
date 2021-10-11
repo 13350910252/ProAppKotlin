@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fafafa"
+    android:orientation="vertical"
+    tools:context=".module.task.activity.AddUndeterminedActivity">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10dp"
+            android:orientation="vertical">
+
+
+            <com.yinp.tools.shap_view.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_14dp"
+                android:orientation="vertical"
+                app:oneBg="@color/white"
+                app:radius="10">
+
+                <EditText
+                    android:id="@+id/et_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_14dp"
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:layout_marginEnd="@dimen/_14dp"
+                    android:layout_marginBottom="@dimen/_16dp"
+                    android:background="@drawable/shape_e8e8e8_10"
+                    android:gravity="start"
+                    android:hint="填写标题(可选)"
+                    android:minHeight="@dimen/_64dp"
+                    android:paddingStart="@dimen/_12dp"
+                    android:paddingTop="@dimen/_8dp"
+                    android:paddingEnd="@dimen/_14dp"
+                    android:paddingBottom="@dimen/_8dp"
+                    android:textColor="@color/_333"
+                    android:textColorHint="@color/b8b8b8"
+                    android:textSize="16sp" />
+            </com.yinp.tools.shap_view.ShapeLinearLayout>
+
+            <com.yinp.tools.shap_view.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_14dp"
+                android:orientation="vertical"
+                app:oneBg="@color/white"
+                app:radius="10">
+
+                <EditText
+                    android:id="@+id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_14dp"
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:layout_marginEnd="@dimen/_14dp"
+                    android:layout_marginBottom="@dimen/_16dp"
+                    android:background="@drawable/shape_e8e8e8_10"
+                    android:gravity="start"
+                    android:hint="填写内容(必须)"
+                    android:minHeight="@dimen/_256dp"
+                    android:paddingStart="@dimen/_12dp"
+                    android:paddingTop="@dimen/_8dp"
+                    android:paddingEnd="@dimen/_14dp"
+                    android:paddingBottom="@dimen/_8dp"
+                    android:textColor="@color/_333"
+                    android:textColorHint="@color/b8b8b8"
+                    android:textSize="16sp" />
+            </com.yinp.tools.shap_view.ShapeLinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.yinp.tools.shap_view.ShapeTextView
+        android:id="@+id/stv_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_48dp"
+        android:layout_marginStart="@dimen/_40dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_40dp"
+        android:layout_marginBottom="@dimen/_12dp"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_16sp"
+        android:textStyle="bold"
+        app:oneBg="@color/ff4d4d"
+        app:radius="10"
+        app:state="pressed" />
+</LinearLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yinp.tools.shap_view.ShapeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_14dp"
+    android:layout_marginTop="@dimen/_10dp"
+    android:layout_marginEnd="@dimen/_14dp"
+    android:orientation="vertical"
+    app:oneBg="@color/white"
+    app:radius="10">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_14dp"
+        android:layout_marginTop="@dimen/_12dp"
+        android:textColor="@color/_333"
+        android:textSize="@dimen/textSize_16sp"
+        android:textStyle="bold"
+        tools:text="标题" />
+
+    <EditText
+        android:id="@+id/et_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_14dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_14dp"
+        android:background="@null"
+        android:hint="填写内容"
+        android:textColor="@color/_333"
+        android:textColorHint="@color/_666"
+        android:textSize="@dimen/textSize_16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
+            android:id="@+id/item_photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_14dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_marginEnd="@dimen/_14dp"
+            app:bga_snpl_deleteDrawable="@mipmap/delete_p"
+            app:bga_snpl_deleteDrawableOverlapQuarter="false"
+            app:bga_snpl_editable="true"
+            app:bga_snpl_itemCornerRadius="3dp"
+            app:bga_snpl_itemSpanCount="4"
+            app:bga_snpl_itemWhiteSpacing="@dimen/_10dp"
+            app:bga_snpl_itemWidth="0dp"
+            app:bga_snpl_maxItemCount="4"
+            app:bga_snpl_otherWhiteSpacing="0dp"
+            app:bga_snpl_plusDrawable="@drawable/take_photos"
+            app:bga_snpl_plusEnable="true"
+            app:bga_snpl_sortable="false" />
+    </LinearLayout>
+</com.yinp.tools.shap_view.ShapeLinearLayout>

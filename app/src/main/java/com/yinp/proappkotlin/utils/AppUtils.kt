@@ -1,8 +1,12 @@
 package com.yinp.proappkotlin.utils
 
 import android.os.Build
+import android.text.TextUtils
 import android.view.Window
 import android.view.WindowManager
+import java.io.BufferedReader
+import java.io.FileReader
+import java.io.IOException
 
 /**
  * @author   :yinpeng
@@ -21,5 +25,26 @@ object AppUtils {
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
         window.attributes = lp;
+    }
+
+    fun getProcessName(pid: Int): String? {
+        var reader: BufferedReader? = null
+        try {
+            reader = BufferedReader(FileReader("/proc/$pid/cmdline"))
+            var processName = reader.readLine()
+            if (!processName.isNullOrEmpty()) {
+                processName = processName.trim()
+            }
+            return processName
+        } catch (throwable: Throwable) {
+            throwable.printStackTrace()
+        } finally {
+            try {
+                reader?.close()
+            } catch (exception: IOException) {
+                exception.printStackTrace()
+            }
+        }
+        return null
     }
 }

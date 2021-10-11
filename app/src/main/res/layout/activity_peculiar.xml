@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.yinp.proapp.module.customview.view.PeculiarView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_32dp"
+        android:layout_marginTop="@dimen/_40dp"
+        android:layout_marginEnd="@dimen/_32dp"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_16dp"
+        app:peculiarCircleDx="4"
+        app:peculiarCircleRadius="20"
+        app:peculiarColor="@color/ff4d4d"
+        app:peculiarCorners="10">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12dp"
+            android:gravity="center"
+            android:text="呢容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10dp"
+            android:gravity="center"
+            android:text="呢容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10dp"
+            android:gravity="center"
+            android:text="呢容"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16sp" />
+    </com.yinp.proapp.module.customview.view.PeculiarView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_14dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_14dp"
+        android:text="原理是通过两个path进行截取（op）操作，就可以的到各种各样的奇怪的简单的view"
+        android:textColor="@color/_333"
+        android:textSize="@dimen/textSize_16sp" />
+</LinearLayout>

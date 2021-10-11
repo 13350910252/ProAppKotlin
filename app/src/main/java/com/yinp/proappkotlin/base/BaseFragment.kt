@@ -2,9 +2,12 @@ package com.yinp.proappkotlin.base
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 
 /**
  * @author   :yinpeng
@@ -12,7 +15,16 @@ import androidx.fragment.app.Fragment
  * package   :com.yinp.proappkotlin.base
  * describe  :
  */
-open class BaseFragment : Fragment() {
+abstract class BaseFragment<VB : ViewBinding> : Fragment() {
+    protected lateinit var bd: VB
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        bd = getBinding(inflater,container) as VB
+        return bd.root
+    }
+
     /**
      * 初始化点击事件
      */
@@ -21,6 +33,7 @@ open class BaseFragment : Fragment() {
             element.setOnClickListener(listener)
         }
     }
+
     fun goToActivity(intent: Intent) {
         goToActivity(intent, -1)
     }
@@ -68,4 +81,9 @@ open class BaseFragment : Fragment() {
             }
         }
     }
+
+    /**
+     * 获取布局
+     */
+    protected abstract fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding
 }
