@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.yinp.proapp.module.jiguangloginshare.view.TwoSelectView
+    <com.yinp.tools.view.TwoSelectView
         android:id="@+id/tsv_select"
         android:transitionName="activityTransform"
         android:layout_width="wrap_content"

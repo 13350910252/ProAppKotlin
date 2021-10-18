@@ -40,3 +40,4 @@ object WanAndroid {
     const val COOKIES = "wanAndroidCookies"
 }
 
+const val pageSize = 10

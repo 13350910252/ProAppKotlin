@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ff4d4d"
-    android:orientation="vertical"
-    tools:context=".module.wanandroid.activity.WanMeActivity">
+    android:orientation="vertical">
 
     <include
         android:id="@+id/header"
@@ -19,7 +18,7 @@
         android:layout_marginTop="@dimen/_60dp"
         android:orientation="horizontal">
 
-        <com.yinp.proapp.view.CustomUserAvatar
+        <com.yinp.tools.view.CustomUserAvatar
             android:id="@+id/cua_user_head"
             android:layout_width="@dimen/_72dp"
             android:layout_height="@dimen/_72dp"

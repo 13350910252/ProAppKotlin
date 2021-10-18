@@ -36,7 +36,7 @@ object SpUtils {
     /**
      * 保存boolean常量
      */
-    fun getValue(key: String?, defValue: String?): String? {
+    fun getValue(key: String?, defValue: String): String? {
         return kv.decodeString(key, defValue)
     }
 
@@ -50,7 +50,7 @@ object SpUtils {
     /**
      * 保存boolean常量
      */
-    fun getValue(key: String?, defValue: Int): Int {
+    fun getValue(key: String?, defValue: Int = 0): Int {
         return kv.decodeInt(key, defValue)
     }
 }

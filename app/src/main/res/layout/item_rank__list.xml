@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.yinp.proapp.view.RankLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.yinp.tools.view.RankLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rll_main"
@@ -62,4 +62,4 @@
         android:textColor="@color/ff4d4d"
         android:textSize="@dimen/textSize_14sp"
         tools:text="42444" />
-</com.yinp.proapp.view.RankLinearLayout>
+</com.yinp.tools.view.RankLinearLayout>

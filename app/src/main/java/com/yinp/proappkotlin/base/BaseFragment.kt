@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleObserver
 import androidx.viewbinding.ViewBinding
 
 /**
@@ -15,14 +16,56 @@ import androidx.viewbinding.ViewBinding
  * package   :com.yinp.proappkotlin.base
  * describe  :
  */
-abstract class BaseFragment<VB : ViewBinding> : Fragment() {
+abstract class BaseFragment<VB : ViewBinding> : Fragment(), View.OnClickListener,
+    LifecycleObserver {
     protected lateinit var bd: VB
 
+    /**
+     * 此处替代onActivityCreated方法
+     */
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        requireActivity().lifecycle.addObserver(object : DefaultLifecycleObserver {
+//            override fun onCreate(owner: LifecycleOwner) {
+//                // 想做啥做点啥
+//                initViews()
+//                // 移除
+//                owner.lifecycle.removeObserver(this)
+//            }
+//        })
+//    }
+
+    /**
+     * 初始化一些数据
+     */
+    abstract fun initViews()
+
+    /**
+     * 创建布局
+     */
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        bd = getBinding(inflater,container) as VB
+        bd = getBinding(inflater, container) as VB
+//        lifecycle.addObserver(this)
         return bd.root
+    }
+
+    /**
+     * 初始化界面
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
+
+    /**
+     * 点击事件
+     */
+    override fun onClick(v: View?) {
+
     }
 
     /**

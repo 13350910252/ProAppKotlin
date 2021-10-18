@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/f0f0f0"
-    android:orientation="vertical"
-    tools:context=".module.game.tanchishe.GSGameContentActivity">
+    android:orientation="vertical">
 
     <include
         android:id="@+id/header"
@@ -21,7 +20,7 @@
     <!--        android:layout_marginBottom="@dimen/_20dp"-->
     <!--        android:background="@drawable/shape_stroke_ff4d4d_2">-->
 
-    <com.yinp.proapp.module.game.tanchishe.GluttonousSnakeView
+    <com.yinp.proappkotlin.recreation.game.tanchishe.GluttonousSnakeView
         android:id="@+id/gs_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

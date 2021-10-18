@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">ProAppKotlin</string>
+
+    <!--    权限提示语-->
+    <string name="warm_prompt">温馨提示</string>
+    <string name="not">暂不</string>
+    <string name="go_open">去开启</string>
+    <string name="per_tips">建议您开启%1$s权限，否则将影响该功能的使用</string>
+    <!--    权限关键词-->
+    <string name="camera">相机</string>
+    <string name="location">定位</string>
+    <string name="storage">手机存储</string>
+    <string name="phone">拨打电话</string>
 </resources>

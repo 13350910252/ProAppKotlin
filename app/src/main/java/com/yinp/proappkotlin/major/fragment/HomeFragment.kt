@@ -1,10 +1,9 @@
-package com.yinp.proappkotlin.major
+package com.yinp.proappkotlin.major.fragment
 
 import android.content.Context
 import android.graphics.Color
 import android.util.SparseArray
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -38,54 +37,58 @@ import java.util.*
  * describe  :
  */
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
-    private lateinit var bannerAdapter: HomeBannerAdapter
     private val listBanner = mutableListOf<BannerEntity>()
 
-    protected fun initViews(view: View?) {
+    /**
+     * 初始化banner
+     */
+    private val bannerAdapter by lazy {
+        HomeBannerAdapter(listBanner, requireContext())
+    }
+    private val todayUndeterminedFragment by lazy {
+        TodayUndeterminedFragment.getInstance()
+    }
+    private val labelFragment by lazy {
+        LabelFragment.getInstance()
+    }
+    private val fragments = SparseArray<Fragment>()
+
+    override fun initViews() {
         initRecycler()
         initIndicator()
         getBannerList()
     }
 
     private fun initRecycler() {
-        bannerAdapter = HomeBannerAdapter(listBanner, requireContext())
         bd.topBanner.setAdapter(bannerAdapter).addBannerLifecycleObserver(this).indicator =
-            CircleIndicator(
-                context
-            )
+            CircleIndicator(context)
         bd.topBanner.setOnBannerListener(OnBannerListener { data: BannerEntity, position: Int ->
             JumpWebUtils.startWebView(
                 requireContext(),
                 data.title,
                 data.url
             )
-        } as OnBannerListener<BannerEntity>?)
+        })
     }
 
-    var todayUndeterminedFragment: TodayUndeterminedFragment? = null
-    var labelFragment: LabelFragment? = null
-    private val fragments = SparseArray<Fragment?>()
-
     private fun initIndicator() {
-        todayUndeterminedFragment = TodayUndeterminedFragment.getInstance()
-        labelFragment = LabelFragment.getInstance()
         fragments.put(0, todayUndeterminedFragment)
         fragments.put(1, labelFragment)
         bd.materialViewPager.adapter = ViewPager2Utils.getAdapter(this, fragments)
-        val titleList: List<String> = ArrayList(Arrays.asList("今日待做", "标签"))
+        val titleList: List<String> = ArrayList(listOf("今日待做", "标签"))
         bd.materialIndicator.setBackgroundColor(Color.WHITE)
         val commonNavigator7 = CommonNavigator(context)
         commonNavigator7.isAdjustMode = true
         commonNavigator7.adapter = object : CommonNavigatorAdapter() {
             override fun getCount(): Int {
-                return titleList?.size ?: 0
+                return titleList.size
             }
 
             override fun getTitleView(context: Context, index: Int): IPagerTitleView {
                 val simplePagerTitleView = SimplePagerTitlePictureView(context)
-                simplePagerTitleView.setText(titleList[index])
+                simplePagerTitleView.text = titleList[index]
                 simplePagerTitleView.setNormalColor(resources.getColor(R.color.b8b8b8))
-                simplePagerTitleView.setTextSize(16)
+                simplePagerTitleView.textSize = 16f
                 when (index) {
                     0 -> {
                         simplePagerTitleView.setmNormalDrawable(R.mipmap.task)
@@ -121,31 +124,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun getBannerList() {
-        showLoading("加载中")
-        presenter.getBannerList(object : WanObserver<WanData?>() {
-            fun onSuccess(o: WanData?) {
-                hideLoading()
-                if (o == null) {
-                    return
-                }
-                val jsonElement: JsonElement = o.getData()
-                if (jsonElement.isJsonNull()) {
-                    return
-                }
-                val type: Type = object : TypeToken<ArrayList<BannerEntity?>?>() {}.getType()
-                listBanner = Gson().fromJson(jsonElement, type)
-                bannerAdapter.setDatas(listBanner)
-                bannerAdapter.notifyDataSetChanged()
-            }
-
-            fun onError(msg: String?) {
-                hideLoading()
-            }
-
-            fun onCodeFail(msg: String?) {
-                hideLoading()
-            }
-        })
+//        showLoading("加载中")
+//        presenter.getBannerList(object : WanObserver<WanData?>() {
+//            fun onSuccess(o: WanData?) {
+//                hideLoading()
+//                if (o == null) {
+//                    return
+//                }
+//                val jsonElement: JsonElement = o.getData()
+//                if (jsonElement.isJsonNull()) {
+//                    return
+//                }
+//                val type: Type = object : TypeToken<ArrayList<BannerEntity?>?>() {}.getType()
+//                listBanner = Gson().fromJson(jsonElement, type)
+//                bannerAdapter.setDatas(listBanner)
+//                bannerAdapter.notifyDataSetChanged()
+//            }
+//
+//            fun onError(msg: String?) {
+//                hideLoading()
+//            }
+//
+//            fun onCodeFail(msg: String?) {
+//                hideLoading()
+//            }
+//        })
     }
 
     override fun onDestroyView() {

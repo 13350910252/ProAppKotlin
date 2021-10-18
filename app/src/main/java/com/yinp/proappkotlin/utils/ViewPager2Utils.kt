@@ -16,7 +16,7 @@ import net.lucode.hackware.magicindicator.MagicIndicator
  * package   :com.yinp.proappkotlin.utils
  * describe  :
  */
-class ViewPager2Utils {
+object ViewPager2Utils {
     fun bind(magicIndicator: MagicIndicator, viewPager: ViewPager2) {
         viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageScrolled(
@@ -72,7 +72,7 @@ class ViewPager2Utils {
         return MFragmentStateAdapter(fragmentActivity, fragments, position)
     }
 
-    fun getAdapter(fragment: Fragment, fragments: List<Fragment>): FragmentStateAdapter? {
+    fun getAdapter(fragment: Fragment, fragments: List<Fragment>): FragmentStateAdapter {
         return MFragmentStateAdapter(fragment, fragments)
     }
 
@@ -120,7 +120,7 @@ class ViewPager2Utils {
     fun getAdapter(
         fragmentActivity: FragmentActivity,
         fragments: SparseArray<Fragment>
-    ): FragmentStateAdapter? {
+    ): FragmentStateAdapter {
         return MFragmentStateAdapter2(fragmentActivity, fragments, -1)
     }
 
@@ -128,11 +128,11 @@ class ViewPager2Utils {
         fragmentActivity: FragmentActivity,
         fragments: SparseArray<Fragment>,
         position: Int
-    ): FragmentStateAdapter? {
+    ): FragmentStateAdapter {
         return MFragmentStateAdapter2(fragmentActivity, fragments, position)
     }
 
-    fun getAdapter(fragment: Fragment, fragments: SparseArray<Fragment>): FragmentStateAdapter? {
+    fun getAdapter(fragment: Fragment, fragments: SparseArray<Fragment>): FragmentStateAdapter {
         return MFragmentStateAdapter2(fragment, fragments)
     }
 
@@ -140,7 +140,7 @@ class ViewPager2Utils {
         fragmentManager: FragmentManager,
         lifecycle: Lifecycle,
         fragments: SparseArray<Fragment>
-    ): FragmentStateAdapter? {
+    ): FragmentStateAdapter {
         return MFragmentStateAdapter2(fragmentManager, lifecycle, fragments)
     }
 

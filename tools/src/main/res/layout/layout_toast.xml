@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#ff4d4d"
+    app:cardCornerRadius="6dp">
+
+    <ImageView
+        android:id="@+id/iv_status"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginBottom="32dp"
+        android:src="@mipmap/success_icon"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:gravity="center"
+        android:minWidth="120dp"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        tools:text="测试toast" />
+</androidx.cardview.widget.CardView>

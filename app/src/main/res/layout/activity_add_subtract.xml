@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <com.yinp.proapp.module.customview.view.AddSubtractView
+    <com.yinp.tools.view.AddSubtractView
         android:layout_marginTop="@dimen/_40dp"
         android:id="@+id/jjv_main"
         android:layout_width="wrap_content"

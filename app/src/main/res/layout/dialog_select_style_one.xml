@@ -14,36 +14,36 @@
 
         <TextView
             android:id="@+id/tv_left"
-            android:padding="@dimen/_12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_4dp"
+            android:padding="@dimen/_12dp"
             android:text="取消"
             android:textColor="@color/_333"
             android:textSize="@dimen/textSize_18sp" />
 
         <TextView
-            android:padding="@dimen/_12dp"
             android:id="@+id/tv_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:padding="@dimen/_12dp"
             android:text="标题"
             android:textColor="@color/_333"
             android:textSize="@dimen/textSize_20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:padding="@dimen/_12dp"
             android:id="@+id/tv_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/_4dp"
+            android:padding="@dimen/_12dp"
             android:text="确定"
             android:textColor="@color/ff4d4d"
             android:textSize="@dimen/textSize_18sp"

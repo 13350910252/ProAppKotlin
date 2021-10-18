@@ -26,7 +26,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <com.yinp.showview.view.ColorCircleView
+                <com.yinp.tools.view.ColorCircleView
                     android:id="@+id/ccv_point"
                     android:layout_width="@dimen/_10dp"
                     android:layout_height="@dimen/_10dp"
@@ -42,7 +42,7 @@
                     android:textSize="@dimen/textSize_16sp" />
             </LinearLayout>
 
-            <com.yinp.showview.view.ColorCircleLinearLayout
+            <com.yinp.tools.view.ColorCircleLinearLayout
                 android:id="@+id/ccll_point"
                 android:layout_width="@dimen/_40dp"
                 android:layout_height="@dimen/_40dp"
@@ -59,9 +59,9 @@
                     android:text=""
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize_18sp" />
-            </com.yinp.showview.view.ColorCircleLinearLayout>
+            </com.yinp.tools.view.ColorCircleLinearLayout>
 
-            <com.yinp.proapp.module.customview.simpleness_view.view.WuJiaoXingView
+            <com.yinp.tools.view.WuJiaoXingView
                 android:layout_width="@dimen/_100dp"
                 android:layout_height="@dimen/_100dp"
                 android:layout_gravity="center_horizontal" />

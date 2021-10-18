@@ -77,7 +77,7 @@
             app:oneBg="@color/_15fb5c5c"
             app:radius="10">
 
-            <com.yinp.showview.view.ColorCircleView
+            <com.yinp.tools.view.ColorCircleView
                 android:id="@+id/ccv_point"
                 android:layout_width="@dimen/_8dp"
                 android:layout_height="@dimen/_8dp"

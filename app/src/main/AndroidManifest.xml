@@ -34,7 +34,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".web.WebViewActivity"></activity>
         <activity
-            android:name=".SplashActivity"
+            android:name=".major.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>

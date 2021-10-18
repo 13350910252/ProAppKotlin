@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fafafa"
-    android:orientation="vertical"
-    tools:context=".module.game.fourcolormap.FourColorMapActivity">
+    android:orientation="vertical">
 
     <include
         android:id="@+id/header"
@@ -23,7 +22,7 @@
         android:textSize="@dimen/textSize_16sp"
         android:textStyle="bold" />
 
-    <com.yinp.proapp.module.game.fourcolormap.MapView
+    <com.yinp.proappkotlin.recreation.MapView
         android:id="@+id/mv_main"
         android:layout_width="match_parent"
         android:layout_height="400dp"

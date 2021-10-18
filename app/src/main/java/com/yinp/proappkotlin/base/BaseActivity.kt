@@ -23,10 +23,11 @@ abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClick
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bd = getBinding() as VB
+        bd = getBinding()
         setContentView(bd.root)
 
         StatusBarUtil.setTranslucentStatus(this)
+        initViews()
     }
 
     /**
@@ -52,6 +53,8 @@ abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClick
     override fun onClick(v: View?) {
 
     }
+
+    abstract fun initViews()
 
     fun goToActivity(intent: Intent) {
         goToActivity(intent, -1)
@@ -102,5 +105,5 @@ abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClick
     /**
      * 获取布局
      */
-    protected abstract fun getBinding(): ViewBinding
+    protected abstract fun getBinding(): VB
 }

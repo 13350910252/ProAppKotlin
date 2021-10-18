@@ -1,15 +1,14 @@
 package com.yinp.proappkotlin.major
 
-import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.databinding.ActivityMajorBinding
+import com.yinp.proappkotlin.major.fragment.*
 import com.yinp.proappkotlin.utils.StatusBarUtil
 
 /**
@@ -27,14 +26,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
     private var curFragment: Fragment? = null
     private lateinit var fragmentManager: FragmentManager
     private lateinit var fragmentTransaction: FragmentTransaction
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        initViews()
-    }
-
-    private fun initViews() {
+    override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this))
         bd.header.headerBackImg.visibility = View.GONE
         bd.header.headerCenterTitle.text = "首页"
@@ -79,84 +71,74 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
         fragmentTransaction = fragmentManager.beginTransaction()
         when (position) {
             0 -> {
-                homeFragment?.let {
-                    curFragment?.let { it1 ->
-                        fragmentTransaction.hide(it1)
-                    } ?: let {
-                        bd.header.ivImg.visibility = View.VISIBLE
-                        curFragment = homeFragment
-                        fragmentTransaction.show(curFragment!!)
-                        fragmentTransaction.commitNow()
-                    }
-                } ?: let {
+                homeFragment ?: let {
                     homeFragment = HomeFragment()
                     fragmentTransaction.add(R.id.fl_content, homeFragment!!)
                 }
+                curFragment?.let {
+                    fragmentTransaction.hide(it)
+                }
+                bd.header.ivImg.visibility = View.VISIBLE
+                curFragment = homeFragment
+                fragmentTransaction.show(curFragment!!)
+                fragmentTransaction.commitNow()
             }
             1 -> {
-                studyFragment?.let {
-                    curFragment?.let { it1 ->
-                        fragmentTransaction.hide(it1)
-                    } ?: let {
-                        bd.header.ivImg.visibility = View.GONE
-                        curFragment = studyFragment
-                        fragmentTransaction.show(curFragment!!)
-                        fragmentTransaction.commitNow()
-                    }
-                } ?: let {
+                studyFragment ?: let {
                     studyFragment = StudyFragment()
                     fragmentTransaction.add(R.id.fl_content, studyFragment!!)
                 }
+                curFragment?.let {
+                    fragmentTransaction.hide(it)
+                }
+                bd.header.ivImg.visibility = View.GONE
+                curFragment = studyFragment
+                fragmentTransaction.show(curFragment!!)
+                fragmentTransaction.commitNow()
             }
             2 -> {
-                toolsFragment?.let {
-                    curFragment?.let { it1 ->
-                        fragmentTransaction.hide(it1)
-                    } ?: let {
-                        bd.header.ivImg.visibility = View.GONE
-                        curFragment = toolsFragment
-                        fragmentTransaction.show(curFragment!!)
-                        fragmentTransaction.commitNow()
-                    }
-                } ?: let {
+                toolsFragment ?: let {
                     toolsFragment = ToolsFragment()
                     fragmentTransaction.add(R.id.fl_content, toolsFragment!!)
                 }
+                curFragment?.let {
+                    fragmentTransaction.hide(it)
+                }
+                bd.header.ivImg.visibility = View.GONE
+                curFragment = toolsFragment
+                fragmentTransaction.show(curFragment!!)
+                fragmentTransaction.commitNow()
             }
             3 -> {
-                recreationFragment?.let {
-                    curFragment?.let { it1 ->
-                        fragmentTransaction.hide(it1)
-                    } ?: let {
-                        bd.header.ivImg.visibility = View.GONE
-                        curFragment = recreationFragment
-                        fragmentTransaction.show(curFragment!!)
-                        fragmentTransaction.commitNow()
-                    }
-                } ?: let {
+                recreationFragment ?: let {
                     recreationFragment = RecreationFragment()
                     fragmentTransaction.add(R.id.fl_content, recreationFragment!!)
                 }
+                curFragment?.let {
+                    fragmentTransaction.hide(it)
+                }
+                bd.header.ivImg.visibility = View.GONE
+                curFragment = recreationFragment
+                fragmentTransaction.show(curFragment!!)
+                fragmentTransaction.commitNow()
             }
             4 -> {
-                meFragment?.let {
-                    curFragment?.let { it1 ->
-                        fragmentTransaction.hide(it1)
-                    } ?: let {
-                        bd.header.ivImg.visibility = View.GONE
-                        curFragment = meFragment
-                        fragmentTransaction.show(curFragment!!)
-                        fragmentTransaction.commitNow()
-                    }
-                } ?: let {
+                meFragment ?: let {
                     meFragment = MeFragment()
                     fragmentTransaction.add(R.id.fl_content, meFragment!!)
                 }
+                curFragment?.let { it1 ->
+                    fragmentTransaction.hide(it1)
+                }
+                bd.header.ivImg.visibility = View.GONE
+                curFragment = meFragment
+                fragmentTransaction.show(curFragment!!)
+                fragmentTransaction.commitNow()
             }
         }
     }
 
-    override fun getBinding(): ViewBinding {
+    override fun getBinding(): ActivityMajorBinding {
         return ActivityMajorBinding.inflate(layoutInflater)
     }
 }

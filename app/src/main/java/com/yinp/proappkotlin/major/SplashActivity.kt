@@ -1,13 +1,10 @@
-package com.yinp.proappkotlin
+package com.yinp.proappkotlin.major
 
+//import com.airbnb.lottie.LottieAnimationView
 import android.animation.Animator
 import android.os.Bundle
-import androidx.viewbinding.ViewBinding
-import com.airbnb.lottie.LottieAnimationView
-//import com.airbnb.lottie.LottieAnimationView
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.databinding.ActivitySplashBinding
-import com.yinp.proappkotlin.major.MajorActivity
 import com.yinp.proappkotlin.utils.AppUtils
 
 /**
@@ -16,8 +13,7 @@ import com.yinp.proappkotlin.utils.AppUtils
  * @Description:启动页
  */
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun initViews() {
         AppUtils.setFullScreen(window)
         initSomething()
     }
@@ -44,7 +40,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         })
     }
 
-    override fun getBinding(): ViewBinding {
+    override fun getBinding(): ActivitySplashBinding {
         return ActivitySplashBinding.inflate(layoutInflater)
     }
+
 }

@@ -24,11 +24,11 @@ class SimplePagerTitlePictureView(val mContext: Context) : AppCompatTextView(mCo
     private var mNormalColor = 0
     private val mChangePercent = 0.5f
 
-    private fun setmSelectedDrawable(mSelectedDrawable: Int) {
+    internal fun setmSelectedDrawable(mSelectedDrawable: Int) {
         this.mSelectedDrawable = mSelectedDrawable
     }
 
-    private fun setmNormalDrawable(mNormalDrawable: Int) {
+    internal fun setmNormalDrawable(mNormalDrawable: Int) {
         this.mNormalDrawable = mNormalDrawable
     }
 
@@ -94,7 +94,7 @@ class SimplePagerTitlePictureView(val mContext: Context) : AppCompatTextView(mCo
     override fun getContentLeft(): Int {
         val bound = Rect()
         var longestString = ""
-        if (text.toString().contains("\n")) {
+            if (text.toString().contains("\n")) {
             val brokenStrings = text.toString().split("\\n").toTypedArray()
             for (each in brokenStrings) {
                 if (each.length > longestString.length) longestString = each

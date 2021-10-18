@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".module.customview.activity.TestCircleActivity">
+    android:orientation="vertical">
 
     <include
         android:id="@+id/header"
@@ -25,13 +24,13 @@
         app:radius="5"
         app:state="pressed" />
 
-    <com.yinp.showview.view.CircleLoopView
-        android:id="@+id/clv_one"
-        android:layout_width="@dimen/_200dp"
-        android:layout_height="@dimen/_200dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_20dp"
-        android:background="@color/white"
-        app:clv_color="@color/ff4d4d"
-        app:clv_max_process="0" />
+<!--    <com.yinp.showview.view.CircleLoopView-->
+<!--        android:id="@+id/clv_one"-->
+<!--        android:layout_width="@dimen/_200dp"-->
+<!--        android:layout_height="@dimen/_200dp"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:layout_marginTop="@dimen/_20dp"-->
+<!--        android:background="@color/white"-->
+<!--        app:clv_color="@color/ff4d4d"-->
+<!--        app:clv_max_process="0" />-->
 </LinearLayout>

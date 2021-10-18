@@ -48,11 +48,7 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
     private var mTitle: String? = null
 
     private var mUrl: String? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initViews()
-    }
-    protected fun initViews() {
+    override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         initClick(this, bd.header.headerBackImg)
         val intent = intent
@@ -105,7 +101,7 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
         super.onDestroy()
     }
 
-    override fun getBinding(): ViewBinding {
+    override fun getBinding(): ActivityWebViewBinding {
         return ActivityWebViewBinding.inflate(layoutInflater)
     }
 }

@@ -1,5 +1,6 @@
 package com.yinp.proappkotlin
 
+import android.content.Context
 import com.yinp.proappkotlin.base.BaseApplication
 
 /**
@@ -12,6 +13,11 @@ const val TAG = "yinp_yinp"
 
 class App : BaseApplication() {
     companion object {
-        val appContext = this
+        lateinit var appContext: Context
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        appContext = applicationContext
     }
 }
