@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/header_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,16 +14,17 @@
         android:layout_height="0dp"
         android:background="@android:color/transparent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/cl_title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:paddingBottom="6dp">
 
         <RelativeLayout
+            android:id="@+id/rl_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
             android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -50,23 +52,25 @@
 
         <TextView
             android:id="@+id/header_center_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_10dp"
+            android:layout_marginEnd="@dimen/_10dp"
+            android:layout_weight="1"
             android:gravity="center"
+            android:maxLines="1"
             android:textColor="#fff"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/iv_img"
+            app:layout_constraintStart_toEndOf="@+id/rl_back"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="ceshi测试时法撒旦范德萨ceshi测试时法撒旦范德萨了飞洒发的数量大幅度了飞洒发的数量大幅度" />
 
         <TextView
             android:id="@+id/header_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
             android:gravity="center"
             android:textColor="#fff"
@@ -74,15 +78,14 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="未知" />
 
         <ImageView
             android:id="@+id/iv_img"
             android:layout_width="@dimen/_24dp"
             android:layout_height="@dimen/_24dp"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
-            android:layout_toStartOf="@+id/header_end"
             android:gravity="center"
             android:src="@mipmap/add_white1"
             android:textColor="#fff"
@@ -90,6 +93,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/header_end"
             app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </LinearLayout>

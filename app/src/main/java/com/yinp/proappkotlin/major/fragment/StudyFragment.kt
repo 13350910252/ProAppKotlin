@@ -10,6 +10,7 @@ import com.yinp.proappkotlin.databinding.FragmentStudyBinding
 import com.yinp.proappkotlin.databinding.ItemTwoSelectBinding
 import com.yinp.proappkotlin.study.jiguang.JiGuangLoginActivity
 import com.yinp.proappkotlin.study.jiguang.JiGuangShareActivity
+import com.yinp.proappkotlin.study.wanAndroid.WandroidActivity
 import com.yinp.tools.fragment_dialog.BaseDialogFragment
 import com.yinp.tools.fragment_dialog.CommonDialogFragment
 import com.yinp.tools.fragment_dialog.DialogFragmentHolder
@@ -29,10 +30,10 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
 
     override fun onClick(v: View?) {
         super.onClick(v)
-//        when {
-//            v === bd.stvOne -> { //玩Android
-//                goToActivity(WandroidActivity::class.java)
-//            }
+        when {
+            v === bd.stvOne -> { //玩Android
+                goToActivity(WandroidActivity::class.java)
+            }
 //            v === bd.stvTwo -> { //学习内容总结
 //                goToActivity(StudySummarizeActivity::class.java)
 //            }
@@ -47,7 +48,7 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
 //            v === bd.stvSix -> {
 //                initTwoSelect()
 //            }
-//        }
+        }
     }
 
     private var mDialogFragment: CommonDialogFragment? = null

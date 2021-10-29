@@ -1,9 +1,8 @@
 package com.yinp.proappkotlin.web
 
-import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.LinearLayout
-import androidx.viewbinding.ViewBinding
 import com.just.agentweb.AgentWeb
 import com.yinp.proappkotlin.KEY_TITLE
 import com.yinp.proappkotlin.KEY_URL
@@ -56,7 +55,7 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
             mTitle = it.getStringExtra(KEY_TITLE)
             mUrl = it.getStringExtra(KEY_URL)
             bd.header.headerCenterTitle.text = mTitle
-            bd.header.headerCenterTitle.isSelected = true
+            bd.header.headerCenterTitle.ellipsize = TextUtils.TruncateAt.END
             mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(
                     bd.llWebContent,

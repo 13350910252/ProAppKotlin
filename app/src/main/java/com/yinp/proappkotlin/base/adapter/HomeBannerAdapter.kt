@@ -4,9 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.yinp.proappkotlin.base.bean.BannerEntity
+import com.bumptech.glide.Glide
 import com.yinp.proappkotlin.databinding.ItemHomeBannerBinding
-import com.yinp.proappkotlin.utils.GlideUtils
+import com.yinp.proappkotlin.home.bean.HomeBannerData
 import com.youth.banner.adapter.BannerAdapter
 
 /**
@@ -15,8 +15,8 @@ import com.youth.banner.adapter.BannerAdapter
  * package   :com.yinp.proappkotlin.base.adapter
  * describe  :
  */
-class HomeBannerAdapter(val datas: List<BannerEntity?>, private var context: Context) :
-    BannerAdapter<BannerEntity, HomeBannerAdapter.HomeBannerViewHolder>(datas) {
+class HomeBannerAdapter(mDatas: List<HomeBannerData>, private var context: Context) :
+    BannerAdapter<HomeBannerData, HomeBannerAdapter.HomeBannerViewHolder>(mDatas) {
 
     override fun onCreateHolder(parent: ViewGroup?, viewType: Int): HomeBannerViewHolder {
         val bannerBinding: ItemHomeBannerBinding =
@@ -25,32 +25,19 @@ class HomeBannerAdapter(val datas: List<BannerEntity?>, private var context: Con
     }
 
     override fun onBindView(
-        holder: HomeBannerViewHolder?,
-        data: BannerEntity?,
+        holder: HomeBannerViewHolder,
+        data: HomeBannerData?,
         position: Int,
         size: Int
     ) {
-        val entity: BannerEntity = mDatas.get(position)
-        holder?.bind?.ivBanner?.let {
-            GlideUtils.loadUrl(
-                context,
-                it,
-                null,
-                entity.imagePath,
-                null,
-                null,
-                false,
-                true
-            )
+        val entity: HomeBannerData = mDatas[position]
+        holder.bind.ivBanner.let {
+            Glide.with(it).load(entity.imagePath).into(it)
         }
     }
 
     class HomeBannerViewHolder(bannerBinding: ItemHomeBannerBinding) :
         RecyclerView.ViewHolder(bannerBinding.root) {
         var bind: ItemHomeBannerBinding = bannerBinding
-    }
-
-    override fun getItemCount(): Int {
-        return datas.size
     }
 }

@@ -19,6 +19,22 @@ import kotlin.collections.ArrayList
  * describe  :
  */
 object DateUtils {
+    val Y_M_D_H_M_S_S: ThreadLocal<SimpleDateFormat> = object : ThreadLocal<SimpleDateFormat>() {
+        override fun initialValue(): SimpleDateFormat? {
+            return SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SS", Locale.getDefault())
+        }
+    }
+    val yyyy_MM_dd: ThreadLocal<SimpleDateFormat> = object : ThreadLocal<SimpleDateFormat>() {
+        override fun initialValue(): SimpleDateFormat {
+            return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        }
+    }
+    val yyyy_MM_dd_HH_mm: ThreadLocal<SimpleDateFormat> =
+        object : ThreadLocal<SimpleDateFormat>() {
+            override fun initialValue(): SimpleDateFormat {
+                return SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+            }
+        }
     /**
      * 格式日期
      *

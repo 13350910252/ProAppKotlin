@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
 import androidx.viewbinding.ViewBinding
+import com.yinp.tools.utils.LoadingUtils
 
 /**
  * @author   :yinpeng
@@ -75,6 +76,29 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), View.OnClickListener
         for (element in views) {
             element.setOnClickListener(listener)
         }
+    }
+
+    /**
+     * 显示加载
+     */
+    val loading by lazy {
+        LoadingUtils()
+    }
+
+    protected fun showLoading(text: String) {
+        loading.show(parentFragmentManager, text)
+    }
+
+    protected fun showLoading(text: String, tag: String) {
+        loading.show(parentFragmentManager, text, tag)
+    }
+
+    protected fun hideLoading(tag: String) {
+        loading.close(tag)
+    }
+
+    protected fun hideLoading() {
+        loading.closeAll()
     }
 
     fun goToActivity(intent: Intent) {

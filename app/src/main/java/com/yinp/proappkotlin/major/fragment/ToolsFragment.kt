@@ -17,7 +17,7 @@ import com.yinp.proappkotlin.databinding.ItemToolsTopListBinding
 import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
-import tools.ToolsTopBean
+import com.yinp.proappkotlin.mtools.ToolsTopBean
 import java.util.*
 
 /**
@@ -87,7 +87,7 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
                 } else {
                     viewHolder.binding.ivImg.setBackgroundResource(item.drawableId)
                 }
-                viewHolder.binding.tvTitle.setText(item.title)
+                viewHolder.binding.tvTitle.text = item.title
             }
         }
         topAdapter?.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {

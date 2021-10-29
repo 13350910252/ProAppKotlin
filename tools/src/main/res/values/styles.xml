@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    dialogFragment底部弹出（translation）的style样式-->
+    <style name="BottomDialogAnimation" parent="android:style/Theme.Dialog">
+        <item name="android:padding">0dp</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_translatet_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_translatet_out</item>
+    </style>
+    <!--    dialogFragment中间alpha的style样式-->
+    <style name="CenterDialogAnimation" parent="android:style/Theme.Dialog">
+        <item name="android:padding">0dp</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_alpha_out</item>
+    </style>
+    <!--    中间显示加载中-->
+    <style name="NormalDialogStyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+</resources>

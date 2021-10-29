@@ -1,3 +1,8 @@
 
 
 解决一：apply plugin: 'kotlin-parcelize' 在1.4.2以后版本代替了 apply plugin: 'kotlin-android-extensions'
+
+问题：Cannot inline bytecode built with JVM target 1.8 into bytecode that is being built with JVM target 1.6.
+解决二：    kotlinOptions {
+            jvmTarget = "1.8"
+        }

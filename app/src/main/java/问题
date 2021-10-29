@@ -1,0 +1,3 @@
+问题A failure occurred while executing org.jetbrains.kotlin.gradle.internal.KaptExecution
+解决：在使用的地方需要导入相关包，import kotlinx.coroutines.flow.collect
+   import kotlinx.coroutines.launch

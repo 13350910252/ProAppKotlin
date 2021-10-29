@@ -5,6 +5,8 @@ import android.os.Build
 import android.text.TextUtils
 import android.view.Window
 import android.view.WindowManager
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import okhttp3.Cookie
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -96,4 +98,19 @@ object AppUtils {
         val scale: Float = context.resources.displayMetrics.density
         return (value / scale + 0.5f).toInt()
     }
+
+//    fun isLogin(context: Context?): Boolean {
+//        val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(context)
+//        val cookies: List<Cookie> = sharedPrefsCookiePersistor.loadAll()
+//        return if (cookies.isNotEmpty()) {
+//            val wanLoginBean: WanLoginBean = WanLoginBean.getUserInfo(context)
+//            if (wanLoginBean != null) {
+//                !TextUtils.isEmpty(wanLoginBean.getUsername())
+//            } else {
+//                false
+//            }
+//        } else {
+//            false
+//        }
+//    }
 }

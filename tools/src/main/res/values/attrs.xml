@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="oneBg" format="reference|color" />
+    <attr name="twoBg" format="reference|color" />
+    <attr name="radius" format="integer" />
+    <attr name="lt_radius" format="integer" />
+    <attr name="rt_radius" format="integer" />
+    <attr name="lb_radius" format="integer" />
+    <attr name="rb_radius" format="integer" />
+    <attr name="alpha_percent" format="float" />
+    <attr name="state" format="flags">
+        <flag name="pressed" value="1" />
+        <flag name="selected" value="2" />
+        <flag name="checked" value="3" />
+        <flag name="focused " value="4" />
+    </attr>
+    <attr name="bgColor" format="color"/>
+
+
+    <declare-styleable name="ShapeTextView">
+        <attr name="oneBg" />
+        <attr name="twoBg" />
+        <attr name="radius" />
+        <attr name="lt_radius" />
+        <attr name="rt_radius" />
+        <attr name="lb_radius" />
+        <attr name="rb_radius" />
+        <attr name="state" />
+        <attr name="alpha_percent" />
+    </declare-styleable>
+    <declare-styleable name="ShapeLinearLayout">
+        <attr name="oneBg" />
+        <attr name="twoBg" />
+        <attr name="radius" />
+        <attr name="lt_radius" />
+        <attr name="rt_radius" />
+        <attr name="lb_radius" />
+        <attr name="rb_radius" />
+        <attr name="state" />
+    </declare-styleable>
+    <declare-styleable name="ShapeRelativeLayout">
+        <attr name="oneBg" />
+        <attr name="twoBg" />
+        <attr name="radius" />
+        <attr name="lt_radius" />
+        <attr name="rt_radius" />
+        <attr name="lb_radius" />
+        <attr name="rb_radius" />
+        <attr name="state" />
+    </declare-styleable>
+    <declare-styleable name="ShapeConstraintLayout">
+        <attr name="oneBg" />
+        <attr name="twoBg" />
+        <attr name="radius" />
+        <attr name="lt_radius" />
+        <attr name="rt_radius" />
+        <attr name="lb_radius" />
+        <attr name="rb_radius" />
+        <attr name="state" />
+    </declare-styleable>
+    <declare-styleable name="ShapeFrameLayout">
+        <attr name="oneBg" />
+        <attr name="twoBg" />
+        <attr name="radius" />
+        <attr name="lt_radius" />
+        <attr name="rt_radius" />
+        <attr name="lb_radius" />
+        <attr name="rb_radius" />
+        <attr name="state" />
+    </declare-styleable>
+    <declare-styleable name="CustomScrollView">
+        <attr name="textMaxSize" format="integer" />
+        <attr name="textMinSize" format="integer" />
+        <attr name="unSelectedColor" format="reference|color" />
+        <attr name="selectedColor" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="ShadowFrameLayout">
+        <!-- 设置上下左右是否显示阴影 -->
+        <attr name="sl_padding_left" format="boolean" />
+        <attr name="sl_padding_top" format="boolean" />
+        <attr name="sl_padding_right" format="boolean" />
+        <attr name="sl_padding_bottom" format="boolean" />
+        <!-- 设置阴影和背景的颜色，阴影的颜色要增加透明度 -->
+        <attr name="sl_shadow_color" format="color" />
+        <attr name="sl_background_color" format="color" />
+        <!-- 阴影扩散的宽度，控件和阴影的圆角 -->
+        <attr name="sl_shadow_width" format="dimension" />
+        <attr name="sl_corner_radius" format="dimension" />
+        <!-- 确定是否绘制边框 -->
+        <attr name="sl_widget_border" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="PeculiarView">
+        <attr name="peculiarCorners" format="integer" />
+        <attr name="peculiarColor" format="color" />
+        <attr name="peculiarCircleRadius" format="integer" />
+        <attr name="peculiarCircleDx" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="ColorCircleView">
+        <attr name="bgColor"/>
+    </declare-styleable>
+    <declare-styleable name="ColorCircleLinearLayout">
+        <attr name="ccll_bgColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="AddSubtractView">
+        <attr name="mRadius" format="integer" />
+        <attr name="mStrokeColor" format="color" />
+        <attr name="mStrokeWidth" format="integer" />
+        <attr name="addLeftRightPd" format="integer" />
+        <attr name="subtractLeftRightPd" format="integer" />
+        <attr name="valueLeftRightPd" format="integer" />
+        <attr name="topBottomPad" format="integer" />
+        <attr name="maxEms" format="integer" />
+        <attr name="defaultValue" format="integer" />
+        <attr name="addTextSize" format="integer" />
+        <attr name="addTextColor" format="color" />
+        <attr name="valueTextSize" format="integer" />
+        <attr name="valueTextColor" format="color" />
+        <attr name="subtractTextSize" format="integer" />
+        <attr name="subtractTextColor" format="color" />
+    </declare-styleable>
+    <declare-styleable name="TriangleLinearLayout">
+        <attr name="triangle_width" format="integer" />
+        <attr name="triangle_height" format="integer" />
+        <attr name="triangle_color" format="color" />
+
+        <attr name="content_corners" format="integer" />
+        <attr name="content_color" format="integer" />
+
+        <attr name="triangle_position" format="flags">
+            <flag name="top_left" value="1" />
+            <flag name="top_right" value="2" />
+        </attr>
+        <!--        跟着位置来的-->
+        <attr name="distance" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="RankLinearLayout">
+        <!--        背景颜色-->
+        <attr name="bgColor"/>
+        <!--        进度比例-->
+        <attr name="schedule" format="float" />
+        <!--        动画时长-->
+        <attr name="duration" format="integer" />
+        <!--        是否开始动画-->
+        <attr name="isStart" format="boolean" />
+    </declare-styleable>
+</resources>

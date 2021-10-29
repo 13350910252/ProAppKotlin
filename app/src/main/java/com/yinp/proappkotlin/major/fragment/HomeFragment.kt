@@ -7,27 +7,35 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.TodayUndeterminedFragment
+import com.yinp.proappkotlin.WanAndroid
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.base.LabelFragment
 import com.yinp.proappkotlin.base.adapter.HomeBannerAdapter
-import com.yinp.proappkotlin.base.bean.BannerEntity
 import com.yinp.proappkotlin.databinding.FragmentHomeBinding
+import com.yinp.proappkotlin.home.HomeViewModel
+import com.yinp.proappkotlin.home.bean.HomeBannerData
 import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.utils.ViewPager2Utils
 import com.yinp.proappkotlin.view.SimplePagerTitlePictureView
+import com.yinp.proappkotlin.web.data.WanAndroidData
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.listener.OnBannerListener
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.launch
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
-import java.lang.reflect.Type
 import java.util.*
 
 /**
@@ -37,7 +45,10 @@ import java.util.*
  * describe  :
  */
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
-    private val listBanner = mutableListOf<BannerEntity>()
+    private var listBanner = mutableListOf<HomeBannerData>()
+    private val viewModel by lazy {
+        ViewModelProvider(this)[HomeViewModel::class.java]
+    }
 
     /**
      * 初始化banner
@@ -60,9 +71,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initRecycler() {
-        bd.topBanner.setAdapter(bannerAdapter).addBannerLifecycleObserver(this).indicator =
+        bd.topBanner.setAdapter(bannerAdapter).addBannerLifecycleObserver(activity)
+            .isAutoLoop(true).indicator =
             CircleIndicator(context)
-        bd.topBanner.setOnBannerListener(OnBannerListener { data: BannerEntity, position: Int ->
+        bd.topBanner.setOnBannerListener(OnBannerListener { data: HomeBannerData, position: Int ->
             JumpWebUtils.startWebView(
                 requireContext(),
                 data.title,
@@ -100,7 +112,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
                 }
                 simplePagerTitleView.setSelectedColor(resources.getColor(R.color.ff4d4d))
-                simplePagerTitleView.setOnClickListener { v ->
+                simplePagerTitleView.setOnClickListener {
                     bd.materialViewPager.currentItem =
                         index
                 }
@@ -124,31 +136,38 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun getBannerList() {
-//        showLoading("加载中")
-//        presenter.getBannerList(object : WanObserver<WanData?>() {
-//            fun onSuccess(o: WanData?) {
-//                hideLoading()
-//                if (o == null) {
-//                    return
-//                }
-//                val jsonElement: JsonElement = o.getData()
-//                if (jsonElement.isJsonNull()) {
-//                    return
-//                }
-//                val type: Type = object : TypeToken<ArrayList<BannerEntity?>?>() {}.getType()
-//                listBanner = Gson().fromJson(jsonElement, type)
-//                bannerAdapter.setDatas(listBanner)
-//                bannerAdapter.notifyDataSetChanged()
-//            }
-//
-//            fun onError(msg: String?) {
-//                hideLoading()
-//            }
-//
-//            fun onCodeFail(msg: String?) {
-//                hideLoading()
-//            }
-//        })
+        viewModel.getBannerList()
+
+        lifecycleScope.launch {
+            lifecycleScope.launch {
+                viewModel.channel.consumeAsFlow().collect {
+                    when (it.eventCode) {
+                        WanAndroid.NET_START -> Toast.makeText(
+                            requireContext(),
+                            "开始",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        WanAndroid.NET_COMPLETION -> Toast.makeText(
+                            requireContext(),
+                            "完成了",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+            lifecycleScope.launch {
+                viewModel.wanResultData.collect() {
+                    if (it is WanAndroidData) {
+                        it.data?.let { data ->
+                            listBanner.clear()
+                            listBanner.addAll(data)
+                            bannerAdapter.setDatas(listBanner)
+                            bannerAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

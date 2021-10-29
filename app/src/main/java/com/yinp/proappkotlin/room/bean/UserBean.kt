@@ -15,7 +15,7 @@ data class UserBean(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var userName: String = "",
     var password: String = "",
-    @IntRange(from = 0, to = 2) var sex: Int = 0,//0啥也不是1男2女
+    @IntRange(from = 0, to = 2) var msex: Int = 0,//0啥也不是1男2女
     var nickName: String = "",
     var headUrl: String = ""
 ) {

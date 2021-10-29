@@ -38,6 +38,15 @@ const val SELECT_PHOTO = 667
  */
 object WanAndroid {
     const val COOKIES = "wanAndroidCookies"
+    const val NET_START = 101
+    const val NET_EMPTY = 102
+    const val NET_CATCH = 103
+    const val NET_COLLECT = 104
+    const val NET_COMPLETION = 105
+
+    const val NET_TYPE_A = "A"
+    const val NET_TYPE_B = "B"
+    const val NET_TYPE_C = "C"
 }
 
 const val pageSize = 10
