@@ -1,17 +1,11 @@
 package com.yinp.proappkotlin.home
 
 import androidx.lifecycle.viewModelScope
-import com.yinp.proappkotlin.WanAndroid.NET_TYPE_A
-import com.yinp.proappkotlin.WanAndroid.NET_TYPE_B
-import com.yinp.proappkotlin.WanAndroid.NET_TYPE_C
 import com.yinp.proappkotlin.base.BaseViewModel
 import com.yinp.proappkotlin.home.bean.HomeBannerData
 import com.yinp.proappkotlin.study.wanAndroid.data.WanHomeListData
-import com.yinp.proappkotlin.web.data.BaseRespData
-import com.yinp.proappkotlin.web.data.WanAndroidData
-import com.yinp.proappkotlin.web.disposeNetOuter
-import com.zhmyzl.mykotlin.network.RetrofitUtil
-import kotlinx.coroutines.channels.Channel
+import com.yinp.proappkotlin.web.data.WanResultDispose
+import com.yinp.proappkotlin.web.wanDisposeNetOuter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -23,23 +17,29 @@ import kotlinx.coroutines.launch
  * describe  :
  */
 class HomeViewModel : BaseViewModel() {
-    private val _wanResultData = MutableStateFlow(BaseRespData<List<HomeBannerData>>())
-    val wanResultData: StateFlow<BaseRespData<List<HomeBannerData>>> = _wanResultData
-    val channel = Channel<WanAndroidData<*>>()
+
+    private val _homeBannerData =
+        MutableStateFlow<WanResultDispose<List<HomeBannerData>>>(WanResultDispose.LS())
+    val homeBannerData: StateFlow<WanResultDispose<List<HomeBannerData>>> =
+        _homeBannerData
+
+    private val _wanHomeListData2 =
+        MutableStateFlow<WanResultDispose<WanHomeListData>>(WanResultDispose.LS())
+    val wanHomeListData2: StateFlow<WanResultDispose<WanHomeListData>> =
+        _wanHomeListData2
 
     private val _wanHomeListData =
-        MutableStateFlow(BaseRespData<WanHomeListData>())
-    val wanHomeListData: StateFlow<BaseRespData<WanHomeListData>> = _wanHomeListData
-
-    private val _wanHomeListData2 = MutableStateFlow(BaseRespData<List<WanHomeListData.Data>>())
-    val wanHomeListData2: StateFlow<BaseRespData<List<WanHomeListData.Data>>> = _wanHomeListData2
+        MutableStateFlow<WanResultDispose<List<WanHomeListData.Data>>>(WanResultDispose.LS())
+    val wanHomeListData: StateFlow<WanResultDispose<List<WanHomeListData.Data>>> =
+        _wanHomeListData
 
     /**
      * 获取banner的显示列表数据
      */
     fun getBannerList() {
         viewModelScope.launch {
-            disposeNetOuter(_wanResultData, channel, NET_TYPE_A) {
+            _homeBannerData.value = WanResultDispose.Start()
+            wanDisposeNetOuter(_homeBannerData) {
                 RetrofitUtil.wandroidApiService.getBannerList()
             }
         }
@@ -50,7 +50,7 @@ class HomeViewModel : BaseViewModel() {
      */
     fun getListInfo(size: Int) {
         viewModelScope.launch {
-            disposeNetOuter(_wanHomeListData, channel, NET_TYPE_B) {
+            wanDisposeNetOuter(_wanHomeListData2) {
                 RetrofitUtil.wandroidApiService.getHomArticleList(size)
             }
         }
@@ -61,7 +61,7 @@ class HomeViewModel : BaseViewModel() {
      */
     fun getStickList() {
         viewModelScope.launch {
-            disposeNetOuter(_wanHomeListData2, channel, NET_TYPE_C) {
+            wanDisposeNetOuter(_wanHomeListData) {
                 RetrofitUtil.wandroidApiService.getStickList()
             }
         }

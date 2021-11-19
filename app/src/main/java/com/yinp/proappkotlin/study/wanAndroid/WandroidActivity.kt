@@ -11,8 +11,7 @@ import androidx.fragment.app.Fragment
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.databinding.ActivityWandroidBinding
-import com.yinp.proappkotlin.study.wanAndroid.fragment.WanHomeFragment
-import com.yinp.proappkotlin.study.wanAndroid.fragment.WanSquareFragment
+import com.yinp.proappkotlin.study.wanAndroid.fragment.*
 import com.yinp.proappkotlin.utils.StatusBarUtil
 import com.yinp.proappkotlin.utils.ViewPager2Utils
 import com.yinp.proappkotlin.view.SimplePagerTitlePictureView
@@ -43,10 +42,10 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
     private fun initIndicator() {
         fragments.put(0, WanHomeFragment.getInstance())
         fragments.put(1, WanSquareFragment.getInstance())
-//        fragments.put(2, WanNavigationFragment.getInstance())
-//        fragments.put(3, WanQuestionAnswerFragment.getInstance())
-//        fragments.put(4, WanSystemFragment.getInstance())
-//        fragments.put(5, WanProjectFragment.getInstance())
+        fragments.put(2, WanNavigationFragment.getInstance())
+        fragments.put(3, WanQuestionAnswerFragment.getInstance())
+        fragments.put(4, WanSystemFragment.getInstance())
+        fragments.put(5, WanProjectFragment.getInstance())
 //        fragments.put(6, WanOfficialAccountFragment.getInstance())
 //        fragments.put(7, WanProjectClassifyFragment.getInstance())
         bd.materialViewPager.adapter = ViewPager2Utils.getAdapter(this, fragments)
@@ -74,7 +73,7 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
                         mContext, R.color.ff4d4d
                     )
                 )
-                simplePagerTitleView.setOnClickListener { v ->
+                simplePagerTitleView.setOnClickListener {
                     bd.materialViewPager.setCurrentItem(
                         index,
                         false

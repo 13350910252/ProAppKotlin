@@ -1,15 +1,11 @@
 package com.yinp.proappkotlin.web
 
-import android.util.Log
 import com.google.gson.JsonParseException
-import com.yinp.proappkotlin.WanAndroid.NET_CATCH
-import com.yinp.proappkotlin.WanAndroid.NET_COMPLETION
-import com.yinp.proappkotlin.WanAndroid.NET_EMPTY
-import com.yinp.proappkotlin.WanAndroid.NET_START
 import com.yinp.proappkotlin.web.data.BaseRespData
+import com.yinp.proappkotlin.web.data.WanAndroidCall
 import com.yinp.proappkotlin.web.data.WanAndroidData
+import com.yinp.proappkotlin.web.data.WanResultDispose
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import org.json.JSONException
 import retrofit2.HttpException
@@ -32,13 +28,8 @@ const val CONNECT_TIMEOUT = 1004  //连接超时
 
 suspend fun <T : Any> disposeNetOuter(
     mResult: MutableStateFlow<BaseRespData<T>>,
-    channel: Channel<WanAndroidData<*>>,
-    type: String,
     block: suspend () -> BaseRespData<T>
 ) {
-    val wanAndroidData = WanAndroidData<T>()
-    wanAndroidData.eventType = type
-
     //调用函数得到结果
     var dataResult = block.invoke()
     //判断类型，并类型转换
@@ -50,39 +41,23 @@ suspend fun <T : Any> disposeNetOuter(
         emit(result)
     }.flowOn(Dispatchers.IO)
         .onStart {
-            wanAndroidData.eventCode = NET_START
-            channel.send(wanAndroidData)
         }
         .onEmpty {
-            wanAndroidData.eventCode = NET_EMPTY
-            channel.send(wanAndroidData)
+
         }
-        .catch {
-            wanAndroidData.exContent = when (it.cause) {
-                is HttpException -> "网络请求异常"
-                is ConnectException, is UnknownHostException -> "网络连接异常"
-                is TimeoutException, is InterruptedIOException -> "网络超时"
-                is JsonParseException, is JSONException, is ParseException -> "数据解析异常"
-                else -> {
-                    "未知异常"
-                }
-            }
-            wanAndroidData.eventCode = NET_CATCH
-            wanAndroidData.success = false
-            channel.send(wanAndroidData)
+        .catch { e ->
+
         }
         .onCompletion {
-            wanAndroidData.eventCode = NET_COMPLETION
-            channel.send(wanAndroidData)
         }
-        .collect {
-            wanAndroidData.success = true
+        .collectLatest {
             mResult.value = it
         }
 }
 
 suspend fun <T : Any> disposeNetOuter(
     mResult: MutableStateFlow<BaseRespData<T>>,
+    call: WanAndroidCall?,
     block: suspend () -> BaseRespData<T>
 ) {
     //调用函数得到结果
@@ -96,54 +71,65 @@ suspend fun <T : Any> disposeNetOuter(
         emit(result)
     }.flowOn(Dispatchers.IO)
         .onStart {
-            Log.i("netState:-------------:", "开始请求")
+            call?.onStart()
         }
         .onEmpty {
-            Log.i("netState:-------------:", "数据为空")
 
         }
         .catch { e ->
-            Log.i("netState:-------------:", "错误：${e.message}")
-
+            call?.onCatch(
+                when (e.cause) {
+                    is HttpException -> "网络请求异常"
+                    is ConnectException, is UnknownHostException -> "网络连接异常"
+                    is TimeoutException, is InterruptedIOException -> "网络超时"
+                    is JsonParseException, is JSONException, is ParseException -> "数据解析异常"
+                    else -> {
+                        "未知异常"
+                    }
+                }
+            )
         }
         .onCompletion {
-            Log.i("netState:-------------:", "请求完成")
         }
         .collectLatest {
-            Log.i("netState:-------------:", "aaa")
+            call?.onSuccess()
             mResult.value = it
         }
 }
 
-//suspend fun <T : Any> disposeNet(
-//    mResult: MutableStateFlow<BaseRespData<T>>,
-//    block: suspend () -> T
-//) {
-//    var blockResult: T
-//    var result = BaseRespData<T>()
-//
-//    flow {
-//        blockResult = block.invoke()
-//        result.values = blockResult
-//        emit(result)
-//    }.flowOn(Dispatchers.IO)
-//        .onStart {
-//            Log.i("netState:-------------:", "开始请求")
-////            mResult.value =
-//        }
-//        .onEmpty {
-//            Log.i("netState:-------------:", "数据为空")
-//
-//        }
-//        .catch { e ->
-//            Log.i("netState:-------------:", "错误：${e.message}")
-//
-//        }
-//        .onCompletion {
-//            Log.i("netState:-------------:", "请求完成")
-//        }
-//        .collect {
-//            Log.i("netState:-------------:", "aaa")
-//            mResult.value = result
-//        }
-//}
+suspend fun <T : Any> wanDisposeNetOuter(
+    mResult: MutableStateFlow<WanResultDispose<T>>,
+    block: suspend () -> WanAndroidData<T>
+) {
+    //调用函数得到结果
+    var dataResult = block.invoke()
+    flow {
+        emit(dataResult)
+    }.flowOn(Dispatchers.IO)
+        .onStart {
+        }
+        .onEmpty {
+            mResult.value = WanResultDispose.Error("返回的数据为空")
+        }
+        .catch { e ->
+            mResult.value = WanResultDispose.Error(
+                when (e.cause) {
+                    is HttpException -> "网络请求异常"
+                    is ConnectException, is UnknownHostException -> "网络连接异常"
+                    is TimeoutException, is InterruptedIOException -> "网络超时"
+                    is JsonParseException, is JSONException, is ParseException -> "数据解析异常"
+                    else -> {
+                        "未知异常"
+                    }
+                }
+            )
+        }
+        .collectLatest {
+            when (it.errorCode) {
+                0 -> mResult.value = WanResultDispose.Success(it)
+                -1001 -> "未登录的"
+                -1 -> mResult.value = WanResultDispose.CodeError("统一错误码", it.errorCode)
+                404 -> mResult.value = WanResultDispose.CodeError("找不到访问地址", it.errorCode)
+            }
+        }
+}

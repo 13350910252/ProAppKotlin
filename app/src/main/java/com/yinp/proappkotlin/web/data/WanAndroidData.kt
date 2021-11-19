@@ -18,4 +18,5 @@ open class WanAndroidData<T> : BaseRespData<T>() {
     var exContent = ""
     var eventType = ""
     var success = false
+
 }

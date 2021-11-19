@@ -1,6 +1,7 @@
 package com.yinp.proappkotlin.study.wanAndroid.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +13,12 @@ import androidx.viewbinding.ViewBinding
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.yinp.proappkotlin.base.BaseFragment
-import com.yinp.proappkotlin.databinding.FragmentWanSquareBinding
-import com.yinp.proappkotlin.databinding.ItemWanSquareBinding
-import com.yinp.proappkotlin.study.wanAndroid.data.WanSquareListData
-import com.yinp.proappkotlin.study.wanAndroid.model.WanSquareViewModel
+import com.yinp.proappkotlin.databinding.FragmentWanProjectBinding
+import com.yinp.proappkotlin.databinding.ItemWanProjectBinding
+import com.yinp.proappkotlin.study.wanAndroid.data.WanProjectListData
+import com.yinp.proappkotlin.study.wanAndroid.model.WanProjectViewModel
+import com.yinp.proappkotlin.utils.AppUtils
+import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
@@ -25,83 +28,73 @@ import java.util.*
 
 /**
  * @author   :yinpeng
- * date      :2021/10/28
+ * date      :2021/11/2
  * package   :com.yinp.proappkotlin.study.wanAndroid.fragment
  * describe  :
  */
-class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
-
-    private val dataList = ArrayList<WanSquareListData.Data>()
-    private lateinit var mAdapter: CommonAdapter<WanSquareListData.Data>
+class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
+    private val dataList = ArrayList<WanProjectListData.DataX>()
+    private lateinit var adapter: CommonAdapter<WanProjectListData.DataX>
+    private var page = 0
     var isLoad: Boolean = true
 
     private val viewModel by lazy {
-        ViewModelProvider(this)[WanSquareViewModel::class.java]
+        ViewModelProvider(this)[WanProjectViewModel::class.java]
     }
-    private var page = 0
 
     companion object {
-        fun getInstance(): WanSquareFragment {
-            val wanSquareFragment = WanSquareFragment()
+        fun getInstance(): WanProjectFragment {
+            val wanProjectFragment = WanProjectFragment()
             val bundle = Bundle()
-            wanSquareFragment.arguments = bundle
-            return wanSquareFragment
+            wanProjectFragment.arguments = bundle
+            return wanProjectFragment
         }
     }
 
     override fun initViews() {
         initRecycler()
         refresh()
-        getSquareList()
+        getProjectList()
     }
 
     private fun initRecycler() {
-        mAdapter = object : CommonAdapter<WanSquareListData.Data>(requireContext(), dataList) {
+        adapter = object : CommonAdapter<WanProjectListData.DataX>(requireContext(), dataList) {
             override fun setComViewHolder(
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
             ): ComViewHolder {
-                return ViewHolder(
-                    ItemWanSquareBinding.inflate(
-                        LayoutInflater.from(parent?.context),
-                        parent,
-                        false
-                    )
+                val itemWanProjectBinding: ItemWanProjectBinding = ItemWanProjectBinding.inflate(
+                    layoutInflater, parent, false
                 )
+                return ViewHolder(itemWanProjectBinding)
             }
 
             override fun onBindItem(
                 holder: RecyclerView.ViewHolder?,
                 position: Int,
-                item: WanSquareListData.Data
+                item: WanProjectListData.DataX
             ) {
                 val viewHolder = holder as ViewHolder
-                if (item.fresh) {
-                    viewHolder.binding.tvLatest.visibility = View.VISIBLE
-                } else {
-                    viewHolder.binding.tvLatest.visibility = View.GONE
-                }
-                viewHolder.binding.ivCollect.isSelected = item.collect
-                viewHolder.binding.tvTitle.text = item.title
-                val person = if (item.author.isEmpty()) {
-                    if (item.shareUser.isEmpty()) {
-                        "暂无"
-                    } else {
-                        item.shareUser
-                    }
-                } else {
-                    item.author
-                }
-                viewHolder.binding.tvSharePerson.text = "分享人：$person"
-                viewHolder.binding.tvTime.text = item.niceDate
+                viewHolder.binding.tvTitle.text = AppUtils.getValue(item.title)
+                viewHolder.binding.tvContent.text = AppUtils.getValue(item.desc)
+                viewHolder.binding.tvAuthor.text =
+                    "作者：" + if (item.author.isNullOrEmpty()) item.shareUser else item.author
+                viewHolder.binding.tvDate.text = AppUtils.getValue(item.niceShareDate)
             }
         }
+        adapter.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
+            override fun onItemClick(position: Int, view: View?) {
+                JumpWebUtils.startWebView(
+                    requireContext(),
+                    dataList[position].title,
+                    dataList[position].link
+                )
+            }
+        })
         bd.baseRecycle.layoutManager = LinearLayoutManager(context)
-        bd.baseRecycle.adapter = mAdapter
+        bd.baseRecycle.adapter = adapter
     }
-
-    internal class ViewHolder(val binding: ItemWanSquareBinding) : ComViewHolder(binding.root)
 
     private fun refresh() {
         //下拉刷新
@@ -111,23 +104,23 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
         bd.baseRefresh.setOnRefreshListener {
             page = 0
             isLoad = false
-            getSquareList()
+            getProjectList()
         }
         //为上拉加载添加事件
         bd.baseRefresh.setOnLoadMoreListener {
             page++
             isLoad = false
-            getSquareList()
+            getProjectList()
         }
     }
 
     /**
-     * 获取广场列表
+     * 获取项目列表
      */
-    private fun getSquareList() {
-        viewModel.getSquareList(page)
+    private fun getProjectList() {
+        viewModel.getProjectList(page)
         lifecycleScope.launch {
-            viewModel.wanSquareListData.collect() {
+            viewModel.wanProjectListData.collect() {
                 when (it) {
                     is WanResultDispose.Start -> {
                         if (isLoad) {
@@ -135,21 +128,24 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
                         }
                     }
                     is WanResultDispose.Success -> {
+                        if (isLoad) {
+                            hideLoading()
+                        }
                         it.data.data?.let { data ->
                             if (data.datas.isNullOrEmpty().not()) {
                                 val length = dataList.size
                                 if (page == 0) {
                                     dataList.clear()
                                     dataList.addAll(data.datas!!)
-                                    mAdapter.notifyDataSetChanged()
+                                    adapter.notifyDataSetChanged()
                                     bd.baseRefresh.finishRefresh(true)
                                 } else {
                                     dataList.addAll(data.datas!!)
-                                    mAdapter.notifyItemChanged(length, dataList.size)
+                                    adapter.notifyItemRangeChanged(length, dataList.size)
                                     bd.baseRefresh.finishLoadMore(true)
                                 }
                                 bd.baseRefresh.visibility = View.VISIBLE
-                                bd.bottom.noLl.setVisibility(View.GONE)
+                                bd.bottom.noLl.visibility = View.GONE
                             } else {
                                 if (page == 0) {
                                     bd.baseRefresh.finishRefresh(false)
@@ -165,14 +161,16 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
                                 bd.baseRefresh.finishLoadMore(false)
                             }
                         }
-                        hideLoading()
                     }
+                    is WanResultDispose.Error -> Log.d("abcd", "getProjectList:aaaaa ")
                 }
             }
         }
     }
 
+    internal class ViewHolder(val binding: ItemWanProjectBinding) : ComViewHolder(binding.root)
+
     override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentWanSquareBinding.inflate(inflater, parent, false)
+        return FragmentWanProjectBinding.inflate(inflater, parent, false)
     }
 }

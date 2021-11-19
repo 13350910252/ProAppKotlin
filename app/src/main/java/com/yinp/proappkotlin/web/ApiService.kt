@@ -1,8 +1,7 @@
 package com.yinp.proappkotlin.web
 
 import com.yinp.proappkotlin.home.bean.HomeBannerData
-import com.yinp.proappkotlin.study.wanAndroid.data.WanHomeListData
-import com.yinp.proappkotlin.study.wanAndroid.data.WanSquareListData
+import com.yinp.proappkotlin.study.wanAndroid.data.*
 import com.yinp.proappkotlin.web.data.WanAndroidData
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -45,4 +44,30 @@ interface ApiService {
      */
     @GET("user_article/list/{page}/json")
     suspend fun getSquareList(@Path("page") page: Int): WanAndroidData<WanSquareListData>
+
+    /**
+     * 获取导航数据
+     * https://www.wanandroid.com/navi/json
+     *
+     * @return
+     */
+    @GET("navi/json")
+    suspend fun getNavigationList(): WanAndroidData<ArrayList<NavigationListData>>
+
+    /**
+     * 获取体系列表
+     *
+     * @return
+     */
+    @GET("tree/json")
+    suspend fun getSystemList(): WanAndroidData<ArrayList<WanSysListData>>
+
+    /**
+     * 获取项目列表数据
+     * https://wanandroid.com/article/listproject/0/json
+     *
+     * @return
+     */
+    @GET("article/listproject/{page}/json")
+    suspend fun getProjectList(@Path("page") page: Int): WanAndroidData<WanProjectListData>
 }

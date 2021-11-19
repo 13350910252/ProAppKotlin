@@ -13,3 +13,9 @@ https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coro
             return@lazy retrofit.create(RequestService::class.java)
         }
     }
+
+    MultiType
+    BlockCanary
+
+
+https://www.zhihu.com/question/39483566 springBoot

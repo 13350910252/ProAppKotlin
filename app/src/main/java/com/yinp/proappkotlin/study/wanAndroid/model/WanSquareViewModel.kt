@@ -1,12 +1,16 @@
-package com.yinp.proappkotlin.study.wanAndroid.other
+package com.yinp.proappkotlin.study.wanAndroid.model
 
 import androidx.lifecycle.viewModelScope
 import com.yinp.proappkotlin.WanAndroid
 import com.yinp.proappkotlin.base.BaseViewModel
+import com.yinp.proappkotlin.study.wanAndroid.data.WanProjectListData
 import com.yinp.proappkotlin.study.wanAndroid.data.WanSquareListData
 import com.yinp.proappkotlin.web.data.BaseRespData
+import com.yinp.proappkotlin.web.data.WanAndroidCall
 import com.yinp.proappkotlin.web.data.WanAndroidData
+import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.proappkotlin.web.disposeNetOuter
+import com.yinp.proappkotlin.web.wanDisposeNetOuter
 import com.zhmyzl.mykotlin.network.RetrofitUtil
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,13 +24,16 @@ import kotlinx.coroutines.launch
  * describe  :
  */
 class WanSquareViewModel : BaseViewModel() {
-    private val _wanSquareListData = MutableStateFlow(BaseRespData<WanSquareListData>())
-    val wanSquareListData: StateFlow<BaseRespData<WanSquareListData>> = _wanSquareListData
-    val channel = Channel<WanAndroidData<*>>()
+
+    private val _wanSquareListData =
+        MutableStateFlow<WanResultDispose<WanSquareListData>>(WanResultDispose.LS())
+    val wanSquareListData: StateFlow<WanResultDispose<WanSquareListData>> =
+        _wanSquareListData
 
     fun getSquareList(page: Int) {
         viewModelScope.launch {
-            disposeNetOuter(_wanSquareListData, channel, WanAndroid.NET_TYPE_A) {
+            _wanSquareListData.value = WanResultDispose.Start()
+            wanDisposeNetOuter(_wanSquareListData) {
                 RetrofitUtil.wandroidApiService.getSquareList(page)
             }
         }

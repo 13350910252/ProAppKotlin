@@ -4,21 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.yinp.proappkotlin.R
-import com.yinp.proappkotlin.WanAndroid.NET_CATCH
-import com.yinp.proappkotlin.WanAndroid.NET_COMPLETION
-import com.yinp.proappkotlin.WanAndroid.NET_START
-import com.yinp.proappkotlin.WanAndroid.NET_TYPE_A
-import com.yinp.proappkotlin.WanAndroid.NET_TYPE_B
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentWanHomeBinding
 import com.yinp.proappkotlin.databinding.ItemWanHomeListBinding
@@ -28,14 +21,13 @@ import com.yinp.proappkotlin.study.wanAndroid.WanHomeBannerAdapter
 import com.yinp.proappkotlin.study.wanAndroid.data.WanHomeBannerData
 import com.yinp.proappkotlin.study.wanAndroid.data.WanHomeListData
 import com.yinp.proappkotlin.utils.JumpWebUtils
-import com.yinp.proappkotlin.web.data.WanAndroidData
+import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
 import com.yinp.tools.utils.DateUtils
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.listener.OnBannerListener
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -72,7 +64,7 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
         initBanner()
         initRecycler()
         getBannerList()
-        getListInfo()
+        getStickList()
         refresh()
     }
 
@@ -118,7 +110,7 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
                 viewHolder.binding.tvAuthor.text =
                     "作者：${if (item.author.isNullOrEmpty()) item.shareUser else item.author}"
                 viewHolder.binding.tvType.text =
-                    "分类：${item.superChapterName}\\${item.chapterName}"
+                    "分类：${item.superChapterName} ${item.chapterName}"
                 if (item.isStick) {
                     viewHolder.binding.tvStick.visibility = View.VISIBLE
                 } else {
@@ -156,7 +148,6 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
             }
         })
         bd.baseRecycle.layoutManager = LinearLayoutManager(context)
-        bd.baseRecycle.setHasFixedSize(true)
         bd.baseRecycle.adapter = commonAdapter
     }
 
@@ -184,20 +175,11 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
     private fun getBannerList() {
         viewModel.getBannerList()
         lifecycleScope.launch {
-            lifecycleScope.launch {
-                viewModel.channel.consumeAsFlow().collect {
-                    when (it.eventCode) {
-                        NET_START -> if (it.eventType == NET_TYPE_A) showLoading("加载中...")
-                        NET_CATCH -> {
-
-                        }
-                    }
-                }
-            }
-            lifecycleScope.launch {
-                viewModel.wanResultData.collect() {
-                    if (it is WanAndroidData) {
-                        it.data?.let { data ->
+            viewModel.homeBannerData.collect() {
+                when (it) {
+                    is WanResultDispose.Start -> showLoading("加载中...")
+                    is WanResultDispose.Success -> {
+                        it.data.data?.let { data ->
                             listBanner.clear()
                             listBanner.addAll(data)
                             bannerAdapter.setDatas(listBanner)
@@ -209,68 +191,58 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
         }
     }
 
+    private fun getStickList() {
+        viewModel.getStickList()
+        lifecycleScope.launch {
+            viewModel.wanHomeListData.collect() {
+                when (it) {
+                    is WanResultDispose.Success -> {
+                        it.data.data?.let { data ->
+                            if (page == 0) {
+                                dataList.clear()
+                                dataList.addAll(data)
+                                bd.bottom.noLl.visibility = View.GONE
+                                bd.baseRefresh.visibility = View.VISIBLE
+                                for (i in dataList.indices) {
+                                    dataList[i].isStick = true
+                                }
+                            }
+                        }
+                        getListInfo()
+                    }
+                    is WanResultDispose.CodeError -> {
+                    }
+                    is WanResultDispose.Error -> {
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * 获取首页得数据
      */
     private fun getListInfo() {
         viewModel.getListInfo(page)
-        viewModel.getStickList()
         lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.channel.consumeAsFlow().collect {
-                        when (it.eventCode) {
-                            NET_COMPLETION -> {
-                                if (it.eventType == NET_TYPE_B)
-                                    hideLoading()
-                                if (it.success) {
-                                    if (page == 0) {
-                                        bd.baseRefresh.finishRefresh(true)
-                                    } else {
-                                        bd.baseRefresh.finishLoadMore(true)
-                                    }
-                                }
+            viewModel.wanHomeListData2.collect {
+                when (it) {
+                    is WanResultDispose.Success -> {
+                        it.data.data?.let { data ->
+                            if (page == 0) {
+                                bd.baseRefresh.finishRefresh()
+                            } else {
+                                bd.baseRefresh.finishLoadMore()
                             }
-                            NET_CATCH -> {
-                                if (page == 0) {
-                                    bd.baseRefresh.finishRefresh(false)
-                                } else {
-                                    bd.baseRefresh.finishLoadMore(false)
-                                }
+                            if (data.datas.isNullOrEmpty().not()) {
+                                val size = dataList.size
+                                dataList.addAll(data.datas!!)
+                                bd.bottom.noLl.visibility = View.GONE
+                                bd.baseRefresh.visibility = View.VISIBLE
+                                commonAdapter.notifyItemRangeChanged(size, dataList.size)
                             }
                         }
-                    }
-                }
-                launch {
-                    viewModel.wanHomeListData2.collect {
-                        if (it is WanAndroidData) {
-                            it.data?.let { data ->
-                                if (page == 0) {
-                                    dataList.clear()
-                                    dataList.addAll(data)
-                                    bd.baseRefresh.finishRefresh()
-                                    bd.bottom.noLl.visibility = View.GONE
-                                    bd.baseRefresh.visibility = View.VISIBLE
-                                    for (i in dataList.indices) {
-                                        dataList[i].isStick = true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                launch {
-                    viewModel.wanHomeListData.collect {
-                        if (it is WanAndroidData) {
-                            it.data?.let { data ->
-                                if (data.datas.isNullOrEmpty().not()) {
-                                    dataList.addAll(data.datas!!)
-                                    bd.bottom.noLl.visibility = View.GONE
-                                    bd.baseRefresh.visibility = View.VISIBLE
-                                    commonAdapter.notifyDataSetChanged()
-                                }
-                            }
-                        }
+                        hideLoading()
                     }
                 }
             }

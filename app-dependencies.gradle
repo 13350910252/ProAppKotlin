@@ -34,15 +34,15 @@ dependencies {
 //     //CallAdapterFactory的Rx依赖包
 //     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
 
-//     /**
-//      * bmob后端与需要的，有的重复了
-//      */
-//     implementation 'io.github.bmob:android-sdk:3.8.4'
-// //    implementation "io.reactivex.rxjava2:rxjava:2.2.8"
-// //    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-// //    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
-//     implementation 'com.squareup.okio:okio:2.2.2'
-// //    implementation 'com.google.code.gson:gson:2.8.5'
+     /**
+      * bmob后端与需要的，有的重复了
+      */
+    implementation 'io.github.bmob:android-sdk:3.8.11'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+//    implementation 'com.squareup.okhttp3:okhttp:4.8.1'
+//    implementation 'com.squareup.okio:okio:2.2.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
     /**
      * banner
      */

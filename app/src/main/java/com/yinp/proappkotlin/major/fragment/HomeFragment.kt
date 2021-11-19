@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.TodayUndeterminedFragment
-import com.yinp.proappkotlin.WanAndroid
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.base.LabelFragment
 import com.yinp.proappkotlin.base.adapter.HomeBannerAdapter
@@ -24,11 +22,10 @@ import com.yinp.proappkotlin.home.bean.HomeBannerData
 import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.utils.ViewPager2Utils
 import com.yinp.proappkotlin.view.SimplePagerTitlePictureView
-import com.yinp.proappkotlin.web.data.WanAndroidData
+import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.listener.OnBannerListener
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -137,33 +134,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun getBannerList() {
         viewModel.getBannerList()
-
         lifecycleScope.launch {
-            lifecycleScope.launch {
-                viewModel.channel.consumeAsFlow().collect {
-                    when (it.eventCode) {
-                        WanAndroid.NET_START -> Toast.makeText(
-                            requireContext(),
-                            "开始",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        WanAndroid.NET_COMPLETION -> Toast.makeText(
-                            requireContext(),
-                            "完成了",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-            lifecycleScope.launch {
-                viewModel.wanResultData.collect() {
-                    if (it is WanAndroidData) {
-                        it.data?.let { data ->
+            viewModel.homeBannerData.collect() {
+                when (it) {
+                    is WanResultDispose.Start -> showLoading("加载中...")
+                    is WanResultDispose.Success -> {
+                        it.data.data?.let { data ->
                             listBanner.clear()
                             listBanner.addAll(data)
                             bannerAdapter.setDatas(listBanner)
                             bannerAdapter.notifyDataSetChanged()
                         }
+                        hideLoading()
+                    }
+                    is WanResultDispose.CodeError -> {
+                    }
+                    is WanResultDispose.Error -> {
                     }
                 }
             }

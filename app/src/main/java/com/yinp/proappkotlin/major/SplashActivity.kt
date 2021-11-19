@@ -2,7 +2,6 @@ package com.yinp.proappkotlin.major
 
 //import com.airbnb.lottie.LottieAnimationView
 import android.animation.Animator
-import android.os.Bundle
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.databinding.ActivitySplashBinding
 import com.yinp.proappkotlin.utils.AppUtils
@@ -18,7 +17,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         initSomething()
     }
 
-    fun initSomething() {
+    private fun initSomething() {
         bd.lavContent.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {
 

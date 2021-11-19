@@ -1,4 +1,3 @@
-package com.zhmyzl.mykotlin.network
 
 import com.google.gson.Gson
 import com.lp.myapplication.net.Interceptor
@@ -60,11 +59,11 @@ class RetrofitUtil {
         if (tag == null) {
             return
         }
-        synchronized(okHttpClient?.dispatcher!!.javaClass) {
-            for (call in okHttpClient?.dispatcher!!.queuedCalls()) {
+        synchronized(okHttpClient.dispatcher.javaClass) {
+            for (call in okHttpClient.dispatcher.queuedCalls()) {
                 if (tag == call.request().tag()) call.cancel()
             }
-            for (call in okHttpClient?.dispatcher!!.runningCalls()) {
+            for (call in okHttpClient.dispatcher.runningCalls()) {
                 if (tag == call.request().tag()) call.cancel()
             }
         }
