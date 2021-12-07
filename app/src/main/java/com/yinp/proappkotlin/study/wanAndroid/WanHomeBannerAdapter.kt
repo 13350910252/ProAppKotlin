@@ -36,8 +36,6 @@ class WanHomeBannerAdapter(mDatas: List<HomeBannerData>, private var context: Co
         }
     }
 
-    class HomeBannerViewHolder(bannerBinding: ItemHomeBannerBinding) :
-        RecyclerView.ViewHolder(bannerBinding.root) {
-        var bind: ItemHomeBannerBinding = bannerBinding
-    }
+    class HomeBannerViewHolder(val bind: ItemHomeBannerBinding) :
+        RecyclerView.ViewHolder(bind.root)
 }

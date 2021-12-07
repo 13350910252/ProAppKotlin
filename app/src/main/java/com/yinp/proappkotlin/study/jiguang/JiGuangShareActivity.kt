@@ -10,14 +10,12 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
  * package   :com.yinp.proappkotlin.study.jiguang
  * describe  :
  */
-class JiGuangShareActivity:BaseActivity<ActivityJiGuangShareBinding>() {
+class JiGuangShareActivity : BaseActivity<ActivityJiGuangShareBinding>() {
     override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this))
         bd.header.headerCenterTitle.text = "极光分享"
         initClick(this, bd.header.headerBackImg)
     }
 
-    override fun getBinding(): ActivityJiGuangShareBinding {
-        return ActivityJiGuangShareBinding.inflate(layoutInflater)
-    }
+    override fun getBinding() = ActivityJiGuangShareBinding.inflate(layoutInflater)
 }

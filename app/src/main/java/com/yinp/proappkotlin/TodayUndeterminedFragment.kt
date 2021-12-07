@@ -11,7 +11,6 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentTodayUndeterminedBinding
 import com.yinp.proappkotlin.utils.ViewPager2Utils
@@ -33,11 +32,8 @@ import java.util.*
  */
 class TodayUndeterminedFragment : BaseFragment<FragmentTodayUndeterminedBinding>() {
     companion object {
-        fun getInstance(): TodayUndeterminedFragment {
-            return TodayUndeterminedFragment().apply {
-                val bundle = Bundle()
-                arguments = bundle
-            }
+        fun getInstance() = TodayUndeterminedFragment().apply {
+            arguments = Bundle()
         }
     }
 
@@ -97,7 +93,6 @@ class TodayUndeterminedFragment : BaseFragment<FragmentTodayUndeterminedBinding>
         ViewPager2Utils.bind(bd.materialIndicator, bd.materialViewPager)
     }
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentTodayUndeterminedBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentTodayUndeterminedBinding.inflate(inflater, parent, false)
 }

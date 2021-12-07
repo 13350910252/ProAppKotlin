@@ -3,7 +3,6 @@ package com.yinp.proappkotlin.study.wanAndroid.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentWanQuestionAnswerBinding
 
@@ -15,11 +14,8 @@ import com.yinp.proappkotlin.databinding.FragmentWanQuestionAnswerBinding
  */
 class WanQuestionAnswerFragment : BaseFragment<FragmentWanQuestionAnswerBinding>() {
     companion object {
-        fun getInstance(): WanQuestionAnswerFragment {
-            val wanQuestionAnswerFragment = WanQuestionAnswerFragment()
-            val bundle = Bundle()
-            wanQuestionAnswerFragment.arguments = bundle
-            return wanQuestionAnswerFragment
+        fun getInstance() = WanQuestionAnswerFragment().apply {
+            arguments = Bundle()
         }
     }
 
@@ -27,7 +23,6 @@ class WanQuestionAnswerFragment : BaseFragment<FragmentWanQuestionAnswerBinding>
 
     }
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentWanQuestionAnswerBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentWanQuestionAnswerBinding.inflate(inflater, parent, false)
 }

@@ -95,10 +95,6 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
         super.onHiddenChanged(hidden)
     }
 
-    override fun getBinding(
-        inflater: LayoutInflater,
-        parent: ViewGroup?
-    ): ViewBinding {
-        return FragmentStudyBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentStudyBinding.inflate(inflater, parent, false)
 }

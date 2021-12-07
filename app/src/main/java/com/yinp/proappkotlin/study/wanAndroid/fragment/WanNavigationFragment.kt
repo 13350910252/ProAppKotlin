@@ -43,11 +43,8 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
     }
 
     companion object {
-        fun getInstance(): WanNavigationFragment {
-            val wanNavigationFragment = WanNavigationFragment()
-            val bundle = Bundle()
-            wanNavigationFragment.arguments = bundle
-            return wanNavigationFragment
+        fun getInstance() = WanNavigationFragment().apply {
+            arguments = Bundle()
         }
     }
 
@@ -70,7 +67,7 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
                             LayoutInflater.from(parent?.context),
                             parent,
                             false
-                        ), 0
+                        )
                     )
                 } else {
                     ViewHolder(
@@ -78,7 +75,7 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
                             LayoutInflater.from(parent?.context),
                             parent,
                             false
-                        ), 1
+                        )
                     )
                 }
             }
@@ -96,19 +93,20 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
                 position: Int,
                 item: NavigationData
             ) {
-                super.onBindItem(holder, position, item)
-                val viewHolder = holder as ViewHolder
-                viewHolder.oneBinding?.let {
-                    it.tvTitle.text = item.name
-                } ?: let {
-                    viewHolder.twoBinding?.let {
-                        it.stvValue.text = item.title
-                        it.stvValue.setOnClickListener {
-                            JumpWebUtils.startWebView(
-                                requireContext(),
-                                item.title,
-                                item.link
-                            )
+                (holder as? ViewHolder)?.binding.let {
+                    when (it) {
+                        is ItemSystemOneBinding -> it.run {
+                            tvTitle.text = item.name
+                        }
+                        is ItemSystemTwoBinding -> it.run {
+                            stvValue.text = item.title
+                            stvValue.setOnClickListener {
+                                JumpWebUtils.startWebView(
+                                    requireContext(),
+                                    item.title,
+                                    item.link
+                                )
+                            }
                         }
                     }
                 }
@@ -125,21 +123,8 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
         bd.rvList.adapter = adapter
     }
 
-    private class ViewHolder(itemView: ViewBinding, position: Int) :
-        ComViewHolder(itemView.root) {
-        var oneBinding: ItemSystemOneBinding? = null
-        var twoBinding: ItemSystemTwoBinding? = null
-
-        init {
-            if (position == 0) {
-                twoBinding = null
-                oneBinding = itemView as ItemSystemOneBinding
-            } else {
-                oneBinding = null
-                twoBinding = itemView as ItemSystemTwoBinding
-            }
-        }
-    }
+    private class ViewHolder(val binding: ViewBinding) :
+        ComViewHolder(binding.root)
 
     /**
      * 获取导航列表
@@ -196,7 +181,6 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
         }
     }
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentWanNavigationBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentWanNavigationBinding.inflate(inflater, parent, false)
 }

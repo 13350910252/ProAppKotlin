@@ -71,14 +71,14 @@ object AppUtils {
      *
      * @return
      */
-    fun dpToPx(context: Context, value: Float): Float {
-        val scale: Float = context.resources.displayMetrics.density
-        return scale * value + 0.5f
-    }
 
-    fun dpToPx(context: Context, value: Int): Int {
-        val scale: Float = context.resources.displayMetrics.density
-        return (scale * value + 0.5f).toInt()
+    inline fun <reified T> dpToPx(context: Context, value: Float): T {
+        val scale = context.resources.displayMetrics.density
+        return when (T::class) {
+            Float::class -> (scale * value + 0.5f) as T
+            Int::class -> (scale * value + 0.5f).toInt() as T
+            else -> throw IllegalStateException("Type not supported")
+        }
     }
 
     /**
@@ -86,14 +86,14 @@ object AppUtils {
      *
      * @return
      */
-    fun pxToDp(context: Context, value: Float): Float {
-        val scale: Float = context.resources.displayMetrics.density
-        return value / scale + 0.5f
-    }
 
-    fun pxToDp(context: Context, value: Int): Int {
-        val scale: Float = context.resources.displayMetrics.density
-        return (value / scale + 0.5f).toInt()
+    inline fun <reified T> pxToDp(context: Context, value: Float): T {
+        val scale = context.resources.displayMetrics.density
+        return when (T::class) {
+            Float::class -> (value / scale + 0.5f) as T
+            Int::class -> (value / scale + 0.5f).toInt() as T
+            else -> throw IllegalStateException("Type not supported")
+        }
     }
 
     fun getValue(value: String?): String {

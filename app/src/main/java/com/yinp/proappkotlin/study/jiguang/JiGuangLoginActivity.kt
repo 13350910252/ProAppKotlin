@@ -32,10 +32,7 @@ class JiGuangLoginActivity : BaseActivity<ActivityJiGuangLoginBinding>() {
 //        val QQAuthorization: Boolean = JShareInterface.isSupportAuthorize(QQ.Name)
     }
 
-    override fun getBinding(): ActivityJiGuangLoginBinding {
-        return ActivityJiGuangLoginBinding.inflate(layoutInflater)
-    }
-
+    override fun getBinding() = ActivityJiGuangLoginBinding.inflate(layoutInflater)
     var imageUrl: String? = null
     private val handler: Handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {

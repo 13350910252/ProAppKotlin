@@ -5,7 +5,6 @@ import com.yinp.proappkotlin.base.BaseViewModel
 import com.yinp.proappkotlin.study.wanAndroid.data.NavigationListData
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.proappkotlin.web.wanDisposeNetOuter
-import com.zhmyzl.mykotlin.network.RetrofitUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

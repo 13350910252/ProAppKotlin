@@ -89,7 +89,5 @@ class AddLabelActivity : BaseActivity<ActivityAddLabelBinding>() {
         ViewPager2Utils.unBind(bd.materialViewPager)
     }
 
-    override fun getBinding(): ActivityAddLabelBinding {
-        return ActivityAddLabelBinding.inflate(layoutInflater)
-    }
+    override fun getBinding() = ActivityAddLabelBinding.inflate(layoutInflater)
 }

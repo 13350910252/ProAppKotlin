@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.base.bean.BaseBean
 import com.yinp.proappkotlin.databinding.FragmentRecreationBinding
@@ -82,14 +81,10 @@ class RecreationFragment : BaseFragment<FragmentRecreationBinding>() {
         bd.rvList.adapter = adapter
     }
 
-    internal class ViewHolder(itemView: ItemRecreationListBinding) :
-        ComViewHolder(itemView.root) {
-        var binding: ItemRecreationListBinding = itemView
+    internal class ViewHolder(val binding: ItemRecreationListBinding) :
+        ComViewHolder(binding.root)
 
-    }
-
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentRecreationBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentRecreationBinding.inflate(inflater, parent, false)
 
 }

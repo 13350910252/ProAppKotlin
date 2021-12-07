@@ -10,7 +10,6 @@ import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.TodayUndeterminedFragment
 import com.yinp.proappkotlin.base.BaseFragment
@@ -161,7 +160,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         ViewPager2Utils.unBind(bd.materialViewPager)
     }
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentHomeBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentHomeBinding.inflate(inflater, parent, false)
 }

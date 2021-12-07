@@ -14,10 +14,10 @@ import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentToolsBinding
 import com.yinp.proappkotlin.databinding.ItemToolsTopListBinding
+import com.yinp.proappkotlin.mtools.ToolsTopBean
 import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
-import com.yinp.proappkotlin.mtools.ToolsTopBean
 import java.util.*
 
 /**
@@ -107,10 +107,8 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
         }
     }
 
-    internal class ToolsTopViewHolder(itemView: ItemToolsTopListBinding) :
-        ComViewHolder(itemView.root) {
-        var binding: ItemToolsTopListBinding = itemView
-    }
+    internal class ToolsTopViewHolder(val binding: ItemToolsTopListBinding) :
+        ComViewHolder(binding.root)
 
     class SpaceItemDecoration(
         private val context: Context, //位移间距
@@ -125,16 +123,16 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
         ) {
             when {
                 parent.getChildAdapterPosition(view) % space == 0 -> {
-                    outRect.left = AppUtils.dpToPx(context, 20)
-                    outRect.right = AppUtils.dpToPx(context, 10)
+                    outRect.left = AppUtils.dpToPx(context, 20.0f)
+                    outRect.right = AppUtils.dpToPx(context, 10.0f)
                 }
                 parent.getChildAdapterPosition(view) % space == 1 -> {
-                    outRect.left = AppUtils.dpToPx(context, 10)
-                    outRect.right = AppUtils.dpToPx(context, 10)
+                    outRect.left = AppUtils.dpToPx(context, 10.0f)
+                    outRect.right = AppUtils.dpToPx(context, 10.0f)
                 }
                 else -> {
-                    outRect.left = AppUtils.dpToPx(context, 10)
-                    outRect.right = AppUtils.dpToPx(context, 20)
+                    outRect.left = AppUtils.dpToPx(context, 10.0f)
+                    outRect.right = AppUtils.dpToPx(context, 20.0f)
                 }
             }
         }

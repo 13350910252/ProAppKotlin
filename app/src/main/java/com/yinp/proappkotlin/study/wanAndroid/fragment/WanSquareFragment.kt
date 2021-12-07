@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.yinp.proappkotlin.base.BaseFragment
@@ -41,11 +40,8 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
     private var page = 0
 
     companion object {
-        fun getInstance(): WanSquareFragment {
-            val wanSquareFragment = WanSquareFragment()
-            val bundle = Bundle()
-            wanSquareFragment.arguments = bundle
-            return wanSquareFragment
+        fun getInstance() = WanSquareFragment().apply {
+            arguments = Bundle()
         }
     }
 
@@ -172,7 +168,6 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
         }
     }
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentWanSquareBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentWanSquareBinding.inflate(inflater, parent, false)
 }

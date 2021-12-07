@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentToDoHistoryBinding
 import com.yinp.proappkotlin.databinding.ItemHistoryUndeterminedListBinding
@@ -26,7 +25,7 @@ import java.util.*
 class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
 
     private lateinit var adapter: CommonAdapter<LocaleTaskBean>
-    private val dataList: MutableList<LocaleTaskBean> = ArrayList<LocaleTaskBean>()
+    private val dataList = ArrayList<LocaleTaskBean>()
 
     override fun initViews() {
         bd.noTips.text = "暂无待历史做任务"
@@ -35,11 +34,8 @@ class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
     }
 
     companion object {
-        fun getInstance(): ToDoHistoryFragment {
-            return ToDoHistoryFragment().apply {
-                val bundle = Bundle()
-                arguments = bundle
-            }
+        fun getInstance() = ToDoHistoryFragment().apply {
+            arguments = Bundle()
         }
     }
 
@@ -100,8 +96,7 @@ class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
                 }
             }
         }
-        val llm = LinearLayoutManager(context)
-        bd.rvList.layoutManager = llm
+        bd.rvList.layoutManager = LinearLayoutManager(context)
         //添加了这个，如果从最后开始删除就没有问题，如果随意删除就会崩溃
         bd.rvList.setHasFixedSize(true)
         bd.rvList.adapter = adapter
@@ -162,13 +157,9 @@ class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
 //        }
     }
 
-    internal class LocaleTaskViewHolder(itemView: ItemHistoryUndeterminedListBinding) :
-        ComViewHolder(itemView.root) {
-        var binding: ItemHistoryUndeterminedListBinding = itemView
+    internal class LocaleTaskViewHolder(val binding: ItemHistoryUndeterminedListBinding) :
+        ComViewHolder(binding.root)
 
-    }
-
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentToDoHistoryBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentToDoHistoryBinding.inflate(inflater, parent, false)
 }

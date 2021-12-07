@@ -16,7 +16,7 @@ import com.yinp.proappkotlin.databinding.FragmentMeBinding
 import com.yinp.proappkotlin.me.AddLabelActivity
 import com.yinp.proappkotlin.utils.GlideUtils
 import com.yinp.proappkotlin.utils.SelectTakePhoto
-import com.yinp.proappkotlin.utils.SpUtils
+import com.yinp.proappkotlin.utils.MMKVUtils
 
 /**
  * @author   :yinpeng
@@ -31,7 +31,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
     override fun initViews() {
         initClick(this, bd.ivHead, bd.sllAddLabel)
-        val img: String = SpUtils.getValue(SpConstants.HEAD_PICTURE, "")!!
+        val img: String = MMKVUtils.getValue(SpConstants.HEAD_PICTURE, "")!!
         if (TextUtils.isEmpty(img)) {
             GlideUtils.intoRadius(requireContext(), R.mipmap.default_head, bd.ivHead, 100)
         } else {
@@ -58,7 +58,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
                     100,
                     true
                 )
-                SpUtils.saveValue(SpConstants.HEAD_PICTURE, selectTakePhoto.imageUri.toString())
+                MMKVUtils.saveValue(SpConstants.HEAD_PICTURE, selectTakePhoto.imageUri.toString())
             } else if (selectTakePhoto.type == SELECT_PHOTO) {
                 if (data != null) {
                     val url: String = selectTakePhoto.handleImageOnKitKat(requireContext(), data)

@@ -100,10 +100,10 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if (v === bd.header.headerBackImg) {
-            finish()
-        } else if (v === bd.ivMe) {
-//            if (AppUtils.isLogin(mContext)) {
+        when (v) {
+            bd.header.headerBackImg -> finish()
+            bd.ivMe -> {
+                //            if (AppUtils.isLogin(mContext)) {
 //                goToActivity(WanMeActivity::class.java)
 //            } else {
 //                DialogShow.setLoginDialog(
@@ -111,6 +111,7 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
 //                    WanMeActivity::class.java, supportFragmentManager
 //                )
 //            }
+            }
         }
     }
 
@@ -119,7 +120,5 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
         ViewPager2Utils.unBind(bd.materialViewPager)
     }
 
-    override fun getBinding(): ActivityWandroidBinding {
-        return ActivityWandroidBinding.inflate(layoutInflater)
-    }
+    override fun getBinding() = ActivityWandroidBinding.inflate(layoutInflater)
 }

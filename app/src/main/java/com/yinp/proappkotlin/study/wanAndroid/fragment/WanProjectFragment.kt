@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.yinp.proappkotlin.base.BaseFragment
@@ -43,11 +42,8 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
     }
 
     companion object {
-        fun getInstance(): WanProjectFragment {
-            val wanProjectFragment = WanProjectFragment()
-            val bundle = Bundle()
-            wanProjectFragment.arguments = bundle
-            return wanProjectFragment
+        fun getInstance() = WanProjectFragment().apply {
+            arguments = Bundle()
         }
     }
 
@@ -170,7 +166,6 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
 
     internal class ViewHolder(val binding: ItemWanProjectBinding) : ComViewHolder(binding.root)
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentWanProjectBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentWanProjectBinding.inflate(inflater, parent, false)
 }

@@ -76,7 +76,5 @@ class AddUndeterminedActivity : BaseActivity<ActivityAddUndeterminedBinding>() {
 //            )
     }
 
-    override fun getBinding(): ActivityAddUndeterminedBinding {
-        return ActivityAddUndeterminedBinding.inflate(layoutInflater)
-    }
+    override fun getBinding() = ActivityAddUndeterminedBinding.inflate(layoutInflater)
 }

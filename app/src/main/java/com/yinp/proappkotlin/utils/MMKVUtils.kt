@@ -9,7 +9,7 @@ import com.yinp.proappkotlin.constant.SpConstants.SP_NAME
  * package   :com.yinp.proappkotlin.major
  * describe  :
  */
-object SpUtils {
+object MMKVUtils {
     private val kv = MMKV.mmkvWithID(SP_NAME, MMKV.MULTI_PROCESS_MODE)
 
     /**

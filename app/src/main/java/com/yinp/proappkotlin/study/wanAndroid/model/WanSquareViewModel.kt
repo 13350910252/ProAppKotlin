@@ -1,18 +1,11 @@
 package com.yinp.proappkotlin.study.wanAndroid.model
 
+import RetrofitUtil
 import androidx.lifecycle.viewModelScope
-import com.yinp.proappkotlin.WanAndroid
 import com.yinp.proappkotlin.base.BaseViewModel
-import com.yinp.proappkotlin.study.wanAndroid.data.WanProjectListData
 import com.yinp.proappkotlin.study.wanAndroid.data.WanSquareListData
-import com.yinp.proappkotlin.web.data.BaseRespData
-import com.yinp.proappkotlin.web.data.WanAndroidCall
-import com.yinp.proappkotlin.web.data.WanAndroidData
 import com.yinp.proappkotlin.web.data.WanResultDispose
-import com.yinp.proappkotlin.web.disposeNetOuter
 import com.yinp.proappkotlin.web.wanDisposeNetOuter
-import com.zhmyzl.mykotlin.network.RetrofitUtil
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

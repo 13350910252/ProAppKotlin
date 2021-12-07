@@ -138,7 +138,5 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
         }
     }
 
-    override fun getBinding(): ActivityMajorBinding {
-        return ActivityMajorBinding.inflate(layoutInflater)
-    }
+    override fun getBinding() = ActivityMajorBinding.inflate(layoutInflater)
 }

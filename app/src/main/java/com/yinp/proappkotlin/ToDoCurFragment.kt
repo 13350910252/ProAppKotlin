@@ -34,6 +34,7 @@ import com.yinp.tools.fragment_dialog.ViewConvertListener
  */
 const val UPDATE_TASK = "update_task"
 const val DELETE_TASK = "delete_task"
+
 class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
     private lateinit var adapter: CommonAdapter<LocaleTaskBean>
     private val dataList: MutableList<LocaleTaskBean> = ArrayList()
@@ -269,7 +270,6 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
 
     }
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentToDoCurBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentToDoCurBinding.inflate(inflater, parent, false)
 }

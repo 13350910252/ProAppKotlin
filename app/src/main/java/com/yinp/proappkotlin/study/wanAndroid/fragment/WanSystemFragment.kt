@@ -42,11 +42,8 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
     }
 
     companion object {
-        fun getInstance(): WanSystemFragment {
-            val wanSystemFragment = WanSystemFragment()
-            val bundle = Bundle()
-            wanSystemFragment.arguments = bundle
-            return wanSystemFragment
+        fun getInstance() = WanSystemFragment().apply {
+            arguments = Bundle()
         }
     }
 
@@ -69,7 +66,7 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
                             LayoutInflater.from(parent?.context),
                             parent,
                             false
-                        ), 0
+                        )
                     )
                 } else {
                     ViewHolder(
@@ -77,7 +74,7 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
                             LayoutInflater.from(parent?.context),
                             parent,
                             false
-                        ), 1
+                        )
                     )
                 }
             }
@@ -95,16 +92,17 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
                 position: Int,
                 item: WanSysListData
             ) {
-                super.onBindItem(holder, position, item)
-                val viewHolder = holder as ViewHolder
-                viewHolder.oneBinding?.let {
-                    it.tvTitle.text = item.name
-                } ?: let {
-                    viewHolder.twoBinding?.let {
-                        it.stvValue.text = item.name
-                        it.stvValue.setOnClickListener {
-                            val bundle = Bundle()
+                (holder as? ViewHolder)?.binding.let {
+                    when (it) {
+                        is ItemSystemOneBinding -> it.run {
+                            tvTitle.text = item.name
+                        }
+                        is ItemSystemTwoBinding -> it.run {
+                            stvValue.text = item.name
+                            stvValue.setOnClickListener {
+                                val bundle = Bundle()
 //                        goToActivity(WanSysActivity::class.java, bundle)
+                            }
                         }
                     }
                 }
@@ -121,21 +119,8 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
         bd.rvList.adapter = adapter
     }
 
-    private class ViewHolder(itemView: ViewBinding, position: Int) :
-        ComViewHolder(itemView.root) {
-        var oneBinding: ItemSystemOneBinding? = null
-        var twoBinding: ItemSystemTwoBinding? = null
-
-        init {
-            if (position == 0) {
-                twoBinding = null
-                oneBinding = itemView as ItemSystemOneBinding
-            } else {
-                oneBinding = null
-                twoBinding = itemView as ItemSystemTwoBinding
-            }
-        }
-    }
+    private class ViewHolder(val binding: ViewBinding) :
+        ComViewHolder(binding.root)
 
     private fun getSystemInfo() {
         viewModel.getSystemInfo(object : WanAndroidCall() {
@@ -194,7 +179,6 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
         }
     }
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentWanSystemBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentWanSystemBinding.inflate(inflater, parent, false)
 }

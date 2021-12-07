@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.yinp.proappkotlin.R
@@ -52,11 +51,8 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
     private var page = 0
 
     companion object {
-        fun getInstance(): WanHomeFragment {
-            val wanHomeFragment = WanHomeFragment()
-            val bundle = Bundle()
-            wanHomeFragment.arguments = bundle
-            return wanHomeFragment
+        fun getInstance() = WanHomeFragment().apply {
+            arguments = Bundle()
         }
     }
 
@@ -151,10 +147,8 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
         bd.baseRecycle.adapter = commonAdapter
     }
 
-    internal class ViewHolder(itemView: ItemWanHomeListBinding) :
-        ComViewHolder(itemView.root) {
-        var binding: ItemWanHomeListBinding = itemView
-    }
+    internal class ViewHolder(val binding: ItemWanHomeListBinding) :
+        ComViewHolder(binding.root)
 
     private fun refresh() {
         //下拉刷新
@@ -249,7 +243,6 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
         }
     }
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentWanHomeBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentWanHomeBinding.inflate(inflater, parent, false)
 }
