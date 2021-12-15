@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.databinding.FragmentLabelBinding
 
 /**
@@ -17,8 +16,7 @@ class LabelFragment : BaseFragment<FragmentLabelBinding>() {
     companion object {
         fun getInstance(): LabelFragment {
             return LabelFragment().apply {
-                val bundle = Bundle()
-                arguments = bundle
+                arguments = Bundle()
             }
         }
     }
@@ -29,7 +27,6 @@ class LabelFragment : BaseFragment<FragmentLabelBinding>() {
     }
 
     override fun onClick(v: View?) {
-        super.onClick(v)
         when (v) {
             bd.noData,
             bd.noTips -> {
@@ -37,7 +34,6 @@ class LabelFragment : BaseFragment<FragmentLabelBinding>() {
         }
     }
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentLabelBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentLabelBinding.inflate(inflater, parent, false)
 }

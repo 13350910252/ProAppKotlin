@@ -15,13 +15,17 @@ import com.youth.banner.adapter.BannerAdapter
  * package   :com.yinp.proappkotlin.base.adapter
  * describe  :
  */
-class HomeBannerAdapter(mDatas: List<HomeBannerData>, private var context: Context) :
-    BannerAdapter<HomeBannerData, HomeBannerAdapter.HomeBannerViewHolder>(mDatas) {
+class HomeBannerAdapter(private var mData: List<HomeBannerData>, private val mContext: Context) :
+    BannerAdapter<HomeBannerData, HomeBannerAdapter.HomeBannerViewHolder>(mData) {
 
     override fun onCreateHolder(parent: ViewGroup?, viewType: Int): HomeBannerViewHolder {
-        val bannerBinding: ItemHomeBannerBinding =
-            ItemHomeBannerBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
-        return HomeBannerViewHolder(bannerBinding)
+        return HomeBannerViewHolder(
+            ItemHomeBannerBinding.inflate(
+                LayoutInflater.from(parent?.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindView(
@@ -30,14 +34,12 @@ class HomeBannerAdapter(mDatas: List<HomeBannerData>, private var context: Conte
         position: Int,
         size: Int
     ) {
-        val entity: HomeBannerData = mDatas[position]
+        val entity: HomeBannerData = mData[position]
         holder.bind.ivBanner.let {
-            Glide.with(it).load(entity.imagePath).into(it)
+            Glide.with(mContext).load(entity.imagePath).into(it)
         }
     }
 
-    class HomeBannerViewHolder(bannerBinding: ItemHomeBannerBinding) :
-        RecyclerView.ViewHolder(bannerBinding.root) {
-        var bind: ItemHomeBannerBinding = bannerBinding
-    }
+    class HomeBannerViewHolder(val bind: ItemHomeBannerBinding) :
+        RecyclerView.ViewHolder(bind.root)
 }

@@ -4,9 +4,11 @@ import android.content.Context
 import android.graphics.Color
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.core.content.ContextCompat
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.databinding.ActivityAddLabelBinding
+import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.proappkotlin.utils.StatusBarUtil
 import com.yinp.proappkotlin.utils.ViewPager2Utils
 import com.yinp.proappkotlin.view.SimplePagerTitlePictureView
@@ -16,7 +18,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -37,7 +38,7 @@ class AddLabelActivity : BaseActivity<ActivityAddLabelBinding>() {
 //        fragments.put(0, todayUndeterminedFragment);
 //        fragments.put(1, labelFragment);
 //        bd.materialViewPager.setAdapter(ViewPager2Utils.getAdapter(this, fragments));
-        val titleList: List<String> = ArrayList(listOf("今日待做", "标签"))
+        val titleList = mutableListOf("今日待做", "标签")
         bd.materialIndicator.setBackgroundColor(Color.WHITE)
         val commonNavigator7 = CommonNavigator(mContext)
         commonNavigator7.isAdjustMode = true
@@ -47,37 +48,37 @@ class AddLabelActivity : BaseActivity<ActivityAddLabelBinding>() {
             }
 
             override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-                val simplePagerTitleView = SimplePagerTitlePictureView(context)
-                simplePagerTitleView.text = titleList[index]
-                simplePagerTitleView.setNormalColor(resources.getColor(R.color.b8b8b8))
-                simplePagerTitleView.textSize = 16f
-                when (index) {
-                    0 -> {
-                        simplePagerTitleView.setmNormalDrawable(R.mipmap.task)
-                        simplePagerTitleView.setmSelectedDrawable(R.mipmap.task_s)
+                return SimplePagerTitlePictureView(context).apply {
+                    text = titleList[index]
+                    setNormalColor(ContextCompat.getColor(context, R.color.b8b8b8))
+                    textSize = 16f
+                    when (index) {
+                        0 -> {
+                            setmNormalDrawable(R.mipmap.task)
+                            setmSelectedDrawable(R.mipmap.task_s)
+                        }
+                        1 -> {
+                            setmNormalDrawable(R.mipmap.label)
+                            setmSelectedDrawable(R.mipmap.label_s)
+                        }
                     }
-                    1 -> {
-                        simplePagerTitleView.setmNormalDrawable(R.mipmap.label)
-                        simplePagerTitleView.setmSelectedDrawable(R.mipmap.label_s)
+                    setSelectedColor(ContextCompat.getColor(context, R.color.ff4d4d))
+                    setOnClickListener {
+                        bd.materialViewPager.currentItem = index
                     }
                 }
-                simplePagerTitleView.setSelectedColor(resources.getColor(R.color.ff4d4d))
-                simplePagerTitleView.setOnClickListener {
-                    bd.materialViewPager.currentItem = index
-                }
-                return simplePagerTitleView
             }
 
             override fun getIndicator(context: Context): IPagerIndicator {
-                val indicator = LinePagerIndicator(context)
-                indicator.mode = LinePagerIndicator.MODE_EXACTLY
-                indicator.lineHeight = UIUtil.dip2px(context, 0.0).toFloat()
-                indicator.lineWidth = UIUtil.dip2px(context, 56.0).toFloat()
-                indicator.roundRadius = UIUtil.dip2px(context, 3.0).toFloat()
-                indicator.startInterpolator = AccelerateInterpolator()
-                indicator.endInterpolator = DecelerateInterpolator(2.0f)
-                indicator.setColors(resources.getColor(R.color.fafafa))
-                return indicator
+                return LinePagerIndicator(context).apply {
+                    mode = LinePagerIndicator.MODE_EXACTLY
+                    lineHeight = AppUtils.dpToPx(context, 0.0f)
+                    lineWidth = AppUtils.dpToPx(context, 56.0f)
+                    roundRadius = AppUtils.dpToPx(context, 3.0f)
+                    startInterpolator = AccelerateInterpolator()
+                    endInterpolator = DecelerateInterpolator(2.0f)
+                    setColors(ContextCompat.getColor(context, R.color.fafafa))
+                }
             }
         }
         bd.materialIndicator.navigator = commonNavigator7

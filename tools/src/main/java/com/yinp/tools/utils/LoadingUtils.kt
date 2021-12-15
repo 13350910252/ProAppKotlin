@@ -16,17 +16,17 @@ import com.yinp.tools.R
  * describe  :
  */
 class LoadingUtils {
-    private lateinit var dialogFrament: LoadingDialog
-    private val dialogList = ArrayList<LoadingDialog>()
+    private lateinit var dialogFragment: LoadingDialog
+    private val dialogList = mutableListOf<LoadingDialog>()
 
     fun show(manager: FragmentManager, text: String) {
         show(manager, text, "")
     }
 
     fun show(manager: FragmentManager, text: String, tag: String) {
-        dialogFrament = LoadingDialog(text)
-        dialogList.add(dialogFrament)
-        dialogFrament.show(manager, tag)
+        dialogFragment = LoadingDialog(text)
+        dialogList.add(dialogFragment)
+        dialogFragment.show(manager, tag)
     }
 
     fun close() {
@@ -62,15 +62,14 @@ class LoadingUtils {
 
         override fun onResume() {
             super.onResume()
-            val window = dialog?.window
-            window?.let {
-                it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) //解决弹窗有空的问题
-                it.decorView.setBackgroundResource(R.drawable.bg_transparent)
-                val layoutParams = window.attributes
-                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
-                layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
-                window.setGravity(Gravity.CENTER)
-                window.attributes = layoutParams
+            dialog?.window?.run {
+                setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) //解决弹窗有空的问题
+                decorView.setBackgroundResource(R.drawable.bg_transparent)
+                setGravity(Gravity.CENTER)
+                attributes = attributes.apply {
+                    width = WindowManager.LayoutParams.MATCH_PARENT
+                    height = WindowManager.LayoutParams.WRAP_CONTENT
+                }
             }
 
         }

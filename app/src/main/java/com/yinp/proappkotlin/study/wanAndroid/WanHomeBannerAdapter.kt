@@ -19,9 +19,13 @@ class WanHomeBannerAdapter(mDatas: List<HomeBannerData>, private var context: Co
     BannerAdapter<HomeBannerData, WanHomeBannerAdapter.HomeBannerViewHolder>(mDatas) {
 
     override fun onCreateHolder(parent: ViewGroup?, viewType: Int): HomeBannerViewHolder {
-        val bannerBinding: ItemHomeBannerBinding =
-            ItemHomeBannerBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
-        return HomeBannerViewHolder(bannerBinding)
+        return HomeBannerViewHolder(
+            ItemHomeBannerBinding.inflate(
+                LayoutInflater.from(parent?.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindView(
@@ -30,7 +34,7 @@ class WanHomeBannerAdapter(mDatas: List<HomeBannerData>, private var context: Co
         position: Int,
         size: Int
     ) {
-        val entity: HomeBannerData = mDatas[position]
+        val entity = mDatas[position]
         holder.bind.ivBanner.let {
             Glide.with(it).load(entity.imagePath).into(it)
         }

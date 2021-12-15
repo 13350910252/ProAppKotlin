@@ -74,28 +74,25 @@ public abstract class BaseDialogFragment extends DialogFragment {
             convertView(DialogFragmentHolder.create(view), this);
             if (mSetKeyListener) {
                 //  用于退出app的功能
-                getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
-                    @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                        if (keyCode == KeyEvent.KEYCODE_BACK) {
-                            if (!isQuit) {
-                                isQuit = true;
-                                Toast.makeText(mContext, getString(R.string.exit_tips),
-                                        Toast.LENGTH_SHORT).show();
-                                TimerTask task;
-                                task = new TimerTask() {
-                                    public void run() {
-                                        isQuit = false;
-                                    }
-                                };
-                                timer.schedule(task, 2000);
-                            } else {
-                                dismiss();
-                            }
-                            return true;
+                getDialog().setOnKeyListener((dialog, keyCode, event) -> {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        if (!isQuit) {
+                            isQuit = true;
+                            Toast.makeText(mContext, getString(R.string.exit_tips),
+                                    Toast.LENGTH_SHORT).show();
+                            TimerTask task;
+                            task = new TimerTask() {
+                                public void run() {
+                                    isQuit = false;
+                                }
+                            };
+                            timer.schedule(task, 2000);
+                        } else {
+                            dismiss();
                         }
-                        return false;
+                        return true;
                     }
+                    return false;
                 });
             }
             return view;

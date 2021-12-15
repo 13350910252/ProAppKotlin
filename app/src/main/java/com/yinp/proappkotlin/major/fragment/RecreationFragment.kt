@@ -12,7 +12,6 @@ import com.yinp.proappkotlin.databinding.FragmentRecreationBinding
 import com.yinp.proappkotlin.databinding.ItemRecreationListBinding
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -21,8 +20,8 @@ import java.util.*
  * describe  :
  */
 class RecreationFragment : BaseFragment<FragmentRecreationBinding>() {
-    private var adapter: CommonAdapter<BaseBean>? = null
-    private val dataList: MutableList<BaseBean> = ArrayList<BaseBean>()
+    private lateinit var adapter: CommonAdapter<BaseBean>
+    private val dataList = mutableListOf<BaseBean>()
 
     override fun initViews() {
         initRecycler()
@@ -57,10 +56,9 @@ class RecreationFragment : BaseFragment<FragmentRecreationBinding>() {
                 viewHolder.binding.stvStart.setOnClickListener {
                     val url: String? = dataList[viewHolder.absoluteAdapterPosition].url
                     if (!url.isNullOrEmpty()) {
-                        val intent = Intent().apply {
+                        goToActivity(Intent().apply {
                             setClassName(mContext, url)
-                        }
-                        goToActivity(intent)
+                        })
                     }
                 }
                 return viewHolder
@@ -72,8 +70,10 @@ class RecreationFragment : BaseFragment<FragmentRecreationBinding>() {
                 item: BaseBean
             ) {
                 val viewHolder = holder as ViewHolder
-                viewHolder.binding.tvTitle.text = item.title
-                viewHolder.binding.tvIntroduce.text = item.content
+                viewHolder.binding.run {
+                    tvTitle.text = item.title
+                    tvIntroduce.text = item.content
+                }
             }
         }
         bd.rvList.layoutManager = LinearLayoutManager(context)

@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
+import kotlin.math.tan
 
 /**
  * @author   :yinpeng
@@ -15,10 +16,6 @@ import android.view.View
  * describe  :
  */
 class WuJiaoXingView : View {
-    constructor(context: Context?) : super(context, null) {
-        init()
-    }
-
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs, 0) {
         init()
     }
@@ -31,13 +28,15 @@ class WuJiaoXingView : View {
         init()
     }
 
-    private var paint: Paint? = null
+    private val paint by lazy {
+        Paint().apply {
+            style = Paint.Style.STROKE
+            color = Color.YELLOW
+        }
+    }
     private var paint1: Paint? = null
 
     private fun init() {
-        paint = Paint()
-        paint!!.style = Paint.Style.STROKE
-        paint!!.color = Color.YELLOW
         paint1 = Paint()
         paint1!!.style = Paint.Style.STROKE
         paint1!!.color = Color.RED
@@ -55,7 +54,7 @@ class WuJiaoXingView : View {
         mWidth = w
         mHeight = h
         centerX = (w / 2).toFloat()
-        centerY = (centerX * Math.tan(ANGLE / 3)).toFloat()
+        centerY = (centerX * tan(ANGLE / 3)).toFloat()
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
@@ -66,15 +65,15 @@ class WuJiaoXingView : View {
     }
 
     private fun drawXingXing(canvas: Canvas) {
-        val path = Path()
-        path.moveTo(centerX, 0f)
-        val x = (height * Math.tan(ANGLE / 6)).toFloat()
-        path.lineTo(centerX - x, height.toFloat())
-        path.lineTo(width.toFloat(), centerY)
-        path.lineTo(0f, centerY)
-        path.lineTo(centerX + x, height.toFloat())
-        path.close()
-        canvas.drawPath(path, paint1!!)
+        canvas.drawPath(Path().apply {
+            moveTo(centerX, 0f)
+            val x = (height * tan(ANGLE / 6)).toFloat()
+            lineTo(centerX - x, height.toFloat())
+            lineTo(width.toFloat(), centerY)
+            lineTo(0f, centerY)
+            lineTo(centerX + x, height.toFloat())
+            close()
+        }, paint1!!)
     }
 
     private fun drawKuang(canvas: Canvas) {}

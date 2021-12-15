@@ -87,3 +87,8 @@ fun FragmentActivity.goToActivityForResult(
 ): ActivityResultLauncher<Intent> {
     return registerForActivityResult(safr, arc)
 }
+
+// 使用扩展函数重写 contains 操作符
+operator fun Regex.contains(text: CharSequence): Boolean {
+    return this.containsMatchIn(text)
+}

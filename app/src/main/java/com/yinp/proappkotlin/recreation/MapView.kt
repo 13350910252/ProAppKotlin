@@ -22,12 +22,12 @@ import javax.xml.parsers.DocumentBuilderFactory
  * package   :com.yinp.proappkotlin.view
  * describe  :
  */
-class MapView : View{
-    constructor(context: Context, attrs: AttributeSet?):super(context, attrs, 0) {
+class MapView : View {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs, 0) {
         init(context)
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int):super(
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
@@ -36,7 +36,7 @@ class MapView : View{
     }
 
     var mContext: Context? = null
-    var itemList: List<ProvinceItem>? = null //省
+    var mItemList = mutableListOf<ProvinceItem>() //省
 
     val mPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG)
@@ -48,7 +48,6 @@ class MapView : View{
 
     private fun init(context: Context) {
         mContext = context
-        itemList = ArrayList<ProvinceItem>()
         mThread.start()
     }
 
@@ -76,7 +75,7 @@ class MapView : View{
             super.run()
             val inputStream = mContext!!.resources.openRawResource(R.raw.chinasvg)
             val factory = DocumentBuilderFactory.newInstance() //获取DocumentBuilderFactory实例
-            var builder: DocumentBuilder? = null
+            var builder: DocumentBuilder?
             try {
                 builder = factory.newDocumentBuilder()
                 val doc = builder.parse(inputStream) //解析svg的输入流
@@ -90,7 +89,7 @@ class MapView : View{
                 for (i in 0 until items.length) {
                     val element = items.item(i) as Element
                     val pathData = element.getAttribute("android:pathData")
-                    val path: Path = PathParser.createPathFromPathData(pathData) //获取每一个path，即要绘画的路径
+                    val path = PathParser.createPathFromPathData(pathData) //获取每一个path，即要绘画的路径
                     val provinceItem = ProvinceItem(path) //设置路径,初始化省对象
                     // 取每个省的上下左右 最后拿出最小或者最大的来充当 总地图的上下左右
                     val rect = RectF()
@@ -103,11 +102,10 @@ class MapView : View{
                     bottom = if (bottom == -1f) rect.bottom else Math.max(bottom, rect.bottom)
                     list.add(provinceItem)
                 }
-                itemList = list
+                mItemList.addAll(list)
                 totalRect = RectF(left, top, right, bottom) //设置地图的上下左右位置
                 // 加载完以后刷新界面,在主线程中就不用Looper.getMainLooper();
-                val handler = Handler(Looper.getMainLooper())
-                handler.post { //requestLayout方法会导致View的onMeasure、onLayout、onDraw方法被调用；
+                Handler(Looper.getMainLooper()).post { //requestLayout方法会导致View的onMeasure、onLayout、onDraw方法被调用；
                     // invalidate方法则只会导致View的onDraw方法被调用
                     requestLayout()
                     invalidate()
@@ -128,15 +126,15 @@ class MapView : View{
         if (mColor == Color.WHITE) {
             return false
         }
-        for (i in itemList!!.indices) {
-            if (RectF.intersects(provinceItem.provinceRectF, itemList!![i].provinceRectF)) {
-                if (provinceItem === itemList!![i]) {
+        for (i in mItemList.indices) {
+            if (RectF.intersects(provinceItem.provinceRectF, mItemList[i].provinceRectF)) {
+                if (provinceItem === mItemList[i]) {
                     continue
                 }
-                if (itemList!![i].selectColor === Color.WHITE) {
+                if (mItemList[i].selectColor == Color.WHITE) {
                     continue
                 }
-                if (itemList!![i].selectColor === mColor) {
+                if (mItemList[i].selectColor == mColor) {
                     return true
                 }
             }
@@ -168,15 +166,15 @@ class MapView : View{
      * @param y
      */
     private fun handleTouch(x: Float, y: Float) {
-        if (itemList == null) {
+        if (mItemList == null) {
             return
         }
         val selectItem: ProvinceItem? = null
-        for (i in itemList!!.indices) {
-            if (itemList!![i].isContains(x, y)) {
+        for (i in mItemList!!.indices) {
+            if (mItemList!![i].isContains(x, y)) {
                 Log.d("abcd", "handleTouch: $i")
-                if (!FCM_judge.judge(itemList!!, i, mColor)) {
-                    itemList!![i].selectColor = mColor
+                if (!FCM_judge.judge(mItemList!!, i, mColor)) {
+                    mItemList!![i].selectColor = mColor
                     postInvalidate()
                 } else {
                     Toast.makeText(mContext, "相邻省颜色不能相同", Toast.LENGTH_SHORT).show()
@@ -206,11 +204,11 @@ class MapView : View{
      * @return
      */
     fun isFull(): Boolean {
-        for (i in itemList!!.indices) {
+        for (i in mItemList.indices) {
             if (i == 11 || i == 19) {
                 continue
             } else {
-                if (itemList!![i].selectColor === Color.WHITE) {
+                if (mItemList[i].selectColor == Color.WHITE) {
                     return false
                 }
             }
@@ -220,9 +218,9 @@ class MapView : View{
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (itemList != null && !itemList!!.isEmpty()) {
+        if (mItemList.isNotEmpty()) {
             canvas.scale(scale, scale) //把画布缩放匹配到本控件的宽高控件有多大，地图就放大或缩小到适应
-            for (provinceItem in itemList!!) {
+            for (provinceItem in mItemList) {
                 provinceItem.drawItem(canvas, mPaint)
             }
             if (isFull()) {
@@ -242,8 +240,8 @@ class MapView : View{
 
     fun restart() {
         isEnd = false
-        for (i in itemList!!.indices) {
-            itemList!![i].selectColor = Color.WHITE
+        for (i in mItemList.indices) {
+            mItemList[i].selectColor = Color.WHITE
         }
         postInvalidate()
     }

@@ -14,7 +14,6 @@ import com.yinp.proappkotlin.databinding.ItemHistoryUndeterminedListBinding
 import com.yinp.proappkotlin.room.bean.LocaleTaskBean
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -25,7 +24,7 @@ import java.util.*
 class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
 
     private lateinit var adapter: CommonAdapter<LocaleTaskBean>
-    private val dataList = ArrayList<LocaleTaskBean>()
+    private val dataList = mutableListOf<LocaleTaskBean>()
 
     override fun initViews() {
         bd.noTips.text = "暂无待历史做任务"
@@ -46,13 +45,13 @@ class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
                 viewType: Int,
                 parent: ViewGroup?
             ): ComViewHolder {
-                val binding: ItemHistoryUndeterminedListBinding =
+                return LocaleTaskViewHolder(
                     ItemHistoryUndeterminedListBinding.inflate(
                         LayoutInflater.from(parent?.context),
                         parent,
                         false
                     )
-                return LocaleTaskViewHolder(binding)
+                )
             }
 
             override fun onBindItem(

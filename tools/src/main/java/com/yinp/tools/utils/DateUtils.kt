@@ -9,7 +9,6 @@ import java.text.Format
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
@@ -20,7 +19,7 @@ import kotlin.collections.ArrayList
  */
 object DateUtils {
     val Y_M_D_H_M_S_S: ThreadLocal<SimpleDateFormat> = object : ThreadLocal<SimpleDateFormat>() {
-        override fun initialValue(): SimpleDateFormat? {
+        override fun initialValue(): SimpleDateFormat {
             return SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SS", Locale.getDefault())
         }
     }
@@ -35,6 +34,7 @@ object DateUtils {
                 return SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
             }
         }
+
     /**
      * 格式日期
      *
@@ -65,10 +65,12 @@ object DateUtils {
 
     fun getFormatDate(time: String?): String? {
         return try {
-            val format = "yyyy-MM-dd HH:mm"
-            @SuppressLint("SimpleDateFormat") val format1 = SimpleDateFormat(format)
-            val parse: Date = format1.parse(time)
-            format1.format(parse)
+            @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            time?.let {
+                format.parse(it)?.let { it2 ->
+                    format.format(it2)
+                }
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -300,8 +302,8 @@ object DateUtils {
     private const val ONE_MONTH_AGO = "月前"
     private const val ONE_YEAR_AGO = "年前"
 
-    fun format(date: Date): String? {
-        val delta: Long = Date().getTime() - date.getTime()
+    fun format(date: Date): String {
+        val delta = Date().time - date.time
         if (delta < 1L * ONE_MINUTE) {
             val seconds = toSeconds(delta)
             return (if (seconds <= 0) 1 else seconds).toString() + ONE_SECOND_AGO
@@ -414,18 +416,17 @@ object DateUtils {
      * @return
      */
     fun getFirstDayOfMonth1(year: Int, month: Int): String? {
-        val cal: Calendar = Calendar.getInstance()
+        val cal = Calendar.getInstance()
         //设置年份
         cal.set(Calendar.YEAR, year)
         //设置月份
         cal.set(Calendar.MONTH, month - 1)
         //获取某月最小天数
-        val firstDay: Int = cal.getMinimum(Calendar.DATE)
+        val firstDay = cal.getMinimum(Calendar.DATE)
         //设置日历中月份的最小天数
         cal.set(Calendar.DAY_OF_MONTH, firstDay)
         //格式化日期
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
-        return sdf.format(cal.time)
+        return SimpleDateFormat("yyyy-MM-dd").format(cal.time)
     }
 
     /**
@@ -436,49 +437,24 @@ object DateUtils {
      * @return
      */
     fun getLastDayOfMonth1(year: Int, month: Int): String? {
-        val cal: Calendar = Calendar.getInstance()
+        val cal = Calendar.getInstance()
         //设置年份
         cal.set(Calendar.YEAR, year)
         //设置月份
         cal.set(Calendar.MONTH, month - 1)
         //获取某月最大天数
-        val lastDay: Int = cal.getActualMaximum(Calendar.DATE)
+        val lastDay = cal.getActualMaximum(Calendar.DATE)
         //设置日历中月份的最大天数
         cal.set(Calendar.DAY_OF_MONTH, lastDay)
         //格式化日期
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
-        return sdf.format(cal.time)
+        return SimpleDateFormat("yyyy-MM-dd").format(cal.time)
     }
 
     object scrollDate {
         const val DEFAULT_START_YEAR = 1900
-        var hourList: List<String> = ArrayList(
-            Arrays.asList(
-                "0",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11",
-                "12",
-                "13",
-                "14",
-                "15",
-                "16",
-                "17",
-                "18",
-                "19",
-                "20",
-                "21",
-                "22",
-                "23"
-            )
+        var hourList = mutableListOf(
+            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
+            "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"
         )
 
         /**
@@ -491,8 +467,8 @@ object DateUtils {
         }
 
         fun setYear(startYear: Int): List<String> {
-            val calendar: Calendar = Calendar.getInstance()
-            val curYear: Int = calendar.get(Calendar.YEAR)
+            val calendar = Calendar.getInstance()
+            val curYear = calendar.get(Calendar.YEAR)
             return setYear(startYear, curYear)
         }
 
@@ -502,7 +478,7 @@ object DateUtils {
             } else {
                 startYear
             }
-            val list: MutableList<String> = ArrayList()
+            val list = mutableListOf<String>()
             if (startYear > endYear) {
                 for (i in startYear downTo endYear) {
                     list.add(i.toString())
@@ -528,7 +504,7 @@ object DateUtils {
             if (startMonth > endMonth || startMonth < 1 || endMonth > 12) {
                 return null
             }
-            val list: MutableList<String> = ArrayList()
+            val list = mutableListOf<String>()
             for (i in startMonth..endMonth) {
                 list.add(i.toString())
             }
@@ -543,10 +519,9 @@ object DateUtils {
          * @return
          */
         fun setDay(year: Int, month: Int): List<String> {
-            val _31Days: List<Int> = ArrayList(listOf(1, 3, 5, 7, 8, 10, 12))
-            val list: MutableList<String> = ArrayList()
-            val days: Int
-            days = if (_31Days.contains(month)) {
+            val _31Days = mutableListOf(1, 3, 5, 7, 8, 10, 12)
+            val list = mutableListOf<String>()
+            val days = if (_31Days.contains(month)) {
                 31
             } else if (month == 2) {
                 if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) { //闰年
@@ -576,7 +551,7 @@ object DateUtils {
         }
 
         fun setMinute(): List<String> {
-            val minuteList: MutableList<String> = ArrayList()
+            val minuteList = mutableListOf<String>()
             for (i in 0..59) {
                 minuteList.add(i.toString())
             }
@@ -639,8 +614,7 @@ object DateUtils {
         }
 
         fun curStringSecond(calendar: Calendar?): String {
-            val calendar = calendar ?: Calendar.getInstance()
-            return calendar.get(Calendar.SECOND).toString()
+            return (calendar ?: Calendar.getInstance()).get(Calendar.SECOND).toString()
         }
     }
 
@@ -656,14 +630,8 @@ object DateUtils {
         } else value.toString()
     }
 
-    fun add0(value: String): String? {
-        val data: Int = try {
-            value.toInt()
-        } catch (ex: Exception) {
-            return null
-        }
-        return if (data < 10) {
-            "0$value"
-        } else value
+    fun add0(value: String): String {
+        val data = value.toIntOrNull() ?: 0
+        return add0(data)
     }
 }

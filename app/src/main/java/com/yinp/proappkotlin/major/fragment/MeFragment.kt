@@ -6,7 +6,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.SELECT_PHOTO
 import com.yinp.proappkotlin.TAKE_PHOTO
@@ -15,8 +14,8 @@ import com.yinp.proappkotlin.constant.SpConstants
 import com.yinp.proappkotlin.databinding.FragmentMeBinding
 import com.yinp.proappkotlin.me.AddLabelActivity
 import com.yinp.proappkotlin.utils.GlideUtils
-import com.yinp.proappkotlin.utils.SelectTakePhoto
 import com.yinp.proappkotlin.utils.MMKVUtils
+import com.yinp.proappkotlin.utils.SelectTakePhoto
 
 /**
  * @author   :yinpeng
@@ -31,12 +30,11 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
 
     override fun initViews() {
         initClick(this, bd.ivHead, bd.sllAddLabel)
-        val img: String = MMKVUtils.getValue(SpConstants.HEAD_PICTURE, "")!!
+        val img = MMKVUtils.getValue(SpConstants.HEAD_PICTURE, "")
         if (TextUtils.isEmpty(img)) {
             GlideUtils.intoRadius(requireContext(), R.mipmap.default_head, bd.ivHead, 100)
         } else {
-            val uri = Uri.parse(img)
-            GlideUtils.intoRadius(requireContext(), uri, bd.ivHead, 100, true)
+            GlideUtils.intoRadius(requireContext(), Uri.parse(img), bd.ivHead, 100, true)
         }
     }
 
@@ -69,7 +67,6 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
     }
 
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentMeBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentMeBinding.inflate(inflater, parent, false)
 }

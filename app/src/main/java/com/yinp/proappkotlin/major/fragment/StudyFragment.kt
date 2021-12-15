@@ -68,7 +68,7 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
                     viewBinding: ViewBinding
                 ) {
                     mDialogFragment = dialogFragment as CommonDialogFragment
-                    val binding: ItemTwoSelectBinding = viewBinding as ItemTwoSelectBinding
+                    val binding = viewBinding as ItemTwoSelectBinding
                     binding.tsvSelect.setcLickListener(object : TwoSelectView.CLickListener() {
                         override fun click(isLeft: Boolean) {
                             if (isLeft) {
@@ -85,9 +85,9 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
 
     override fun onPause() {
         super.onPause()
-        if (mDialogFragment != null) {
-            mDialogFragment!!.dismiss()
-            mDialogFragment = null
+        mDialogFragment = mDialogFragment?.run {
+            dismiss()
+            null
         }
     }
 

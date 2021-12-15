@@ -81,11 +81,7 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
                 viewHolder.binding.ivCollect.isSelected = item.collect
                 viewHolder.binding.tvTitle.text = item.title
                 val person = if (item.author.isEmpty()) {
-                    if (item.shareUser.isEmpty()) {
-                        "暂无"
-                    } else {
-                        item.shareUser
-                    }
+                    item.shareUser.ifEmpty { "暂无" }
                 } else {
                     item.author
                 }

@@ -36,8 +36,8 @@ object MMKVUtils {
     /**
      * 保存boolean常量
      */
-    fun getValue(key: String?, defValue: String): String? {
-        return kv.decodeString(key, defValue)
+    fun getValue(key: String?, defValue: String): String {
+        return kv.decodeString(key, defValue)!!
     }
 
     /**

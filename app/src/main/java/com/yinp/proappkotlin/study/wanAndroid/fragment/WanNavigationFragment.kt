@@ -143,12 +143,10 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
                                 dataList.add(NavigationData(navigationListBean.name))
                                 if (navigationListBean.articles.isNullOrEmpty().not()) {
                                     for (element in navigationListBean.articles!!) {
-                                        val childrenBean: NavigationListData.Article =
-                                            element
                                         dataList.add(
                                             NavigationData(
-                                                childrenBean.title,
-                                                childrenBean.link
+                                                element.title,
+                                                element.link
                                             )
                                         )
                                     }

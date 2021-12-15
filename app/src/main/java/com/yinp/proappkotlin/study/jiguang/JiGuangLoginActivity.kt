@@ -34,7 +34,7 @@ class JiGuangLoginActivity : BaseActivity<ActivityJiGuangLoginBinding>() {
 
     override fun getBinding() = ActivityJiGuangLoginBinding.inflate(layoutInflater)
     var imageUrl: String? = null
-    private val handler: Handler = object : Handler(Looper.getMainLooper()) {
+    private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             imageUrl = msg.obj as String

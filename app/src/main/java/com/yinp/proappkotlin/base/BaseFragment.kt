@@ -49,7 +49,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), View.OnClickListener
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bd = getBinding(inflater, container) as VB
+        bd = getBinding(inflater, container)
 //        lifecycle.addObserver(this)
         return bd.root
     }
@@ -81,7 +81,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), View.OnClickListener
     /**
      * 显示加载
      */
-    val loading by lazy {
+    private val loading by lazy {
         LoadingUtils()
     }
 
@@ -152,5 +152,5 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), View.OnClickListener
     /**
      * 获取布局
      */
-    protected abstract fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding
+    protected abstract fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): VB
 }

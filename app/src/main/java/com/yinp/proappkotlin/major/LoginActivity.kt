@@ -20,8 +20,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if (v === bd.stvLogin) {
-            goToActivity<MajorActivity>()
+        when (v) {
+            bd.stvLogin -> goToActivity<MajorActivity>()
         }
     }
 

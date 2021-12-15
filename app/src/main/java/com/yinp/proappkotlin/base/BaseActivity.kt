@@ -11,18 +11,15 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
 
 abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClickListener {
     protected lateinit var bd: VB
-    protected val mContext: Context
-    protected val mActivity: Activity
-
-    init {
-        mContext = this
-        mActivity = this
-    }
+    protected lateinit var mContext: Context
+    protected lateinit var mActivity: Activity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bd = getBinding()
         setContentView(bd.root)
+        mContext = this
+        mActivity = this
 
         StatusBarUtil.setTranslucentStatus(this)
         initViews()
@@ -33,8 +30,8 @@ abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClick
      *
      * @param height 状态栏高度
      */
-    protected open fun setStatusBarHeight(height: Int) {
-        val view: View = findViewById(R.id.view_status)
+    protected fun setStatusBarHeight(height: Int) {
+        val view = findViewById<View>(R.id.view_status)
         val params = view.layoutParams
         params.height = height
     }

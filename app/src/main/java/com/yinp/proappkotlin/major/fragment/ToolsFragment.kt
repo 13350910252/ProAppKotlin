@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentToolsBinding
@@ -18,7 +17,6 @@ import com.yinp.proappkotlin.mtools.ToolsTopBean
 import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -31,11 +29,10 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
         initRecycler()
     }
 
-    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?): ViewBinding {
-        return FragmentToolsBinding.inflate(inflater, parent, false)
-    }
+    override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
+        FragmentToolsBinding.inflate(inflater, parent, false)
 
-    private val topList: MutableList<ToolsTopBean> = ArrayList<ToolsTopBean>()
+    private val topList = mutableListOf<ToolsTopBean>()
     private var topAdapter: CommonAdapter<ToolsTopBean>? = null
 
     private fun initRecycler() {
@@ -82,21 +79,22 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
                 item: ToolsTopBean
             ) {
                 val viewHolder = holder as ToolsTopViewHolder
-                if (item.drawableId == -1) {
-                    viewHolder.binding.ivImg.setBackgroundResource(R.mipmap.default1)
-                } else {
-                    viewHolder.binding.ivImg.setBackgroundResource(item.drawableId)
+                viewHolder.binding.run {
+                    if (item.drawableId == -1) {
+                        ivImg.setBackgroundResource(R.mipmap.default1)
+                    } else {
+                        ivImg.setBackgroundResource(item.drawableId)
+                    }
+                    tvTitle.text = item.title
                 }
-                viewHolder.binding.tvTitle.text = item.title
             }
         }
         topAdapter?.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
             override fun onItemClick(position: Int, view: View?) {
                 if (topList[position].url.isNullOrEmpty().not()) {
-                    val intent = Intent().apply {
+                    goToActivity(Intent().apply {
                         setClassName(requireContext(), topList[position].url!!)
-                    }
-                    goToActivity(intent)
+                    })
                 }
             }
         })
@@ -113,8 +111,7 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
     class SpaceItemDecoration(
         private val context: Context, //位移间距
         private val space: Int
-    ) :
-        ItemDecoration() {
+    ) : ItemDecoration() {
         override fun getItemOffsets(
             outRect: Rect,
             view: View,

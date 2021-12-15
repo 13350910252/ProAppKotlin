@@ -25,7 +25,6 @@ class TriangleLinearLayout : LinearLayout {
         attrs,
         defStyleAttr
     ) {
-
         init(context, attrs)
     }
 

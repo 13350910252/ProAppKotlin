@@ -37,17 +37,14 @@ const val DELETE_TASK = "delete_task"
 
 class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
     private lateinit var adapter: CommonAdapter<LocaleTaskBean>
-    private val dataList: MutableList<LocaleTaskBean> = ArrayList()
+    private val dataList = mutableListOf<LocaleTaskBean>()
 
     /**
      * 初始化，以可能回传递数据
      */
     companion object {
-        fun getInstance(): ToDoCurFragment {
-            return ToDoCurFragment().apply {
-                val bundle = Bundle()
-                arguments = bundle
-            }
+        fun getInstance() = ToDoCurFragment().apply {
+            arguments = Bundle()
         }
     }
 
@@ -94,13 +91,13 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
                 viewType: Int,
                 parent: ViewGroup?
             ): ComViewHolder {
-                val binding: ItemTodayUndeterminedListBinding =
+                return LocaleTaskViewHolder(
                     ItemTodayUndeterminedListBinding.inflate(
                         LayoutInflater.from(parent?.context),
                         parent,
                         false
                     )
-                return LocaleTaskViewHolder(binding)
+                )
             }
 
             override fun onBindItem(
@@ -109,24 +106,26 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
                 item: LocaleTaskBean
             ) {
                 val viewHolder = holder as LocaleTaskViewHolder
-                if (item.title.isNotEmpty()) {
-                    viewHolder.binding.tvTitle.text = item.title
-                    viewHolder.binding.tvTitle.visibility = View.VISIBLE
-                }
-                viewHolder.binding.tvContent.text = item.content
-                viewHolder.binding.stvFinish.setOnClickListener {
-                    saveDialog(
-                        "确定完成当前任务吗？",
-                        viewHolder.absoluteAdapterPosition,
-                        UPDATE_TASK
-                    )
-                }
-                viewHolder.binding.tvDelete.setOnClickListener {
-                    saveDialog(
-                        "确定删除当前任务吗？",
-                        viewHolder.absoluteAdapterPosition,
-                        DELETE_TASK
-                    )
+                viewHolder.binding.run {
+                    if (item.title.isNotEmpty()) {
+                        tvTitle.text = item.title
+                        tvTitle.visibility = View.VISIBLE
+                    }
+                    tvContent.text = item.content
+                    stvFinish.setOnClickListener {
+                        saveDialog(
+                            "确定完成当前任务吗？",
+                            viewHolder.absoluteAdapterPosition,
+                            UPDATE_TASK
+                        )
+                    }
+                    tvDelete.setOnClickListener {
+                        saveDialog(
+                            "确定删除当前任务吗？",
+                            viewHolder.absoluteAdapterPosition,
+                            DELETE_TASK
+                        )
+                    }
                 }
             }
 
@@ -250,12 +249,13 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
                     viewBinding: ViewBinding
                 ) {
                     super.convertView(holder, dialogFragment, viewBinding)
-                    val binding: DialogTipBinding = viewBinding as DialogTipBinding
-                    binding.tvTitle.text = title
-                    binding.tvLeft.setOnClickListener { dialogFragment.dismiss() }
-                    binding.tvRight.setOnClickListener {
-                        dialogFragment.dismiss()
-                        initType(position, type)
+                    (viewBinding as? DialogTipBinding)?.apply {
+                        tvTitle.text = title
+                        tvLeft.setOnClickListener { dialogFragment.dismiss() }
+                        tvRight.setOnClickListener {
+                            dialogFragment.dismiss()
+                            initType(position, type)
+                        }
                     }
                 }
             }).setAnimStyle(BaseDialogFragment.CENTER).setGravity(BaseDialogFragment.CENTER)
@@ -264,11 +264,8 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
             )
     }
 
-    internal class LocaleTaskViewHolder(itemView: ItemTodayUndeterminedListBinding) :
-        ComViewHolder(itemView.root) {
-        var binding: ItemTodayUndeterminedListBinding = itemView
-
-    }
+    internal class LocaleTaskViewHolder(val binding: ItemTodayUndeterminedListBinding) :
+        ComViewHolder(binding.root)
 
     override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
         FragmentToDoCurBinding.inflate(inflater, parent, false)

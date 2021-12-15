@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentTodayUndeterminedBinding
+import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.proappkotlin.utils.ViewPager2Utils
 import com.yinp.tools.view.ColorFlipPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -21,8 +22,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -54,7 +53,7 @@ class TodayUndeterminedFragment : BaseFragment<FragmentTodayUndeterminedBinding>
 
     private fun initIndicator() {
         bd.materialViewPager.adapter = ViewPager2Utils.getAdapter(this, fragments)
-        val titleList: List<String> = ArrayList(listOf("当前", "历史"))
+        val titleList = mutableListOf("当前", "历史")
         bd.materialIndicator.setBackgroundColor(Color.WHITE)
         val commonNavigator7 = CommonNavigator(context)
         commonNavigator7.isAdjustMode = true
@@ -64,29 +63,25 @@ class TodayUndeterminedFragment : BaseFragment<FragmentTodayUndeterminedBinding>
             }
 
             override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-                val simplePagerTitleView: SimplePagerTitleView = ColorFlipPagerTitleView(context)
-                simplePagerTitleView.text = titleList[index]
-                simplePagerTitleView.normalColor =
-                    ContextCompat.getColor(requireContext(), R.color._999)
-                simplePagerTitleView.selectedColor =
-                    ContextCompat.getColor(requireContext(), R.color.ff4d4d)
-                simplePagerTitleView.textSize = 14f
-                simplePagerTitleView.setOnClickListener { v: View? ->
-                    bd.materialViewPager.currentItem = index
+                return ColorFlipPagerTitleView(context).apply {
+                    text = titleList[index]
+                    normalColor = ContextCompat.getColor(requireContext(), R.color._999)
+                    selectedColor = ContextCompat.getColor(requireContext(), R.color.ff4d4d)
+                    textSize = 14f
+                    setOnClickListener { bd.materialViewPager.currentItem = index }
                 }
-                return simplePagerTitleView
             }
 
             override fun getIndicator(context: Context): IPagerIndicator {
-                val indicator = LinePagerIndicator(context)
-                indicator.mode = LinePagerIndicator.MODE_EXACTLY
-                indicator.lineHeight = UIUtil.dip2px(context, 4.0).toFloat()
-                indicator.lineWidth = UIUtil.dip2px(context, 56.0).toFloat()
-                indicator.roundRadius = UIUtil.dip2px(context, 2.0).toFloat()
-                indicator.startInterpolator = AccelerateInterpolator()
-                indicator.endInterpolator = DecelerateInterpolator(2.0f)
-                indicator.setColors(ContextCompat.getColor(context, R.color.ff4d4d))
-                return indicator
+                return LinePagerIndicator(context).apply {
+                    mode = LinePagerIndicator.MODE_EXACTLY
+                    lineHeight = AppUtils.dpToPx(context, 4.0f)
+                    lineWidth = AppUtils.dpToPx(context, 56.0f)
+                    roundRadius = AppUtils.dpToPx(context, 2.0f)
+                    startInterpolator = AccelerateInterpolator()
+                    endInterpolator = DecelerateInterpolator(2.0f)
+                    setColors(ContextCompat.getColor(context, R.color.ff4d4d))
+                }
             }
         }
         bd.materialIndicator.navigator = commonNavigator7

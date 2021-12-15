@@ -63,8 +63,8 @@ object FCM_judge {
         provinceItemList: List<ProvinceItem>,
         vararg positions: Int
     ): Boolean {
-        for (i in 0 until positions.size) {
-            if (provinceItemList[positions[i]].selectColor === curColor) {
+        for (element in positions) {
+            if (provinceItemList[element].selectColor == curColor) {
                 return true
             }
         }

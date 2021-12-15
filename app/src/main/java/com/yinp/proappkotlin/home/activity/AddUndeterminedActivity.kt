@@ -21,10 +21,9 @@ class AddUndeterminedActivity : BaseActivity<ActivityAddUndeterminedBinding>() {
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if (v === bd.header.headerBackImg) {
-            finish()
-        } else if (v === bd.stvSave) {
-            saveDialog()
+        when (v) {
+            bd.header.headerBackImg -> finish()
+            bd.stvSave -> saveDialog()
         }
     }
 

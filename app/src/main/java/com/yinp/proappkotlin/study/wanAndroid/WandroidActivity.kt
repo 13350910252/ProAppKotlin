@@ -21,7 +21,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -49,8 +48,7 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
 //        fragments.put(6, WanOfficialAccountFragment.getInstance())
 //        fragments.put(7, WanProjectClassifyFragment.getInstance())
         bd.materialViewPager.adapter = ViewPager2Utils.getAdapter(this, fragments)
-        val titleList: List<String> =
-            ArrayList(listOf("首页", "广场", "导航", "问答", "体系", "项目", "公众号", "项目分类"))
+        val titleList = mutableListOf("首页", "广场", "导航", "问答", "体系", "项目", "公众号", "项目分类")
         bd.materialIndicator.setBackgroundColor(Color.WHITE)
         val commonNavigator7 = CommonNavigator(mContext)
         commonNavigator7.adapter = object : CommonNavigatorAdapter() {
@@ -59,39 +57,39 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
             }
 
             override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-                val simplePagerTitleView = SimplePagerTitlePictureView(context)
-                simplePagerTitleView.text = titleList[index]
-                simplePagerTitleView.setNormalColor(
-                    ContextCompat.getColor(
-                        mContext,
-                        R.color.b8b8b8
+                return SimplePagerTitlePictureView(context).apply {
+                    text = titleList[index]
+                    setNormalColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.b8b8b8
+                        )
                     )
-                )
-                simplePagerTitleView.textSize = 16f
-                simplePagerTitleView.setSelectedColor(
-                    ContextCompat.getColor(
-                        mContext, R.color.ff4d4d
+                    textSize = 16f
+                    setSelectedColor(
+                        ContextCompat.getColor(
+                            mContext, R.color.ff4d4d
+                        )
                     )
-                )
-                simplePagerTitleView.setOnClickListener {
-                    bd.materialViewPager.setCurrentItem(
-                        index,
-                        false
-                    )
+                    setOnClickListener {
+                        bd.materialViewPager.setCurrentItem(
+                            index,
+                            false
+                        )
+                    }
                 }
-                return simplePagerTitleView
             }
 
             override fun getIndicator(context: Context): IPagerIndicator {
-                val indicator = LinePagerIndicator(context)
-                indicator.mode = LinePagerIndicator.MODE_EXACTLY
-                indicator.lineHeight = UIUtil.dip2px(context, 0.0).toFloat()
-                indicator.lineWidth = UIUtil.dip2px(context, 56.0).toFloat()
-                indicator.roundRadius = UIUtil.dip2px(context, 3.0).toFloat()
-                indicator.startInterpolator = AccelerateInterpolator()
-                indicator.endInterpolator = DecelerateInterpolator(2.0f)
-                indicator.setColors(resources.getColor(R.color.ff4d4d))
-                return indicator
+                return LinePagerIndicator(context).apply {
+                    mode = LinePagerIndicator.MODE_EXACTLY
+                    lineHeight = UIUtil.dip2px(context, 0.0).toFloat()
+                    lineWidth = UIUtil.dip2px(context, 56.0).toFloat()
+                    roundRadius = UIUtil.dip2px(context, 3.0).toFloat()
+                    startInterpolator = AccelerateInterpolator()
+                    endInterpolator = DecelerateInterpolator(2.0f)
+                    setColors(ContextCompat.getColor(context, R.color.ff4d4d))
+                }
             }
         }
         bd.materialIndicator.navigator = commonNavigator7

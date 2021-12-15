@@ -13,12 +13,16 @@ import java.util.*
  * package   :com.yinp.proappkotlin.recreation.game
  * describe  :
  */
-class GluttonousSnakeView: View {
-    constructor(context: Context?, attrs: AttributeSet?):super(context, attrs) {
+class GluttonousSnakeView : View {
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         init()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int):super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         init()
     }
 
@@ -29,68 +33,76 @@ class GluttonousSnakeView: View {
     /**
      * 蛇
      */
-    private var snakePaint: Paint? = null
-    private var snakePaint2: Paint? = null
+    private val snakePaint by lazy {
+        Paint().apply {
+            style = Paint.Style.STROKE
+            strokeWidth = snakeWidth.toFloat()
+            color = Color.RED
+        }
+    }
+    private val snakePaint2 by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
+            strokeWidth = snakeWidth.toFloat()
+            color = Color.TRANSPARENT
+        }
+    }
     private var snakeWidth = 0
 
     /**
      * 食物
      */
-    private var foodPaint: Paint? = null
+    private val foodPaint by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
+            color = Color.BLUE
+            strokeWidth = snakeWidth.toFloat()
+        }
+    }
     private var foodPoint: Point? = null
 
     /**
      * 边框
      */
-    private var borderPaint: Paint? = null
-    private var borderRect: Rect? = null
+    private val borderPaint by lazy {
+        Paint().apply {
+            strokeWidth = mPadding.toFloat()
+            color = Color.RED
+            style = Paint.Style.STROKE
+        }
+    }
+    private lateinit var borderRect: Rect
 
-    private val part = 50 //能被100整除
+    private val mPart = 50 //能被100整除
 
 
     private fun init() {
-        snakePaint = Paint()
-        snakePaint2 = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
-        foodPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
-        borderPaint = Paint()
-        borderPaint!!.strokeWidth = padding.toFloat()
-        borderPaint!!.color = Color.RED
-        borderPaint!!.style = Paint.Style.STROKE
     }
 
-    private var mWidth= 0 //当前view的宽度
+    private var mWidth = 0 //当前view的宽度
 
-    private var mHeight= 0 //当前view的高度
+    private var mHeight = 0 //当前view的高度
 
-    var isFirst = true
-    private var totalLRWidth = 0 //左右间距之和
+    private var mFirst = true
+    private var mTotalLRWidth = 0 //左右间距之和
 
-    private val padding = 4 //边框
+    private val mPadding = 4 //边框
 
-    private var duration = 60 //蛇的移动速度
+    private var mDuration = 60 //蛇的移动速度
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val screenWidth = AppUtils.getWidthPixels(context) as Int
-        val screenHeight = AppUtils.getHeightPixels(context) as Int
-        totalLRWidth = 100 + screenWidth % 100 - padding * 2
-        mHeight = screenWidth - totalLRWidth - padding * 2
+        val screenWidth = AppUtils.getWidthPixels(context)
+        val screenHeight = AppUtils.getHeightPixels(context)
+        mTotalLRWidth = 100 + screenWidth % 100 - mPadding * 2
+        mHeight = screenWidth - mTotalLRWidth - mPadding * 2
         mWidth = mHeight
-        borderRect = Rect(padding, padding, mWidth - padding, mHeight - padding)
-        if (isFirst) {
-            snakeWidth = mWidth / part
-            snakePaint!!.style = Paint.Style.STROKE
-            snakePaint!!.strokeWidth = snakeWidth.toFloat()
-            snakePaint!!.color = Color.RED
-            snakePaint2!!.strokeWidth = snakeWidth.toFloat()
-            snakePaint2!!.color = Color.TRANSPARENT
-            foodPaint!!.color = Color.BLUE
-            foodPaint!!.strokeWidth = snakeWidth.toFloat()
+        borderRect = Rect(mPadding, mPadding, mWidth - mPadding, mHeight - mPadding)
+        if (mFirst) {
+            snakeWidth = mWidth / mPart
             initSnakeAndFood()
-            isFirst = false
+            mFirst = false
         }
-        setMeasuredDimension(mWidth + padding * 2, mHeight + padding * 2)
+        setMeasuredDimension(mWidth + mPadding * 2, mHeight + mPadding * 2)
     }
 
     /**
@@ -117,7 +129,7 @@ class GluttonousSnakeView: View {
         }
         if (aLinkList.isFirstRepetition() || aLinkList.first!!.x >= mWidth || aLinkList.first!!.x <= 0 || aLinkList.first!!.y >= mHeight || aLinkList.first!!.y <= 0) {
             timer!!.cancel()
-            duration = 100
+            mDuration = 100
             isRun = false
             isEnd = true
             timer = null
@@ -125,7 +137,7 @@ class GluttonousSnakeView: View {
         } else {
             if (foodPoint!!.x == aLinkList.first!!.x && foodPoint!!.y == aLinkList.first!!.y) {
                 foodPoint = null
-                duration -= 4
+                mDuration -= 4
             } else {
                 aLinkList.removeLast()
             }
@@ -162,28 +174,29 @@ class GluttonousSnakeView: View {
             }
         }
         if (timer == null) {
-            timer = Timer()
-            timer!!.schedule(timerTask, 0, duration.toLong())
+            timer = Timer().apply {
+                schedule(timerTask, 0, mDuration.toLong())
+            }
         }
     }
 
     fun reStart() {
-        if (timer != null) {
-            timer!!.cancel()
+        timer = timer?.run {
+            cancel()
+            null
         }
-        duration = 100
+        mDuration = 100
         isRun = false
         isEnd = true
-        timer = null
         timerTask = null
         startMove()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPoints(aLinkList.getAll()!!, snakePaint!!)
-        canvas.drawPoint(foodPoint!!.x.toFloat(), foodPoint!!.y.toFloat(), foodPaint!!)
-        canvas.drawRect(borderRect!!, borderPaint!!)
+        canvas.drawPoints(aLinkList.getAll()!!, snakePaint)
+        canvas.drawPoint(foodPoint!!.x.toFloat(), foodPoint!!.y.toFloat(), foodPaint)
+        canvas.drawRect(borderRect, borderPaint)
     }
 
     /**
@@ -191,16 +204,16 @@ class GluttonousSnakeView: View {
      */
     private fun randomFood() {
         val random = Random()
-        var x = random.nextInt(part)
-        var y = random.nextInt(part)
+        var x = random.nextInt(mPart)
+        var y = random.nextInt(mPart)
         if (x == 0) {
             x = 1
         }
         if (y == 0) {
             y = 1
         }
-        val `is`: Boolean = aLinkList.contains(x * snakeWidth, y * snakeWidth)
-        if (!`is`) {
+        val hasFood: Boolean = aLinkList.contains(x * snakeWidth, y * snakeWidth)
+        if (!hasFood) {
             foodPoint = Point(x * snakeWidth, y * snakeWidth)
         } else {
             randomFood()
@@ -211,11 +224,13 @@ class GluttonousSnakeView: View {
      * 初始化蛇的位置和食物的位置，表示重开
      */
     private fun initSnakeAndFood() {
-        aLinkList.clearAll()
-        aLinkList.insertFirst(mWidth / 2, mWidth / 2)
-        aLinkList.insertFirst(mWidth / 2 + snakeWidth, mWidth / 2)
-        aLinkList.insertFirst(mWidth / 2 + snakeWidth * 2, mWidth / 2)
-        aLinkList.insertFirst(mWidth / 2 + snakeWidth * 3, mWidth / 2)
+        aLinkList.run {
+            clearAll()
+            insertFirst(mWidth / 2, mWidth / 2)
+            insertFirst(mWidth / 2 + snakeWidth, mWidth / 2)
+            insertFirst(mWidth / 2 + snakeWidth * 2, mWidth / 2)
+            insertFirst(mWidth / 2 + snakeWidth * 3, mWidth / 2)
+        }
         randomFood()
     }
 
@@ -224,21 +239,23 @@ class GluttonousSnakeView: View {
      */
     fun stopMove() {
         isRun = false
-        timer!!.cancel()
-        timer = null
+        timer = timer?.run {
+            cancel()
+            null
+        }
     }
 
     /**
      * 结束时
      */
     fun remove() {
-        if (timer != null) {
-            timer!!.cancel()
-            timer = null
+        timer = timer?.run {
+            cancel()
+            null
         }
-        if (timerTask != null) {
-            timerTask!!.cancel()
-            timerTask = null
+        timerTask = timerTask?.run {
+            cancel()
+            null
         }
     }
 }

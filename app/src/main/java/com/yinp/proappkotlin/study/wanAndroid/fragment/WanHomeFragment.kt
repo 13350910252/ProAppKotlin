@@ -38,15 +38,14 @@ import java.util.*
  */
 class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
     private lateinit var bannerAdapter: WanHomeBannerAdapter
-    private var listBanner = ArrayList<HomeBannerData>()
+    private var listBanner = mutableListOf<HomeBannerData>()
 
-    private val dataList = ArrayList<WanHomeListData.Data>()
+    private val dataList = mutableListOf<WanHomeListData.Data>()
     private lateinit var commonAdapter: CommonAdapter<WanHomeListData.Data>
 
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
-
 
     private var page = 0
 
