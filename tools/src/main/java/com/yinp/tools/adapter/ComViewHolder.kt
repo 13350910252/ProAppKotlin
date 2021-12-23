@@ -16,7 +16,8 @@ abstract class ComViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
         itemView.setOnClickListener(this)
         itemView.setOnLongClickListener(this)
     }
-    var mOnItemClickListener: OnItemClickListener? = null
+
+    private var mOnItemClickListener: OnItemClickListener? = null
     override fun onClick(v: View?) {
         if (mOnItemClickListener != null) {
             mOnItemClickListener!!.onItemClick(layoutPosition, v)

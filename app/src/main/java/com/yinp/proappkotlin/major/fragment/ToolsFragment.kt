@@ -118,12 +118,12 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
             parent: RecyclerView,
             state: RecyclerView.State
         ) {
-            when {
-                parent.getChildAdapterPosition(view) % space == 0 -> {
+            when (parent.getChildAdapterPosition(view) % space) {
+                0 -> {
                     outRect.left = AppUtils.dpToPx(context, 20.0f)
                     outRect.right = AppUtils.dpToPx(context, 10.0f)
                 }
-                parent.getChildAdapterPosition(view) % space == 1 -> {
+                1 -> {
                     outRect.left = AppUtils.dpToPx(context, 10.0f)
                     outRect.right = AppUtils.dpToPx(context, 10.0f)
                 }

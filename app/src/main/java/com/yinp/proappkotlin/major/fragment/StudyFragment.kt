@@ -68,16 +68,17 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
                     viewBinding: ViewBinding
                 ) {
                     mDialogFragment = dialogFragment as CommonDialogFragment
-                    val binding = viewBinding as ItemTwoSelectBinding
-                    binding.tsvSelect.setcLickListener(object : TwoSelectView.CLickListener() {
-                        override fun click(isLeft: Boolean) {
-                            if (isLeft) {
-                                goToActivity(JiGuangLoginActivity::class.java)
-                            } else {
-                                goToActivity(JiGuangShareActivity::class.java)
+                    (viewBinding as? ItemTwoSelectBinding)?.let {
+                        it.tsvSelect.setcLickListener(object : TwoSelectView.CLickListener() {
+                            override fun click(isLeft: Boolean) {
+                                if (isLeft) {
+                                    goToActivity(JiGuangLoginActivity::class.java)
+                                } else {
+                                    goToActivity(JiGuangShareActivity::class.java)
+                                }
                             }
-                        }
-                    })
+                        })
+                    }
                 }
             }).setAnimStyle(R.style.CenterDialogAnimation).setGravity(BaseDialogFragment.CENTER)
             .setPercent(false, false).show(childFragmentManager)

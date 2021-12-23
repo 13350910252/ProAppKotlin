@@ -105,8 +105,7 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
                 position: Int,
                 item: LocaleTaskBean
             ) {
-                val viewHolder = holder as LocaleTaskViewHolder
-                viewHolder.binding.run {
+                (holder as? LocaleTaskViewHolder)?.binding?.run {
                     if (item.title.isNotEmpty()) {
                         tvTitle.text = item.title
                         tvTitle.visibility = View.VISIBLE
@@ -115,14 +114,14 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
                     stvFinish.setOnClickListener {
                         saveDialog(
                             "确定完成当前任务吗？",
-                            viewHolder.absoluteAdapterPosition,
+                            holder.absoluteAdapterPosition,
                             UPDATE_TASK
                         )
                     }
                     tvDelete.setOnClickListener {
                         saveDialog(
                             "确定删除当前任务吗？",
-                            viewHolder.absoluteAdapterPosition,
+                            holder.absoluteAdapterPosition,
                             DELETE_TASK
                         )
                     }
@@ -137,16 +136,18 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
         bd.rvList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                (linearLayoutManager ?: recyclerView.layoutManager as LinearLayoutManager?)?.let {
-                    totalCount = it.itemCount
-                    visiblePosition = it.findLastVisibleItemPosition()
-                    (totalCount == 0).or(visiblePosition == 0).not().let {
-                        if (isMore.and(dy > 0).and(totalCount.rem(visiblePosition) == 2)) {
-                            isMore = false
+                mLinearLayoutManager =
+                    mLinearLayoutManager ?: recyclerView.layoutManager as? LinearLayoutManager
+                mLinearLayoutManager?.let {
+                    mTotalCount = it.itemCount
+                    mVisiblePosition = it.findLastVisibleItemPosition()
+                    (mTotalCount == 0).or(mVisiblePosition == 0).not().let {
+                        if (mCanGet.and(dy > 0).and(mTotalCount.rem(mVisiblePosition) == 2)) {
+                            mCanGet = false
                             page++
                             getDataList()
-                        } else if (totalCount.rem(visiblePosition) != 2) {
-                            isMore = true
+                        } else if (mTotalCount.rem(mVisiblePosition) != 2) {
+                            mCanGet = true
                         }
                     }
                 }
@@ -154,10 +155,10 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
         })
     }
 
-    private var totalCount = -1
-    private var visiblePosition = -1
-    private var linearLayoutManager: LinearLayoutManager? = null
-    private var isMore = false
+    private var mTotalCount = -1
+    private var mVisiblePosition = -1
+    private var mLinearLayoutManager: LinearLayoutManager? = null
+    private var mCanGet = false
 
     private var page = 1
 
@@ -248,7 +249,6 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
                     dialogFragment: BaseDialogFragment,
                     viewBinding: ViewBinding
                 ) {
-                    super.convertView(holder, dialogFragment, viewBinding)
                     (viewBinding as? DialogTipBinding)?.apply {
                         tvTitle.text = title
                         tvLeft.setOnClickListener { dialogFragment.dismiss() }

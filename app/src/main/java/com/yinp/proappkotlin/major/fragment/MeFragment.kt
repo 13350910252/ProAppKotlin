@@ -59,7 +59,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
                 MMKVUtils.saveValue(SpConstants.HEAD_PICTURE, selectTakePhoto.imageUri.toString())
             } else if (selectTakePhoto.type == SELECT_PHOTO) {
                 if (data != null) {
-                    val url: String = selectTakePhoto.handleImageOnKitKat(requireContext(), data)
+                    val url = selectTakePhoto.handleImageOnKitKat(requireContext(), data)
                     GlideUtils.intoRadius(requireContext(), url, bd.ivHead, 100, true)
                 }
             }

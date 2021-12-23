@@ -93,27 +93,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
 
             override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-                val simplePagerTitleView = SimplePagerTitlePictureView(context)
-                simplePagerTitleView.text = titleList[index]
-                simplePagerTitleView.setNormalColor(ContextCompat.getColor(context, R.color.b8b8b8))
-                simplePagerTitleView.textSize = 16f
-                when (index) {
-                    0 -> {
-                        simplePagerTitleView.setmNormalDrawable(R.mipmap.task)
-                        simplePagerTitleView.setmSelectedDrawable(R.mipmap.task_s)
+                return SimplePagerTitlePictureView(context).apply {
+                    text = titleList[index]
+                    setNormalColor(ContextCompat.getColor(context, R.color.b8b8b8))
+                    textSize = 16f
+                    when (index) {
+                        0 -> {
+                            setmNormalDrawable(R.mipmap.task)
+                            setmSelectedDrawable(R.mipmap.task_s)
+                        }
+                        1 -> {
+                            setmNormalDrawable(R.mipmap.label)
+                            setmSelectedDrawable(R.mipmap.label_s)
+                        }
                     }
-                    1 -> {
-                        simplePagerTitleView.setmNormalDrawable(R.mipmap.label)
-                        simplePagerTitleView.setmSelectedDrawable(R.mipmap.label_s)
+                    setSelectedColor(
+                        ContextCompat.getColor(context, R.color.ff4d4d)
+                    )
+                    setOnClickListener {
+                        bd.materialViewPager.currentItem = index
                     }
                 }
-                simplePagerTitleView.setSelectedColor(
-                    ContextCompat.getColor(context, R.color.ff4d4d)
-                )
-                simplePagerTitleView.setOnClickListener {
-                    bd.materialViewPager.currentItem = index
-                }
-                return simplePagerTitleView
             }
 
             override fun getIndicator(context: Context): IPagerIndicator {

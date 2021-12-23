@@ -59,39 +59,40 @@ class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
                 position: Int,
                 item: LocaleTaskBean
             ) {
-                val viewHolder = holder as LocaleTaskViewHolder
-                if (!TextUtils.isEmpty(item.title)) {
-                    viewHolder.binding.tvTitle.text = item.title
-                    viewHolder.binding.tvTitle.visibility = View.VISIBLE
-                }
-                viewHolder.binding.tvContent.text = item.content
-                viewHolder.binding.tvDate.text = item.date.toString() + " " + item.time
-                if (item.isFinish == 1) {
-                    viewHolder.binding.tvStatus.text = "已完成"
-                    viewHolder.binding.ccvPoint.changeColor(requireContext(), R.color._59d281)
-                    viewHolder.binding.tvStatus.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(), R.color._59d281
+                (holder as? LocaleTaskViewHolder)?.binding?.run {
+                    if (!TextUtils.isEmpty(item.title)) {
+                        tvTitle.text = item.title
+                        tvTitle.visibility = View.VISIBLE
+                    }
+                    tvContent.text = item.content
+                    tvDate.text = "${item.date} ${item.time}"
+                    if (item.isFinish == 1) {
+                        tvStatus.text = "已完成"
+                        ccvPoint.changeColor(requireContext(), R.color._59d281)
+                        tvStatus.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(), R.color._59d281
+                            )
                         )
-                    )
-                    viewHolder.binding.sllStatus.setBackgroundColor(
-                        ContextCompat.getColor(
-                            requireContext(), R.color._1559d281
+                        sllStatus.setBackgroundColor(
+                            ContextCompat.getColor(
+                                requireContext(), R.color._1559d281
+                            )
                         )
-                    )
-                } else {
-                    viewHolder.binding.tvStatus.text = "未完成"
-                    viewHolder.binding.ccvPoint.changeColor(requireContext(), R.color.fb5c5c)
-                    viewHolder.binding.tvStatus.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(), R.color.fb5c5c
+                    } else {
+                        tvStatus.text = "未完成"
+                        ccvPoint.changeColor(requireContext(), R.color.fb5c5c)
+                        tvStatus.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(), R.color.fb5c5c
+                            )
                         )
-                    )
-                    viewHolder.binding.sllStatus.setBackgroundColor(
-                        ContextCompat.getColor(
-                            requireContext(), R.color._15fb5c5c
+                        sllStatus.setBackgroundColor(
+                            ContextCompat.getColor(
+                                requireContext(), R.color._15fb5c5c
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
@@ -102,29 +103,30 @@ class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
         bd.rvList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (linearLayoutManager == null) {
-                    linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
+                mLinearLayoutManager =
+                    mLinearLayoutManager ?: recyclerView.layoutManager as? LinearLayoutManager
+                mLinearLayoutManager?.run {
+                    mTotalCount = itemCount
+                    mVisiblePosition = findLastVisibleItemPosition()
+                    if (mCanGet && dy > 0 && mTotalCount % mVisiblePosition == 2) {
+                        mCanGet = false
+                        page++
+                        getDataList()
+                    } else if (mTotalCount % mVisiblePosition != 2) {
+                        mCanGet = true
+                    }
                 }
-                if (linearLayoutManager == null) {
-                    return
-                }
-                totalCount = linearLayoutManager!!.itemCount
-                visiblePosition = linearLayoutManager!!.findLastVisibleItemPosition()
-                if (`is` && dy > 0 && totalCount % visiblePosition == 2) {
-                    `is` = false
-                    page++
-                    getDataList()
-                } else if (totalCount % visiblePosition != 2) {
-                    `is` = true
-                }
+
             }
         })
     }
 
-    private var totalCount = -1
-    private var visiblePosition = -1
-    private var linearLayoutManager: LinearLayoutManager? = null
-    private var `is` = false
+    private var mTotalCount = -1
+    private var mVisiblePosition = -1
+    private var mLinearLayoutManager: LinearLayoutManager? = null
+
+    //表示是否可以刷新了
+    private var mCanGet = false
     private var page = 1
 
     /**
