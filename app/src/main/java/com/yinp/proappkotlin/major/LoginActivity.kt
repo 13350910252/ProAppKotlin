@@ -15,10 +15,10 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
-        initClick(this, bd.stvLogin)
+        initClick(bd.stvLogin)
     }
 
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
             bd.stvLogin -> goToActivity<MajorActivity>()

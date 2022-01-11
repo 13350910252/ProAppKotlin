@@ -14,12 +14,12 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
 class AddUndeterminedActivity : BaseActivity<ActivityAddUndeterminedBinding>() {
     override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
-        initClick(this, bd.header.headerBackImg, bd.stvSave)
+        initClick( bd.header.headerBackImg, bd.stvSave)
         bd.header.headerCenterTitle.text = "添加任务今日"
 //        localeTaskBeanDaoUtils = DaoUtils(LocaleTaskBean::class.java, App.daoSession.getLocaleTaskBeanDao())
     }
 
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
             bd.header.headerBackImg -> finish()

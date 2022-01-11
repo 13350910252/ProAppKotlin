@@ -3,6 +3,7 @@ package com.yinp.proappkotlin.web
 import com.yinp.proappkotlin.home.bean.HomeBannerData
 import com.yinp.proappkotlin.study.wanAndroid.data.*
 import com.yinp.proappkotlin.web.data.WanAndroidData
+import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -70,4 +71,29 @@ interface ApiService {
      */
     @GET("article/listproject/{page}/json")
     suspend fun getProjectList(@Path("page") page: Int): WanAndroidData<WanProjectListData>
+
+    /**
+     * 获取自己得积分
+     *
+     * @return
+     */
+    @GET("lg/coin/userinfo/json")
+    suspend fun getIntegral(): WanAndroidData<IntegralBean>
+
+    /**
+     * 退出WanAndroid登录
+     * https://www.wanandroid.com/user/logout/json
+     *
+     * @return
+     */
+    @GET("user/logout/json")
+    suspend fun loginOut(): WanAndroidData<String>
+
+    /**
+     * 获取积分排行榜
+     *
+     * @return
+     */
+    @GET("coin/rank/{page}/json")
+    suspend fun getRankList(@Path("page") page: Int): WanAndroidData<RankListBean>
 }

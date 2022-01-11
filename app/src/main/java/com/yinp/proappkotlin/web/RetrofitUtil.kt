@@ -1,6 +1,7 @@
-
 import com.google.gson.Gson
 import com.lp.myapplication.net.Interceptor
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.yinp.proappkotlin.web.ApiService
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -9,6 +10,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 class RetrofitUtil {
@@ -30,8 +32,10 @@ class RetrofitUtil {
          * wandroid的专属
          */
         val wandroidApiService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
             (Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(Gson()))
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) //设置gson转换器,将返回的json数据转为实体（自定义factory解密）
                 .baseUrl("https://www.wanandroid.com") //设置CallAdapter
                 .client(okHttpClient)

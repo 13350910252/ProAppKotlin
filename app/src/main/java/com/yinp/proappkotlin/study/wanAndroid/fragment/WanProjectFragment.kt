@@ -35,7 +35,7 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
     private val dataList = ArrayList<WanProjectListData.DataX>()
     private lateinit var adapter: CommonAdapter<WanProjectListData.DataX>
     private var page = 0
-    var isLoad: Boolean = true
+    var isLoad = true
 
     private val viewModel by lazy {
         ViewModelProvider(this)[WanProjectViewModel::class.java]

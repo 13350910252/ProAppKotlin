@@ -49,7 +49,7 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
     private var mUrl: String? = null
     override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
-        initClick(this, bd.header.headerBackImg)
+        initClick(bd.header.headerBackImg)
         val intent = intent
         intent?.let {
             mTitle = it.getStringExtra(KEY_TITLE)
@@ -68,11 +68,10 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
         }
     }
 
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
         super.onClick(v)
-        if (v === bd.header.headerBackImg) {
-            //直接推出整个页面
-            finish()
+        when (v) {
+            bd.header.headerBackImg -> finish()
         }
     }
 
@@ -100,7 +99,5 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
         super.onDestroy()
     }
 
-    override fun getBinding(): ActivityWebViewBinding {
-        return ActivityWebViewBinding.inflate(layoutInflater)
-    }
+    override fun getBinding() = ActivityWebViewBinding.inflate(layoutInflater)
 }

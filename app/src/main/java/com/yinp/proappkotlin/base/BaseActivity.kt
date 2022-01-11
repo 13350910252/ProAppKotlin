@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.utils.StatusBarUtil
+import com.yinp.tools.utils.LoadingUtils
 
 abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClickListener {
     protected lateinit var bd: VB
@@ -39,13 +40,13 @@ abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClick
     /**
      * 初始化点击事件
      */
-    protected fun initClick(listener: View.OnClickListener, vararg views: View) {
+    protected fun initClick(vararg views: View) {
         for (element in views) {
-            element.setOnClickListener(listener)
+            element.setOnClickListener(this)
         }
     }
 
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
 
     }
 
@@ -55,4 +56,30 @@ abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClick
      * 获取布局
      */
     protected abstract fun getBinding(): VB
+
+    protected open fun bindData() {}
+
+
+    /**
+     * 显示加载
+     */
+    private val loading by lazy {
+        LoadingUtils()
+    }
+
+    protected fun showLoading(text: String) {
+        loading.show(supportFragmentManager, text)
+    }
+
+    protected fun showLoading(text: String, tag: String) {
+        loading.show(supportFragmentManager, text, tag)
+    }
+
+    protected fun hideLoading(tag: String) {
+        loading.close(tag)
+    }
+
+    protected fun hideLoading() {
+        loading.closeAll()
+    }
 }

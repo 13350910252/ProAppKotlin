@@ -10,8 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
+import com.yinp.proappkotlin.base.goToActivity
 import com.yinp.proappkotlin.databinding.ActivityWandroidBinding
 import com.yinp.proappkotlin.study.wanAndroid.fragment.*
+import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.proappkotlin.utils.StatusBarUtil
 import com.yinp.proappkotlin.utils.ViewPager2Utils
 import com.yinp.proappkotlin.view.SimplePagerTitlePictureView
@@ -34,7 +36,7 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this))
         bd.header.headerCenterTitle.text = "玩Android"
         bd.header.headerEnd.setImageResource(R.mipmap.common_software)
-        initClick(this, bd.header.headerBackImg, bd.header.headerEnd, bd.ivMe)
+        initClick(bd.header.headerBackImg, bd.header.headerEnd, bd.ivMe)
         initIndicator()
     }
 
@@ -45,8 +47,8 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
         fragments.put(3, WanQuestionAnswerFragment.getInstance())
         fragments.put(4, WanSystemFragment.getInstance())
         fragments.put(5, WanProjectFragment.getInstance())
-//        fragments.put(6, WanOfficialAccountFragment.getInstance())
-//        fragments.put(7, WanProjectClassifyFragment.getInstance())
+        fragments.put(6, WanOfficialAccountFragment.getInstance())
+        fragments.put(7, WanProjectClassifyFragment.getInstance())
         bd.materialViewPager.adapter = ViewPager2Utils.getAdapter(this, fragments)
         val titleList = mutableListOf("首页", "广场", "导航", "问答", "体系", "项目", "公众号", "项目分类")
         bd.materialIndicator.setBackgroundColor(Color.WHITE)
@@ -96,19 +98,19 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
         ViewPager2Utils.bind(bd.materialIndicator, bd.materialViewPager)
     }
 
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
             bd.header.headerBackImg -> finish()
             bd.ivMe -> {
-                //            if (AppUtils.isLogin(mContext)) {
-//                goToActivity(WanMeActivity::class.java)
-//            } else {
-//                DialogShow.setLoginDialog(
-//                    mContext, presenter, true,
-//                    WanMeActivity::class.java, supportFragmentManager
-//                )
-//            }
+                if (AppUtils.isLogin(mContext)) {
+                    goToActivity<WanMeActivity>()
+                } else {
+//                    DialogShow.setLoginDialog(
+//                        mContext, presenter, true,
+//                        WanMeActivity::class.java, supportFragmentManager
+//                    )
+                }
             }
         }
     }

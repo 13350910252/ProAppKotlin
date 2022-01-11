@@ -1,6 +1,7 @@
 package com.yinp.proappkotlin.study.wanAndroid.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,6 @@ import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.listener.OnBannerListener
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -112,7 +112,7 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
                     viewHolder.binding.tvStick.visibility = View.GONE
                 }
                 viewHolder.binding.tvSuperChapter.text = item.superChapterName
-                if (item.collect) {
+                if (item.collect!!) {
                     viewHolder.binding.ivCollect.setImageResource(R.mipmap.collecton_s)
                 } else {
                     viewHolder.binding.ivCollect.setImageResource(R.mipmap.collecton)
@@ -177,6 +177,9 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
                             listBanner.addAll(data)
                             bannerAdapter.setDatas(listBanner)
                             bannerAdapter.notifyDataSetChanged()
+//                            data[0].ss?.let {
+//                                Log.d("abcd", "getBannerList:fsafdafdaff ")
+//                            }
                         }
                     }
                 }
@@ -187,7 +190,7 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
     private fun getStickList() {
         viewModel.getStickList()
         lifecycleScope.launch {
-            viewModel.wanHomeListData.collect() {
+            viewModel.wanHomeListData.collect {
                 when (it) {
                     is WanResultDispose.Success -> {
                         it.data.data?.let { data ->
@@ -196,6 +199,7 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
                                 dataList.addAll(data)
                                 bd.bottom.noLl.visibility = View.GONE
                                 bd.baseRefresh.visibility = View.VISIBLE
+
                                 for (i in dataList.indices) {
                                     dataList[i].isStick = true
                                 }

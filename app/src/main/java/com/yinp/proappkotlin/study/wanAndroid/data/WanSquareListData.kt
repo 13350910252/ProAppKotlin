@@ -1,51 +1,100 @@
 package com.yinp.proappkotlin.study.wanAndroid.data
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.yinp.proappkotlin.web.data.WanAndroidData
+
 
 /**
  * @author   :yinpeng
  * date      :2021/10/28
  * package   :com.yinp.proappkotlin.study.wanAndroid.data
- * describe  :
+ * describe  : WanSquareListData
  */
+@JsonClass(generateAdapter = true)
 data class WanSquareListData(
-    val curPage: Int,
-    val datas: List<Data>?,
+    @Json(name = "curPage")
+    val curPage: Int = 0,
+    @Json(name = "datas")
+    val datas: List<Data> = listOf(),
+    @Json(name = "offset")
+    val offset: Int = 0,
+    @Json(name = "over")
+    val over: Boolean = false,
+    @Json(name = "pageCount")
+    val pageCount: Int = 0,
+    @Json(name = "size")
+    val size: Int = 0,
+    @Json(name = "total")
+    val total: Int = 0
 ) : WanAndroidData<WanSquareListData>() {
+    @JsonClass(generateAdapter = true)
     data class Data(
-        val alreadyInHomePage: Boolean,
-        val apkLink: String,
-        val audit: Int,
-        val author: String,
-        val canEdit: Boolean,
-        val chapterId: Int,
-        val chapterName: String,
-        val collect: Boolean,
-        val courseId: Int,
-        val desc: String,
-        val descMd: String,
-        val envelopePic: String,
-        val fresh: Boolean,
-        val host: String,
-        val id: Int,
-        val link: String,
-        val niceDate: String,
-        val niceShareDate: String,
-        val origin: String,
-        val prefix: String,
-        val projectLink: String,
-        val publishTime: Long,
-        val realSuperChapterId: Int,
-        val selfVisible: Int,
-        val shareDate: Long,
-        val shareUser: String,
-        val superChapterId: Int,
-        val superChapterName: String,
-        val tags: List<Any>,
-        val title: String,
-        val type: Int,
-        val userId: Int,
-        val visible: Int,
-        val zan: Int
+        @Json(name = "apkLink")
+        val apkLink: String = "",
+        @Json(name = "audit")
+        val audit: Int = 0,
+        @Json(name = "author")
+        val author: String = "",
+        @Json(name = "canEdit")
+        val canEdit: Boolean = false,
+        @Json(name = "chapterId")
+        val chapterId: Int = 0,
+        @Json(name = "chapterName")
+        val chapterName: String = "",
+        @Json(name = "collect")
+        val collect: Boolean = false,
+        @Json(name = "courseId")
+        val courseId: Int = 0,
+        @Json(name = "desc")
+        val desc: String = "",
+        @Json(name = "descMd")
+        val descMd: String = "",
+        @Json(name = "envelopePic")
+        val envelopePic: String = "",
+        @Json(name = "fresh")
+        val fresh: Boolean = false,
+        @Json(name = "host")
+        val host: String = "",
+        @Json(name = "id")
+        val id: Int = 0,
+        @Json(name = "link")
+        val link: String = "",
+        @Json(name = "niceDate")
+        val niceDate: String = "",
+        @Json(name = "niceShareDate")
+        val niceShareDate: String = "",
+        @Json(name = "origin")
+        val origin: String = "",
+        @Json(name = "prefix")
+        val prefix: String = "",
+        @Json(name = "projectLink")
+        val projectLink: String = "",
+        @Json(name = "publishTime")
+        val publishTime: Long = 0,
+        @Json(name = "realSuperChapterId")
+        val realSuperChapterId: Int = 0,
+        @Json(name = "selfVisible")
+        val selfVisible: Int = 0,
+        @Json(name = "shareDate")
+        val shareDate: Long = 0,
+        @Json(name = "shareUser")
+        val shareUser: String = "",
+        @Json(name = "superChapterId")
+        val superChapterId: Int = 0,
+        @Json(name = "superChapterName")
+        val superChapterName: String = "",
+        @Json(name = "tags")
+        val tags: List<Any> = listOf(),
+        @Json(name = "title")
+        val title: String = "",
+        @Json(name = "type")
+        val type: Int = 0,
+        @Json(name = "userId")
+        val userId: Int = 0,
+        @Json(name = "visible")
+        val visible: Int = 0,
+        @Json(name = "zan")
+        val zan: Int = 0
     )
 }

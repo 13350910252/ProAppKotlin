@@ -15,12 +15,12 @@ import com.yinp.proappkotlin.databinding.FragmentWanSquareBinding
 import com.yinp.proappkotlin.databinding.ItemWanSquareBinding
 import com.yinp.proappkotlin.study.wanAndroid.data.WanSquareListData
 import com.yinp.proappkotlin.study.wanAndroid.model.WanSquareViewModel
+import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -30,14 +30,14 @@ import java.util.*
  */
 class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
 
-    private val dataList = ArrayList<WanSquareListData.Data>()
+    private val mDataList = mutableListOf<WanSquareListData.Data>()
     private lateinit var mAdapter: CommonAdapter<WanSquareListData.Data>
-    var isLoad: Boolean = true
+    var mLoad = true
 
     private val viewModel by lazy {
         ViewModelProvider(this)[WanSquareViewModel::class.java]
     }
-    private var page = 0
+    private var mPage = 0
 
     companion object {
         fun getInstance() = WanSquareFragment().apply {
@@ -48,11 +48,12 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
     override fun initViews() {
         initRecycler()
         refresh()
+        mLoad = true
         getSquareList()
     }
 
     private fun initRecycler() {
-        mAdapter = object : CommonAdapter<WanSquareListData.Data>(requireContext(), dataList) {
+        mAdapter = object : CommonAdapter<WanSquareListData.Data>(requireContext(), mDataList) {
             override fun setComViewHolder(
                 view: View?,
                 viewType: Int,
@@ -89,7 +90,16 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
                 viewHolder.binding.tvTime.text = item.niceDate
             }
         }
+        mAdapter.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
+            override fun onItemClick(position: Int, view: View?) {
+                val item = mDataList[position]
+                if (item.link.isNotEmpty()) {
+                    JumpWebUtils.startWebView(requireContext(), item.title, item.link)
+                }
+            }
+        })
         bd.baseRecycle.layoutManager = LinearLayoutManager(context)
+        bd.baseRecycle.setHasFixedSize(true)
         bd.baseRecycle.adapter = mAdapter
     }
 
@@ -101,14 +111,14 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
         bd.baseRefresh.setRefreshFooter(ClassicsFooter(context))
         //为下来刷新添加事件
         bd.baseRefresh.setOnRefreshListener {
-            page = 0
-            isLoad = false
+            mPage = 0
+            mLoad = false
             getSquareList()
         }
         //为上拉加载添加事件
         bd.baseRefresh.setOnLoadMoreListener {
-            page++
-            isLoad = false
+            mPage++
+            mLoad = false
             getSquareList()
         }
     }
@@ -117,47 +127,44 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
      * 获取广场列表
      */
     private fun getSquareList() {
-        viewModel.getSquareList(page)
+        viewModel.getSquareList(mPage)
         lifecycleScope.launch {
-            viewModel.wanSquareListData.collect() {
+            viewModel.wanSquareListData.collect {
                 when (it) {
-                    is WanResultDispose.Start -> {
-                        if (isLoad) {
-                            showLoading("加载中...")
-                        }
-                    }
+                    is WanResultDispose.Start -> if (mLoad) showLoading("加载中...")
                     is WanResultDispose.Success -> {
                         it.data.data?.let { data ->
-                            if (data.datas.isNullOrEmpty().not()) {
-                                val length = dataList.size
-                                if (page == 0) {
-                                    dataList.clear()
-                                    dataList.addAll(data.datas!!)
+                            if (data.datas.isNotEmpty()) {
+                                val length = mDataList.size
+                                if (mPage == 0) {
+                                    mDataList.clear()
+                                    mDataList.addAll(data.datas)
                                     mAdapter.notifyDataSetChanged()
                                     bd.baseRefresh.finishRefresh(true)
                                 } else {
-                                    dataList.addAll(data.datas!!)
-                                    mAdapter.notifyItemChanged(length, dataList.size)
+                                    mDataList.addAll(data.datas)
+                                    mAdapter.notifyItemChanged(length, mDataList.size)
                                     bd.baseRefresh.finishLoadMore(true)
                                 }
                                 bd.baseRefresh.visibility = View.VISIBLE
                                 bd.bottom.noLl.setVisibility(View.GONE)
                             } else {
-                                if (page == 0) {
+                                if (mPage == 0) {
                                     bd.baseRefresh.finishRefresh(false)
                                 } else {
                                     bd.baseRefresh.finishLoadMore(false)
                                 }
                             }
                         } ?: let {
-                            if (page == 0) {
+                            if (mPage == 0) {
                                 bd.baseRefresh.visibility = View.GONE
                                 bd.bottom.noLl.visibility = View.VISIBLE
                             } else {
                                 bd.baseRefresh.finishLoadMore(false)
                             }
                         }
-                        hideLoading()
+                        if (mLoad)
+                            hideLoading()
                     }
                 }
             }

@@ -21,7 +21,6 @@ class JiGuangLoginActivity : BaseActivity<ActivityJiGuangLoginBinding>() {
         bd.header.headerCenterTitle.text = "极光登录"
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         initClick(
-            this,
             bd.header.headerBackImg,
             bd.tvLogin,
             bd.tvShare,
@@ -46,7 +45,7 @@ class JiGuangLoginActivity : BaseActivity<ActivityJiGuangLoginBinding>() {
         SelectTakePhoto()
     }
 
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
 //        super.onClick(v)
 //        when {
 //            v === bd.header.headerBackImg -> {

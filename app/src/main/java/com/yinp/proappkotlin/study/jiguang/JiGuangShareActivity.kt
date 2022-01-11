@@ -14,7 +14,7 @@ class JiGuangShareActivity : BaseActivity<ActivityJiGuangShareBinding>() {
     override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this))
         bd.header.headerCenterTitle.text = "极光分享"
-        initClick(this, bd.header.headerBackImg)
+        initClick(bd.header.headerBackImg)
     }
 
     override fun getBinding() = ActivityJiGuangShareBinding.inflate(layoutInflater)

@@ -28,7 +28,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 class AddLabelActivity : BaseActivity<ActivityAddLabelBinding>() {
     override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
-        initClick(this, bd.header.headerBackImg)
+        initClick(bd.header.headerBackImg)
 //        initIndicator();
     }
 

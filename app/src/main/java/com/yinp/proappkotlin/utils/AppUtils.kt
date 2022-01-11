@@ -2,11 +2,17 @@ package com.yinp.proappkotlin.utils
 
 import android.content.Context
 import android.os.Build
+import android.text.TextUtils
 import android.view.Window
 import android.view.WindowManager
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import com.yinp.proappkotlin.study.wanAndroid.data.WanLoginBean
+import okhttp3.Cookie
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
+import java.io.UnsupportedEncodingException
+import java.net.URLDecoder
 
 /**
  * @author   :yinpeng
@@ -102,18 +108,37 @@ object AppUtils {
         }
         return value
     }
-//    fun isLogin(context: Context?): Boolean {
-//        val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(context)
-//        val cookies: List<Cookie> = sharedPrefsCookiePersistor.loadAll()
-//        return if (cookies.isNotEmpty()) {
-//            val wanLoginBean: WanLoginBean = WanLoginBean.getUserInfo(context)
-//            if (wanLoginBean != null) {
-//                !TextUtils.isEmpty(wanLoginBean.getUsername())
-//            } else {
-//                false
-//            }
-//        } else {
-//            false
-//        }
-//    }
+
+    fun isLogin(context: Context?): Boolean {
+        val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(context)
+        val cookies: List<Cookie> = sharedPrefsCookiePersistor.loadAll()
+        return if (cookies.isNotEmpty()) {
+            val wanLoginBean = WanLoginBean.getUserInfo(context)
+            if (wanLoginBean != null) {
+                !TextUtils.isEmpty(wanLoginBean.username)
+            } else {
+                false
+            }
+        } else {
+            false
+        }
+    }
+
+    /**
+     * 获取Decode的中文
+     *
+     * @param encodeName
+     * @return
+     */
+    fun getDecodeName(encodeName: String?): String {
+        var decodeName = ""
+        encodeName?.let {
+            try {
+                decodeName = URLDecoder.decode(it, "UTF-8")
+            } catch (e: UnsupportedEncodingException) {
+                e.printStackTrace()
+            }
+        }
+        return decodeName
+    }
 }
