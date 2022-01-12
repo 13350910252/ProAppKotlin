@@ -75,7 +75,7 @@ object DialogShow {
                                     )
                                     is WanResultDispose.Success -> {
                                         loadingUtils.close()
-                                        WanLoginBean.saveUserInfo(it.data.data, activity)
+                                        WanLoginBean.saveUserInfo(it.data, activity)
                                         MMKVUtils.saveValue(account, SpConstants.WAN_ACCOUNT)
                                         if (isSkip) {
                                             activity.startActivity(Intent(activity, T::class.java))

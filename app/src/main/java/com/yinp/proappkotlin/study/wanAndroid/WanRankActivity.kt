@@ -148,7 +148,7 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
                 when (it) {
                     is WanResultDispose.Start -> if (isLoad) showLoading("加载中...")
                     is WanResultDispose.Success -> {
-                        it.data.data?.let { data ->
+                        it.data.let { data ->
                             if (page > 1) bd.baseRefresh.finishLoadMore()
                             if (data.datas.isNotEmpty()
                             ) {

@@ -38,7 +38,7 @@ class HomeViewModel : BaseViewModel() {
      */
     fun getBannerList() {
         viewModelScope.launch {
-            _homeBannerData.value = WanResultDispose.Start()
+//            _homeBannerData.value = WanResultDispose.Start()
             wanDisposeNetOuter(_homeBannerData) {
                 RetrofitUtil.wandroidApiService.getBannerList()
             }

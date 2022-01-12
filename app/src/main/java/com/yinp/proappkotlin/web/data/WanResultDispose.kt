@@ -10,7 +10,7 @@ sealed class WanResultDispose<T> {
     class Start<T> : WanResultDispose<T>()
 
     //成功
-    data class Success<T>(var data: WanAndroidData<T>) : WanResultDispose<T>()
+    data class Success<T>(var data: T) : WanResultDispose<T>()
 
     //失败
     data class Error<T>(val errMsg: String) : WanResultDispose<T>()

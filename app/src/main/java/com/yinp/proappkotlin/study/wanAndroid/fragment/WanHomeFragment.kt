@@ -172,14 +172,11 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
                 when (it) {
                     is WanResultDispose.Start -> showLoading("加载中...")
                     is WanResultDispose.Success -> {
-                        it.data.data?.let { data ->
+                        it.data.let { data ->
                             listBanner.clear()
                             listBanner.addAll(data)
                             bannerAdapter.setDatas(listBanner)
                             bannerAdapter.notifyDataSetChanged()
-//                            data[0].ss?.let {
-//                                Log.d("abcd", "getBannerList:fsafdafdaff ")
-//                            }
                         }
                     }
                 }
@@ -193,7 +190,7 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
             viewModel.wanHomeListData.collect {
                 when (it) {
                     is WanResultDispose.Success -> {
-                        it.data.data?.let { data ->
+                        it.data.let { data ->
                             if (page == 0) {
                                 dataList.clear()
                                 dataList.addAll(data)
@@ -225,7 +222,7 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
             viewModel.wanHomeListData2.collect {
                 when (it) {
                     is WanResultDispose.Success -> {
-                        it.data.data?.let { data ->
+                        it.data.let { data ->
                             if (page == 0) {
                                 bd.baseRefresh.finishRefresh()
                             } else {

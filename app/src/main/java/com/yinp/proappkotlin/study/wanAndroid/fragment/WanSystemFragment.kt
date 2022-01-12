@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
 
     private lateinit var adapter: CommonAdapter<WanSysListData>
-    private val dataList = mutableListOf<WanSysListData>()
+    private val mDataList = mutableListOf<WanSysListData>()
 
     private val viewModel by lazy {
         ViewModelProvider(this)[WanSystemModel::class.java]
@@ -55,7 +55,7 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
 
     private fun initRecycler() {
         bd.bottom.noLl.visibility = View.GONE
-        adapter = object : CommonAdapter<WanSysListData>(requireContext(), dataList) {
+        adapter = object : CommonAdapter<WanSysListData>(requireContext(), mDataList) {
             override fun setComViewHolder(
                 view: View?,
                 viewType: Int,
@@ -81,7 +81,7 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
             }
 
             override fun getItemViewType(position: Int): Int {
-                return if (dataList[position].isTitle) {
+                return if (mDataList[position].isTitle) {
                     0
                 } else {
                     1
@@ -139,7 +139,7 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
                     val listBeans = it.data
                     if (listBeans.isNullOrEmpty().not()) {
                         for (item in listBeans!!) {
-                            dataList.add(
+                            mDataList.add(
                                 WanSysListData(
                                     item.courseId,
                                     item.id,
@@ -153,7 +153,7 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
                             )
                             item.children?.let {
                                 for (item2 in item.children) {
-                                    dataList.add(
+                                    mDataList.add(
                                         WanSysListData(
                                             item2.courseId,
                                             item2.id,

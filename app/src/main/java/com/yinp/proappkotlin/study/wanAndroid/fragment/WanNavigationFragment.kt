@@ -25,7 +25,6 @@ import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -35,8 +34,8 @@ import java.util.*
  */
 class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
 
-    private lateinit var adapter: CommonAdapter<NavigationData>
-    private val dataList = ArrayList<NavigationData>()
+    private lateinit var mAdapter: CommonAdapter<NavigationData>
+    private val mDataList = mutableListOf<NavigationData>()
 
     private val viewModel by lazy {
         ViewModelProvider(this)[WanNavigationModel::class.java]
@@ -55,7 +54,7 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
 
     private fun initRecycler() {
         bd.bottom.noLl.visibility = View.GONE
-        adapter = object : CommonAdapter<NavigationData>(requireContext(), dataList) {
+        mAdapter = object : CommonAdapter<NavigationData>(requireContext(), mDataList) {
             override fun setComViewHolder(
                 view: View?,
                 viewType: Int,
@@ -81,7 +80,7 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
             }
 
             override fun getItemViewType(position: Int): Int {
-                return if (TextUtils.isEmpty(dataList[position].title)) {
+                return if (TextUtils.isEmpty(mDataList[position].title)) {
                     0
                 } else {
                     1
@@ -120,7 +119,7 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
             //justifyContent 属性定义了项目在主轴上的对齐方式。
             justifyContent = JustifyContent.FLEX_START //交叉轴的起点对齐。
         }
-        bd.rvList.adapter = adapter
+        bd.rvList.adapter = mAdapter
     }
 
     private class ViewHolder(val binding: ViewBinding) :
@@ -136,14 +135,14 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
             viewModel.navigationListData.collect {
                 when (it) {
                     is WanResultDispose.Success -> {
-                        it.data.data?.let { data ->
-                            dataList.clear()
+                        it.data.let { data ->
+                            mDataList.clear()
                             for (i in data.indices) {
                                 val navigationListBean: NavigationListData = data[i]
-                                dataList.add(NavigationData(navigationListBean.name))
+                                mDataList.add(NavigationData(navigationListBean.name))
                                 if (navigationListBean.articles.isNullOrEmpty().not()) {
                                     for (element in navigationListBean.articles!!) {
-                                        dataList.add(
+                                        mDataList.add(
                                             NavigationData(
                                                 element.title,
                                                 element.link
@@ -152,7 +151,7 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
                                     }
                                 }
                             }
-                            adapter.notifyDataSetChanged()
+                            mAdapter.notifyDataSetChanged()
                         }
                         hideLoading()
                     }

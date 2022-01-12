@@ -23,7 +23,6 @@ import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -32,10 +31,10 @@ import java.util.*
  * describe  :
  */
 class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
-    private val dataList = ArrayList<WanProjectListData.DataX>()
-    private lateinit var adapter: CommonAdapter<WanProjectListData.DataX>
-    private var page = 0
-    var isLoad = true
+    private val mDataList = mutableListOf<WanProjectListData.DataX>()
+    private lateinit var mAdapter: CommonAdapter<WanProjectListData.DataX>
+    private var mPage = 0
+    private var mLoad = true
 
     private val viewModel by lazy {
         ViewModelProvider(this)[WanProjectViewModel::class.java]
@@ -54,7 +53,7 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
     }
 
     private fun initRecycler() {
-        adapter = object : CommonAdapter<WanProjectListData.DataX>(requireContext(), dataList) {
+        mAdapter = object : CommonAdapter<WanProjectListData.DataX>(requireContext(), mDataList) {
             override fun setComViewHolder(
                 view: View?,
                 viewType: Int,
@@ -79,17 +78,17 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
                 viewHolder.binding.tvDate.text = AppUtils.getValue(item.niceShareDate)
             }
         }
-        adapter.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
+        mAdapter.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
             override fun onItemClick(position: Int, view: View?) {
                 JumpWebUtils.startWebView(
                     requireContext(),
-                    dataList[position].title,
-                    dataList[position].link
+                    mDataList[position].title,
+                    mDataList[position].link
                 )
             }
         })
         bd.baseRecycle.layoutManager = LinearLayoutManager(context)
-        bd.baseRecycle.adapter = adapter
+        bd.baseRecycle.adapter = mAdapter
     }
 
     private fun refresh() {
@@ -98,14 +97,14 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
         bd.baseRefresh.setRefreshFooter(ClassicsFooter(context))
         //为下来刷新添加事件
         bd.baseRefresh.setOnRefreshListener {
-            page = 0
-            isLoad = false
+            mPage = 0
+            mLoad = false
             getProjectList()
         }
         //为上拉加载添加事件
         bd.baseRefresh.setOnLoadMoreListener {
-            page++
-            isLoad = false
+            mPage++
+            mLoad = false
             getProjectList()
         }
     }
@@ -114,43 +113,43 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
      * 获取项目列表
      */
     private fun getProjectList() {
-        viewModel.getProjectList(page)
+        viewModel.getProjectList(mPage)
         lifecycleScope.launch {
             viewModel.wanProjectListData.collect() {
                 when (it) {
                     is WanResultDispose.Start -> {
-                        if (isLoad) {
+                        if (mLoad) {
                             showLoading("加载中...")
                         }
                     }
                     is WanResultDispose.Success -> {
-                        if (isLoad) {
+                        if (mLoad) {
                             hideLoading()
                         }
-                        it.data.data?.let { data ->
+                        it.data.let { data ->
                             if (data.datas.isNullOrEmpty().not()) {
-                                val length = dataList.size
-                                if (page == 0) {
-                                    dataList.clear()
-                                    dataList.addAll(data.datas!!)
-                                    adapter.notifyDataSetChanged()
+                                val length = mDataList.size
+                                if (mPage == 0) {
+                                    mDataList.clear()
+                                    mDataList.addAll(data.datas!!)
+                                    mAdapter.notifyDataSetChanged()
                                     bd.baseRefresh.finishRefresh(true)
                                 } else {
-                                    dataList.addAll(data.datas!!)
-                                    adapter.notifyItemRangeChanged(length, dataList.size)
+                                    mDataList.addAll(data.datas!!)
+                                    mAdapter.notifyItemRangeChanged(length, mDataList.size)
                                     bd.baseRefresh.finishLoadMore(true)
                                 }
                                 bd.baseRefresh.visibility = View.VISIBLE
                                 bd.bottom.noLl.visibility = View.GONE
                             } else {
-                                if (page == 0) {
+                                if (mPage == 0) {
                                     bd.baseRefresh.finishRefresh(false)
                                 } else {
                                     bd.baseRefresh.finishLoadMore(false)
                                 }
                             }
                         } ?: let {
-                            if (page == 0) {
+                            if (mPage == 0) {
                                 bd.baseRefresh.visibility = View.GONE
                                 bd.bottom.noLl.visibility = View.VISIBLE
                             } else {

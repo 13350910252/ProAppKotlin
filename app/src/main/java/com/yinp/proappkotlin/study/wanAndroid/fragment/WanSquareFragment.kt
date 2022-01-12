@@ -32,7 +32,7 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
 
     private val mDataList = mutableListOf<WanSquareListData.Data>()
     private lateinit var mAdapter: CommonAdapter<WanSquareListData.Data>
-    var mLoad = true
+    private var mLoad = true
 
     private val viewModel by lazy {
         ViewModelProvider(this)[WanSquareViewModel::class.java]
@@ -133,7 +133,7 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
                 when (it) {
                     is WanResultDispose.Start -> if (mLoad) showLoading("加载中...")
                     is WanResultDispose.Success -> {
-                        it.data.data?.let { data ->
+                        it.data.let { data ->
                             if (data.datas.isNotEmpty()) {
                                 val length = mDataList.size
                                 if (mPage == 0) {

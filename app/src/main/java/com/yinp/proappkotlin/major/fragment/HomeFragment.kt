@@ -23,6 +23,7 @@ import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.utils.ViewPager2Utils
 import com.yinp.proappkotlin.view.SimplePagerTitlePictureView
 import com.yinp.proappkotlin.web.data.WanResultDispose
+import com.yinp.tools.utils.ToastUtil
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.listener.OnBannerListener
 import kotlinx.coroutines.flow.collect
@@ -139,7 +140,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 when (it) {
                     is WanResultDispose.Start -> showLoading("加载中...")
                     is WanResultDispose.Success -> {
-                        it.data.data?.let { data ->
+                        it.data.let { data ->
                             listBanner.clear()
                             listBanner.addAll(data)
                             bannerAdapter.setDatas(listBanner)
@@ -148,8 +149,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         hideLoading()
                     }
                     is WanResultDispose.CodeError -> {
+                        hideLoading()
+                        ToastUtil.initToast(requireContext(),it.msg)
                     }
                     is WanResultDispose.Error -> {
+                        hideLoading()
+                        ToastUtil.initToast(requireContext(),it.errMsg)
                     }
                 }
             }

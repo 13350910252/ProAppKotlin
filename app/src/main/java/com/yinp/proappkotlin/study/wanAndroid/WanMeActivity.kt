@@ -115,7 +115,7 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
             viewModel.integralBean.collect {
                 when (it) {
                     is WanResultDispose.Success -> {
-                        it.data.data?.run {
+                        it.data.run {
                             bd.tvIntegralRanking.text =
                                 "积分：${coinCount} 排行：${rank}"
                         }

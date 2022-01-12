@@ -107,6 +107,7 @@ suspend fun <T : Any> wanDisposeNetOuter(
         emit(dataResult)
     }.flowOn(Dispatchers.IO)
         .onStart {
+//            mResult.value = WanResultDispose.Start()
         }
         .onEmpty {
             mResult.value = WanResultDispose.Error("返回的数据为空")
@@ -126,10 +127,16 @@ suspend fun <T : Any> wanDisposeNetOuter(
         }
         .collectLatest {
             when (it.errorCode) {
-                0 -> mResult.value = WanResultDispose.Success(it)
+                0 ->
+                    it.data?.run {
+                        mResult.value = WanResultDispose.Success(this)
+                    } ?: run {
+                        mResult.value = WanResultDispose.Error("请求数据为空")
+                    }
                 -1001 -> "未登录的"
                 -1 -> mResult.value = WanResultDispose.CodeError("统一错误码", it.errorCode)
                 404 -> mResult.value = WanResultDispose.CodeError("找不到访问地址", it.errorCode)
+                else -> mResult.value = WanResultDispose.CodeError("未知错误码", it.errorCode)
             }
         }
 

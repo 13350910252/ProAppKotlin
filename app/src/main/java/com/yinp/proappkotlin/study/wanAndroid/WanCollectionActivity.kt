@@ -184,7 +184,7 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
                         }
                     }
                     is WanResultDispose.Success -> {
-                        it.data.data?.let { data ->
+                        it.data.let { data ->
                             if (data.datas.isNotEmpty()) {
                                 val start = dataList.size
                                 dataList.addAll(data.datas)
