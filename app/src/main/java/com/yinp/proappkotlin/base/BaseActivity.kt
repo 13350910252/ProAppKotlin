@@ -1,19 +1,21 @@
 package com.yinp.proappkotlin.base
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.utils.StatusBarUtil
 import com.yinp.tools.utils.LoadingUtils
+import com.yinp.tools.utils.ToastUtil
 
 abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClickListener {
     protected lateinit var bd: VB
     protected lateinit var mContext: Context
-    protected lateinit var mActivity: Activity
+    protected lateinit var mActivity: FragmentActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +34,11 @@ abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClick
      * @param height 状态栏高度
      */
     protected fun setStatusBarHeight(height: Int) {
-        val view = findViewById<View>(R.id.view_status)
-        val params = view.layoutParams
-        params.height = height
+        findViewById<View>(R.id.view_status).apply {
+            layoutParams.also {
+                it.height = height
+            }
+        }
     }
 
     /**
@@ -81,5 +85,18 @@ abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClick
 
     protected fun hideLoading() {
         loading.closeAll()
+    }
+
+
+    /**
+     * 显示加载
+     */
+
+    protected fun showToast(text: String?) {
+        ToastUtil.initToast(mContext, text)
+    }
+
+    protected fun showToast(@StringRes id: Int) {
+        ToastUtil.initToast(mContext, id)
     }
 }

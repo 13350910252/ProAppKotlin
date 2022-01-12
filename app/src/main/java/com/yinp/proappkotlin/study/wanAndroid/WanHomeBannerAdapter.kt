@@ -15,7 +15,7 @@ import com.youth.banner.adapter.BannerAdapter
  * package   :com.yinp.proappkotlin.base.adapter
  * describe  :
  */
-class WanHomeBannerAdapter(mDatas: List<HomeBannerData>, private var context: Context) :
+class WanHomeBannerAdapter(mDatas: List<HomeBannerData>, private var mContext: Context) :
     BannerAdapter<HomeBannerData, WanHomeBannerAdapter.HomeBannerViewHolder>(mDatas) {
 
     override fun onCreateHolder(parent: ViewGroup?, viewType: Int): HomeBannerViewHolder {

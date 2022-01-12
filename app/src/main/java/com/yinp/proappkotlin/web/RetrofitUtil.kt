@@ -1,8 +1,12 @@
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.google.gson.Gson
-import com.lp.myapplication.net.Interceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.yinp.proappkotlin.App
 import com.yinp.proappkotlin.web.ApiService
+import com.yinp.proappkotlin.web.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -21,6 +25,12 @@ class RetrofitUtil {
                 .readTimeout(10, TimeUnit.SECONDS)
                 .addInterceptor(Interceptor().loggingInterceptor())//OkHttp进行添加拦截器loggingInterceptor
                 .addNetworkInterceptor(Interceptor().headerInterceptor())
+                .cookieJar(
+                    PersistentCookieJar(
+                        SetCookieCache(),
+                        SharedPrefsCookiePersistor(App.appContext)
+                    )
+                )
                 .build()
         }
 
@@ -32,10 +42,13 @@ class RetrofitUtil {
          * wandroid的专属
          */
         val wandroidApiService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-            val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
             (Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(Gson()))
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .addConverterFactory(
+                    MoshiConverterFactory.create(
+                        Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+                    )
+                )
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) //设置gson转换器,将返回的json数据转为实体（自定义factory解密）
                 .baseUrl("https://www.wanandroid.com") //设置CallAdapter
                 .client(okHttpClient)

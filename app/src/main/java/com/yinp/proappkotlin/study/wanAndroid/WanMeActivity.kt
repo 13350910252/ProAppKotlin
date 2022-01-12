@@ -32,7 +32,8 @@ import org.greenrobot.eventbus.ThreadMode
  * describe  :
  */
 class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
-    private var mIsLogin = false
+    //是否已经登录的标志
+    private var mLogin = false
 
     private val viewModel by lazy {
         ViewModelProvider(this)[WanMeModel::class.java]
@@ -68,23 +69,23 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
             if (TextUtils.isEmpty(wanLoginBean.username)) {
                 bd.cuaUserHead.setUserName("登录")
                 bd.tvNickName.text = "请先登录~"
-                mIsLogin = false
+                mLogin = false
             } else {
-                mIsLogin = true
+                mLogin = true
                 bd.cuaUserHead.setUserName(AppUtils.getDecodeName(wanLoginBean.nickname))
                 bd.tvNickName.text = wanLoginBean.nickname
             }
         } else {
             bd.cuaUserHead.setUserName("登录")
             bd.tvNickName.text = "请先登录~"
-            mIsLogin = false
+            mLogin = false
         }
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
         if (v === bd.tvNickName) {
-            if (!mIsLogin) {
+            if (!mLogin) {
 //                setLoginDialog()
             }
         } else if (v === bd.llOpenSourceWeb) {
@@ -102,7 +103,7 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
         } else if (v === bd.llIntegralRank) {
             goToActivity<WanRankActivity>()
         } else if (v === bd.llCollect) {
-//            goToActivity<WanCollectionActivity>()
+            goToActivity<WanCollectionActivity>()
         } else if (v === bd.sllLoginOut) {
             loginOutDialog()
         }

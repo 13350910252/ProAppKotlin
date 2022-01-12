@@ -135,7 +135,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun getBannerList() {
         viewModel.getBannerList()
         lifecycleScope.launch {
-            viewModel.homeBannerData.collect() {
+            viewModel.homeBannerData.collect {
                 when (it) {
                     is WanResultDispose.Start -> showLoading("加载中...")
                     is WanResultDispose.Success -> {

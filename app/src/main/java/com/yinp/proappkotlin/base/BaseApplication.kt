@@ -1,10 +1,13 @@
 package com.yinp.proappkotlin.base
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Process
 import cn.bmob.v3.Bmob
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import com.scwang.smartrefresh.layout.api.*
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import com.yinp.proappkotlin.utils.AppUtils
@@ -16,7 +19,7 @@ import com.yinp.proappkotlin.utils.AppUtils
  * describe  :
  */
 open class BaseApplication : Application() {
-    protected var mAppContext: Context? = null
+    protected lateinit var mAppContext: Context
 
     companion object {
         private val TYPE_DEBUG = "type_debug"
@@ -28,6 +31,22 @@ open class BaseApplication : Application() {
         super.onCreate()
         mAppContext = this
         initSomething()
+    }
+
+    //代码段可以防止内存泄露
+    init {
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+            ClassicsHeader(
+                applicationContext
+            )
+        }
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
+            ClassicsFooter(
+                applicationContext
+            ).setDrawableSize(20f)
+        }
     }
 
     private fun initSomething() {
@@ -48,7 +67,7 @@ open class BaseApplication : Application() {
 
     private fun initBugly() {
         // 获取当前包名
-        val packageName = mAppContext!!.packageName
+        val packageName = mAppContext.packageName
         // 获取当前进程名
         val processName: String? = AppUtils.getProcessName(Process.myPid())
         // 设置是否为上报进程
@@ -60,7 +79,8 @@ open class BaseApplication : Application() {
             CrashReport.initCrashReport(applicationContext, "03ed601592", false, strategy)
         }
     }
-    private fun initBmob(){
+
+    private fun initBmob() {
         //提供以下两种方式进行初始化操作：
 
         //第一：默认初始化

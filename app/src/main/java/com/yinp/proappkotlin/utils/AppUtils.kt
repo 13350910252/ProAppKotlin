@@ -74,10 +74,9 @@ object AppUtils {
 
     /**
      * dp转px
-     *
+     * 如果赋值给有数据类型的变量，则会自动转换；如果没有，则可以自己<Int>给定
      * @return
      */
-
     inline fun <reified T> dpToPx(context: Context, value: Float): T {
         val scale = context.resources.displayMetrics.density
         return when (T::class) {
@@ -109,7 +108,7 @@ object AppUtils {
         return value
     }
 
-    fun isLogin(context: Context?): Boolean {
+    fun isLogin(context: Context): Boolean {
         val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(context)
         val cookies: List<Cookie> = sharedPrefsCookiePersistor.loadAll()
         return if (cookies.isNotEmpty()) {

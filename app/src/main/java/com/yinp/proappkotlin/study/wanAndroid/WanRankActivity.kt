@@ -21,7 +21,6 @@ import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -53,10 +52,13 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
 
     override fun onClick(v: View) {
         super.onClick(v)
-        if (v === bd.header.headerBackImg) {
-            finish()
-        } else if (v === bd.header.headerEnd) {
-            JumpWebUtils.startWebView(mContext, "积分规则", HttpUrl.INTEGRAL_HELP_URL)
+        when (v) {
+            bd.header.headerBackImg -> finish()
+            bd.header.headerEnd -> JumpWebUtils.startWebView(
+                mContext,
+                "积分规则",
+                HttpUrl.INTEGRAL_HELP_URL
+            )
         }
     }
 
@@ -72,7 +74,6 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
                     ItemRankListBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
                 )
             }
-
             override fun onBindItem(
                 holder: RecyclerView.ViewHolder?,
                 position: Int,
@@ -119,7 +120,6 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
             override fun onItemClick(position: Int, view: View?) {
 
             }
-
         })
         bd.baseRecycle.layoutManager = LinearLayoutManager(mContext)
         bd.baseRecycle.setHasFixedSize(true)

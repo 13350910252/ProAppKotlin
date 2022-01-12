@@ -13,9 +13,11 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.yinp.proappkotlin.base.BaseFragment
+import com.yinp.proappkotlin.base.goToActivity
 import com.yinp.proappkotlin.databinding.FragmentWanSystemBinding
 import com.yinp.proappkotlin.databinding.ItemSystemOneBinding
 import com.yinp.proappkotlin.databinding.ItemSystemTwoBinding
+import com.yinp.proappkotlin.study.wanAndroid.WanSysActivity
 import com.yinp.proappkotlin.study.wanAndroid.data.WanSysListData
 import com.yinp.proappkotlin.study.wanAndroid.model.WanSystemModel
 import com.yinp.proappkotlin.web.data.WanAndroidCall
@@ -24,7 +26,6 @@ import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 
 /**
  * @author   :yinpeng
@@ -35,7 +36,7 @@ import java.util.*
 class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
 
     private lateinit var adapter: CommonAdapter<WanSysListData>
-    private val dataList = ArrayList<WanSysListData>()
+    private val dataList = mutableListOf<WanSysListData>()
 
     private val viewModel by lazy {
         ViewModelProvider(this)[WanSystemModel::class.java]
@@ -101,7 +102,7 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
                             stvValue.text = item.name
                             stvValue.setOnClickListener {
                                 val bundle = Bundle()
-//                        goToActivity(WanSysActivity::class.java, bundle)
+                                goToActivity<WanSysActivity>(bundle)
                             }
                         }
                     }

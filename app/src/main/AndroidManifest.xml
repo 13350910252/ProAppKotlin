@@ -54,10 +54,16 @@
         </activity>
         <activity android:name=".major.MajorActivity" />
         <activity android:name=".study.wanAndroid.WandroidActivity" />
+        <activity
+            android:name=".study.wanAndroid.WanMeActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".study.wanAndroid.WanCollectionActivity" />
+        <activity android:name=".study.wanAndroid.WanRankActivity" />
+        <activity android:name=".study.wanAndroid.WanSysActivity" />
         <!-- ==============bmob后端云================ -->
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
-            android:authorities="com.yinp.proappkotlin.BmobContentProvider"/>
+            android:authorities="com.yinp.proappkotlin.BmobContentProvider" />
     </application>
 
 </manifest>

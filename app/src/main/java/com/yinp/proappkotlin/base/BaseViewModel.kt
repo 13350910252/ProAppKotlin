@@ -1,9 +1,6 @@
 package com.yinp.proappkotlin.base
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.yinp.proappkotlin.web.data.BaseRespData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,17 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
  * package   :com.yinp.proappkotlin.base
  * describe  :
  */
-open class BaseViewModel : ViewModel(), LifecycleObserver {
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    open fun activityCreate() {
-
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    open fun activityDestroy() {
-
-    }
-
+open class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
     /**
      * 处理网络请求返回的code
      */

@@ -12,12 +12,12 @@ import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.base.goToActivity
 import com.yinp.proappkotlin.databinding.ActivityWandroidBinding
+import com.yinp.proappkotlin.study.wanAndroid.dialog.DialogShow
 import com.yinp.proappkotlin.study.wanAndroid.fragment.*
 import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.proappkotlin.utils.StatusBarUtil
 import com.yinp.proappkotlin.utils.ViewPager2Utils
 import com.yinp.proappkotlin.view.SimplePagerTitlePictureView
-import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
@@ -32,6 +32,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
  */
 class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
     private val fragments = SparseArray<Fragment>()
+
     override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this))
         bd.header.headerCenterTitle.text = "玩Android"
@@ -85,9 +86,9 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
             override fun getIndicator(context: Context): IPagerIndicator {
                 return LinePagerIndicator(context).apply {
                     mode = LinePagerIndicator.MODE_EXACTLY
-                    lineHeight = UIUtil.dip2px(context, 0.0).toFloat()
-                    lineWidth = UIUtil.dip2px(context, 56.0).toFloat()
-                    roundRadius = UIUtil.dip2px(context, 3.0).toFloat()
+                    lineHeight = AppUtils.dpToPx(context, 0.0f)
+                    lineWidth = AppUtils.dpToPx(context, 56f)
+                    roundRadius = AppUtils.dpToPx(context, 3.0f)
                     startInterpolator = AccelerateInterpolator()
                     endInterpolator = DecelerateInterpolator(2.0f)
                     setColors(ContextCompat.getColor(context, R.color.ff4d4d))
@@ -106,10 +107,10 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
                 if (AppUtils.isLogin(mContext)) {
                     goToActivity<WanMeActivity>()
                 } else {
-//                    DialogShow.setLoginDialog(
-//                        mContext, presenter, true,
-//                        WanMeActivity::class.java, supportFragmentManager
-//                    )
+                    DialogShow.setLoginDialog<WanMeActivity>(
+                        mActivity, true,
+                        supportFragmentManager
+                    )
                 }
             }
         }

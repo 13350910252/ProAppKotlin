@@ -3,9 +3,10 @@ package com.yinp.proappkotlin.web
 import com.yinp.proappkotlin.home.bean.HomeBannerData
 import com.yinp.proappkotlin.study.wanAndroid.data.*
 import com.yinp.proappkotlin.web.data.WanAndroidData
-import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * @author   :yinpeng
@@ -96,4 +97,42 @@ interface ApiService {
      */
     @GET("coin/rank/{page}/json")
     suspend fun getRankList(@Path("page") page: Int): WanAndroidData<RankListBean>
+
+    /**
+     * 登录接口
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    @POST("user/login")
+    suspend fun login(
+        @Query("username") username: String?,
+        @Query("password") password: String?
+    ): WanAndroidData<WanLoginBean>
+
+
+    /**
+     * 收藏文章
+     * @return
+     */
+    @POST("lg/collect/{id}/json")
+    suspend fun addCollect(@Path("id") id: Int): WanAndroidData<String>
+
+    /**
+     * 取消收藏
+     * @return
+     */
+    @POST("lg/uncollect_originId/{id}/json")
+    suspend fun cancelCollect(@Path("id") id: Int): WanAndroidData<String>
+
+
+    /**
+     * 获取收藏列表
+     * https://www.wanandroid.com/lg/collect/list/0/json
+     *
+     * @return
+     */
+    @GET("lg/collect/list/{page}/json")
+    suspend fun getCollectList(@Path("page") page: Int): WanAndroidData<CollectionListBean>
 }
