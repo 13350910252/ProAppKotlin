@@ -1,6 +1,7 @@
 package com.yinp.proappkotlin.study.wanAndroid.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter
-import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentWanSquareBinding
 import com.yinp.proappkotlin.databinding.ItemWanSquareBinding
@@ -48,8 +47,8 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
     override fun initViews() {
         initRecycler()
         refresh()
-        mLoad = true
-        getSquareList()
+        viewModel.getSquareList(mPage)
+        initData()
     }
 
     private fun initRecycler() {
@@ -106,33 +105,29 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
     internal class ViewHolder(val binding: ItemWanSquareBinding) : ComViewHolder(binding.root)
 
     private fun refresh() {
-        //下拉刷新
-        bd.baseRefresh.setRefreshHeader(ClassicsHeader(context))
-        bd.baseRefresh.setRefreshFooter(ClassicsFooter(context))
         //为下来刷新添加事件
         bd.baseRefresh.setOnRefreshListener {
             mPage = 0
             mLoad = false
-            getSquareList()
+            viewModel.getSquareList(mPage)
         }
         //为上拉加载添加事件
         bd.baseRefresh.setOnLoadMoreListener {
-            mPage++
             mLoad = false
-            getSquareList()
+            viewModel.getSquareList(++mPage)
         }
     }
 
     /**
      * 获取广场列表
      */
-    private fun getSquareList() {
-        viewModel.getSquareList(mPage)
+    private fun initData() {
         lifecycleScope.launch {
             viewModel.wanSquareListData.collect {
                 when (it) {
                     is WanResultDispose.Start -> if (mLoad) showLoading("加载中...")
                     is WanResultDispose.Success -> {
+                        Log.d("abcd", "getSquareList: ")
                         it.data.let { data ->
                             if (data.datas.isNotEmpty()) {
                                 val length = mDataList.size
@@ -143,7 +138,7 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
                                     bd.baseRefresh.finishRefresh(true)
                                 } else {
                                     mDataList.addAll(data.datas)
-                                    mAdapter.notifyItemChanged(length, mDataList.size)
+                                    mAdapter.notifyItemRangeChanged(length - 1, data.datas.size)
                                     bd.baseRefresh.finishLoadMore(true)
                                 }
                                 bd.baseRefresh.visibility = View.VISIBLE

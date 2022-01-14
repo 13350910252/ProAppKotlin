@@ -86,10 +86,6 @@ object DialogShow {
                                         loadingUtils.close()
                                         ToastUtil.initToast(activity, "登录失败")
                                     }
-                                    is WanResultDispose.CodeError -> {
-                                        loadingUtils.close()
-                                        ToastUtil.initToast(activity, "登录失败")
-                                    }
                                 }
                             }
                         }

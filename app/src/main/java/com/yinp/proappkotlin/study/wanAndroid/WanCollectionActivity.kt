@@ -82,9 +82,6 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
                                         is WanResultDispose.Error -> {
                                             showToast("收藏失败")
                                         }
-                                        is WanResultDispose.CodeError -> {
-                                            showToast("收藏失败")
-                                        }
                                     }
                                 }
                             }
@@ -100,9 +97,6 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
                                             showToast("取消收藏")
                                         }
                                         is WanResultDispose.Error -> {
-                                            showToast("取消失败")
-                                        }
-                                        is WanResultDispose.CodeError -> {
                                             showToast("取消失败")
                                         }
                                     }
@@ -189,7 +183,7 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
                                 val start = dataList.size
                                 dataList.addAll(data.datas)
                                 val end = dataList.size
-                                commonAdapter.notifyItemRangeChanged(start, end)
+                                commonAdapter.notifyItemRangeChanged(start-1, end)
                                 bd.baseRefresh.visibility = View.VISIBLE
                                 bd.bottom.noLl.visibility = View.GONE
                             }
@@ -202,12 +196,6 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
                         }
                     }
                     is WanResultDispose.Error -> {
-                        if (page > 0) bd.baseRefresh.finishLoadMore(false)
-                        else bd.baseRefresh.finishRefresh(false)
-                        hideLoading()
-                        showToast(it.errMsg)
-                    }
-                    is WanResultDispose.CodeError -> {
                         if (page > 0) bd.baseRefresh.finishLoadMore(false)
                         else bd.baseRefresh.finishRefresh(false)
                         hideLoading()

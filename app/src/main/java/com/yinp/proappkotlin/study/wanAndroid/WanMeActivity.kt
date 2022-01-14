@@ -123,9 +123,6 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
                     is WanResultDispose.Error -> {
                         bd.tvIntegralRanking.text = "积分:--" + " 排行:--"
                     }
-                    is WanResultDispose.CodeError -> {
-                        bd.tvIntegralRanking.text = "积分:--" + " 排行:--"
-                    }
                 }
             }
         }
@@ -227,9 +224,6 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
                         //退出登录时，清除本地cookie
                         val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(mContext)
                         sharedPrefsCookiePersistor.clear()
-                    }
-                    is WanResultDispose.CodeError -> {
-//                        showToast("登出失败")
                     }
                     is WanResultDispose.Error -> {
 //                        showToast("登出失败")

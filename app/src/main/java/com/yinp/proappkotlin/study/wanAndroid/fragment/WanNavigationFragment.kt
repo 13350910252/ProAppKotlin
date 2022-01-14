@@ -5,8 +5,10 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.google.android.flexbox.FlexDirection
@@ -49,7 +51,8 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
 
     override fun initViews() {
         initRecycler()
-        getNavigationList()
+        viewModel.getNavigationList()
+        initData()
     }
 
     private fun initRecycler() {
@@ -128,35 +131,36 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
     /**
      * 获取导航列表
      */
-    private fun getNavigationList() {
-        viewModel.getNavigationList()
-        showLoading("加载中...")
+    private fun initData() {
         lifecycleScope.launch {
-            viewModel.navigationListData.collect {
-                when (it) {
-                    is WanResultDispose.Success -> {
-                        it.data.let { data ->
-                            mDataList.clear()
-                            for (i in data.indices) {
-                                val navigationListBean: NavigationListData = data[i]
-                                mDataList.add(NavigationData(navigationListBean.name))
-                                if (navigationListBean.articles.isNullOrEmpty().not()) {
-                                    for (element in navigationListBean.articles!!) {
-                                        mDataList.add(
-                                            NavigationData(
-                                                element.title,
-                                                element.link
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigationListData.collect {
+                    when (it) {
+                        is WanResultDispose.Start -> showLoading("加载中...")
+                        is WanResultDispose.Success -> {
+                            it.data.let { data ->
+                                mDataList.clear()
+                                for (i in data.indices) {
+                                    val navigationListBean: NavigationListData = data[i]
+                                    mDataList.add(NavigationData(navigationListBean.name))
+                                    if (navigationListBean.articles.isNullOrEmpty().not()) {
+                                        for (element in navigationListBean.articles!!) {
+                                            mDataList.add(
+                                                NavigationData(
+                                                    element.title,
+                                                    element.link
+                                                )
                                             )
-                                        )
+                                        }
                                     }
                                 }
+                                mAdapter.notifyDataSetChanged()
                             }
-                            mAdapter.notifyDataSetChanged()
+                            hideLoading()
                         }
-                        hideLoading()
-                    }
-                    is WanResultDispose.Error -> {
+                        is WanResultDispose.Error -> {
 
+                        }
                     }
                 }
             }

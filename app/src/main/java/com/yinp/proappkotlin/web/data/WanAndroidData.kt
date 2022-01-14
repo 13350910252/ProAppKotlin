@@ -17,7 +17,11 @@ open class WanAndroidData<T> (
     @Json(name = "errorCode")
     val errorCode: Int = 0,
     @Json(name = "errorMsg")
-    val errorMsg: String = ""
+    val errorMsg: String = "",
+    @Json(name = "errorCode")
+    val endCode: Int = 0,
+    @Json(name = "errorMsg")
+    val endMsg: String = ""
 ): BaseRespData<T>()
 //    /**
 //     * 用于标识来处理事件

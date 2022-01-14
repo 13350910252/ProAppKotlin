@@ -68,7 +68,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initRecycler() {
-        bd.topBanner.setAdapter(bannerAdapter).addBannerLifecycleObserver(activity)
+        bd.topBanner.addBannerLifecycleObserver(activity)
             .isAutoLoop(true).indicator =
             CircleIndicator(context)
         bd.topBanner.setOnBannerListener(OnBannerListener { data: HomeBannerData, position: Int ->
@@ -143,18 +143,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         it.data.let { data ->
                             listBanner.clear()
                             listBanner.addAll(data)
-                            bannerAdapter.setDatas(listBanner)
-                            bannerAdapter.notifyDataSetChanged()
+                            bd.topBanner.setAdapter(bannerAdapter)
                         }
                         hideLoading()
                     }
-                    is WanResultDispose.CodeError -> {
-                        hideLoading()
-                        ToastUtil.initToast(requireContext(),it.msg)
-                    }
                     is WanResultDispose.Error -> {
                         hideLoading()
-                        ToastUtil.initToast(requireContext(),it.errMsg)
+                        ToastUtil.initToast(requireContext(), it.msg)
                     }
                 }
             }

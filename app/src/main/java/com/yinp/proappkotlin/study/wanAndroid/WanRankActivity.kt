@@ -155,7 +155,7 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
                                 val start = dataList.size
                                 dataList.addAll(data.datas)
                                 val end = dataList.size
-                                commonAdapter.notifyItemRangeChanged(start, end)
+                                commonAdapter.notifyItemRangeChanged(start-1, end)
                                 bd.baseRefresh.visibility = View.VISIBLE
                                 bd.bottom.noLl.visibility = View.GONE
                             }
@@ -166,15 +166,10 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
                         if (isLoad)
                             hideLoading()
                     }
-                    is WanResultDispose.CodeError -> {
-                        if (isLoad)
-                            hideLoading()
-//                        showToast(msg)
-                    }
                     is WanResultDispose.Error -> {
                         if (isLoad)
                             hideLoading()
-//                        showToast(msg)
+                        showToast(it.msg)
                     }
                 }
             }

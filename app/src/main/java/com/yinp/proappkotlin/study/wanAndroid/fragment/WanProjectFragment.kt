@@ -5,15 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter
-import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentWanProjectBinding
 import com.yinp.proappkotlin.databinding.ItemWanProjectBinding
+import com.yinp.proappkotlin.launchAndCollectIn
 import com.yinp.proappkotlin.study.wanAndroid.data.WanProjectListData
 import com.yinp.proappkotlin.study.wanAndroid.model.WanProjectViewModel
 import com.yinp.proappkotlin.utils.AppUtils
@@ -21,8 +20,6 @@ import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 /**
  * @author   :yinpeng
@@ -49,7 +46,8 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
     override fun initViews() {
         initRecycler()
         refresh()
-        getProjectList()
+        viewModel.getProjectList(mPage)
+        initData()
     }
 
     private fun initRecycler() {
@@ -92,73 +90,63 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
     }
 
     private fun refresh() {
-        //下拉刷新
-        bd.baseRefresh.setRefreshHeader(ClassicsHeader(context))
-        bd.baseRefresh.setRefreshFooter(ClassicsFooter(context))
         //为下来刷新添加事件
         bd.baseRefresh.setOnRefreshListener {
             mPage = 0
             mLoad = false
-            getProjectList()
+            viewModel.getProjectList(mPage)
         }
         //为上拉加载添加事件
         bd.baseRefresh.setOnLoadMoreListener {
             mPage++
             mLoad = false
-            getProjectList()
+            viewModel.getProjectList(++mPage)
         }
     }
 
     /**
      * 获取项目列表
      */
-    private fun getProjectList() {
-        viewModel.getProjectList(mPage)
-        lifecycleScope.launch {
-            viewModel.wanProjectListData.collect() {
-                when (it) {
-                    is WanResultDispose.Start -> {
-                        if (mLoad) {
-                            showLoading("加载中...")
-                        }
+    private fun initData() {
+        viewModel.wanProjectListData.launchAndCollectIn(this, Lifecycle.State.STARTED) {
+            when (it) {
+                is WanResultDispose.Start -> if (mLoad) showLoading("加载中...")
+                is WanResultDispose.Success -> {
+                    if (mLoad) {
+                        hideLoading()
                     }
-                    is WanResultDispose.Success -> {
-                        if (mLoad) {
-                            hideLoading()
-                        }
-                        it.data.let { data ->
-                            if (data.datas.isNullOrEmpty().not()) {
-                                val length = mDataList.size
-                                if (mPage == 0) {
-                                    mDataList.clear()
-                                    mDataList.addAll(data.datas!!)
-                                    mAdapter.notifyDataSetChanged()
-                                    bd.baseRefresh.finishRefresh(true)
-                                } else {
-                                    mDataList.addAll(data.datas!!)
-                                    mAdapter.notifyItemRangeChanged(length, mDataList.size)
-                                    bd.baseRefresh.finishLoadMore(true)
-                                }
-                                bd.baseRefresh.visibility = View.VISIBLE
-                                bd.bottom.noLl.visibility = View.GONE
-                            } else {
-                                if (mPage == 0) {
-                                    bd.baseRefresh.finishRefresh(false)
-                                } else {
-                                    bd.baseRefresh.finishLoadMore(false)
-                                }
-                            }
-                        } ?: let {
+                    it.data.let { data ->
+                        if (data.datas.isNullOrEmpty().not()) {
+                            val length = mDataList.size
                             if (mPage == 0) {
-                                bd.baseRefresh.visibility = View.GONE
-                                bd.bottom.noLl.visibility = View.VISIBLE
+                                mDataList.clear()
+                                mDataList.addAll(data.datas!!)
+                                mAdapter.notifyDataSetChanged()
+                                bd.baseRefresh.finishRefresh(true)
+                            } else {
+                                mDataList.addAll(data.datas!!)
+                                mAdapter.notifyItemRangeChanged(length - 1, mDataList.size)
+                                bd.baseRefresh.finishLoadMore(true)
+                            }
+                            bd.baseRefresh.visibility = View.VISIBLE
+                            bd.bottom.noLl.visibility = View.GONE
+                        } else {
+                            if (mPage == 0) {
+                                bd.baseRefresh.finishRefresh(false)
                             } else {
                                 bd.baseRefresh.finishLoadMore(false)
                             }
                         }
+                    } ?: let {
+                        if (mPage == 0) {
+                            bd.baseRefresh.visibility = View.GONE
+                            bd.bottom.noLl.visibility = View.VISIBLE
+                        } else {
+                            bd.baseRefresh.finishLoadMore(false)
+                        }
                     }
-                    is WanResultDispose.Error -> Log.d("abcd", "getProjectList:aaaaa ")
                 }
+                is WanResultDispose.Error -> Log.d("abcd", "getProjectList:aaaaa ")
             }
         }
     }

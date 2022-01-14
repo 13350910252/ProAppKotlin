@@ -27,8 +27,8 @@ interface ApiService {
      * @param size
      * @return
      */
-    @GET("article/list/{size}/json")
-    suspend fun getHomArticleList(@Path("size") size: Int): WanAndroidData<WanHomeListData>
+    @GET("article/list/{page}/json")
+    suspend fun getHomArticleList(@Path("page") size: Int): WanAndroidData<WanHomeListData>
 
     /**
      * 获取置顶文章

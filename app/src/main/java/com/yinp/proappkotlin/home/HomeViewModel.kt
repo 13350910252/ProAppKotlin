@@ -1,11 +1,13 @@
 package com.yinp.proappkotlin.home
 
+import RetrofitUtil
 import androidx.lifecycle.viewModelScope
 import com.yinp.proappkotlin.base.BaseViewModel
 import com.yinp.proappkotlin.home.bean.HomeBannerData
 import com.yinp.proappkotlin.study.wanAndroid.data.WanHomeListData
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.proappkotlin.web.wanDisposeNetOuter
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -38,7 +40,6 @@ class HomeViewModel : BaseViewModel() {
      */
     fun getBannerList() {
         viewModelScope.launch {
-//            _homeBannerData.value = WanResultDispose.Start()
             wanDisposeNetOuter(_homeBannerData) {
                 RetrofitUtil.wandroidApiService.getBannerList()
             }
@@ -48,10 +49,10 @@ class HomeViewModel : BaseViewModel() {
     /**
      * 获取首页数据
      */
-    fun getListInfo(size: Int) {
+    fun getListInfo(page: Int) {
         viewModelScope.launch {
             wanDisposeNetOuter(_wanHomeListData2) {
-                RetrofitUtil.wandroidApiService.getHomArticleList(size)
+                RetrofitUtil.wandroidApiService.getHomArticleList(page)
             }
         }
     }

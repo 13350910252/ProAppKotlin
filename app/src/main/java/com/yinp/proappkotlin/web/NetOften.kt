@@ -30,14 +30,14 @@ suspend fun <T : Any> disposeNetOuter(
     mResult: MutableStateFlow<BaseRespData<T>>,
     block: suspend () -> BaseRespData<T>
 ) {
-    //调用函数得到结果
-    var dataResult = block.invoke()
-    //判断类型，并类型转换
-    var result = when (dataResult) {
-        is WanAndroidData<T> -> dataResult
-        else -> dataResult
-    }
     flow {
+        //调用函数得到结果
+        var dataResult = block.invoke()
+        //判断类型，并类型转换
+        var result = when (dataResult) {
+            is WanAndroidData<T> -> dataResult
+            else -> dataResult
+        }
         emit(result)
     }.flowOn(Dispatchers.IO)
         .onStart {
@@ -60,14 +60,14 @@ suspend fun <T : Any> disposeNetOuter(
     call: WanAndroidCall?,
     block: suspend () -> BaseRespData<T>
 ) {
-    //调用函数得到结果
-    var dataResult = block.invoke()
-    //判断类型，并类型转换
-    var result = when (dataResult) {
-        is WanAndroidData<T> -> dataResult
-        else -> dataResult
-    }
     flow {
+        //调用函数得到结果
+        var dataResult = block.invoke()
+        //判断类型，并类型转换
+        var result = when (dataResult) {
+            is WanAndroidData<T> -> dataResult
+            else -> dataResult
+        }
         emit(result)
     }.flowOn(Dispatchers.IO)
         .onStart {
@@ -102,28 +102,32 @@ suspend fun <T : Any> wanDisposeNetOuter(
     block: suspend () -> WanAndroidData<T>
 ) {
     //调用函数得到结果
-    var dataResult = block.invoke()
     flow {
-        emit(dataResult)
+        emit(block.invoke())
     }.flowOn(Dispatchers.IO)
         .onStart {
-//            mResult.value = WanResultDispose.Start()
+            /**
+             * 每次都需要重新更改
+             * 也可以这样写，mResult.value = WanResultDispose.LS()
+             */
+            mResult.value = WanResultDispose.Start()
         }
         .onEmpty {
-            mResult.value = WanResultDispose.Error("返回的数据为空")
+            mResult.value = WanResultDispose.Error("返回的数据为空", -789)
         }
         .catch { e ->
-            mResult.value = WanResultDispose.Error(
-                when (e.cause) {
-                    is HttpException -> "网络请求异常"
-                    is ConnectException, is UnknownHostException -> "网络连接异常"
-                    is TimeoutException, is InterruptedIOException -> "网络超时"
-                    is JsonParseException, is JSONException, is ParseException -> "数据解析异常"
-                    else -> {
-                        "未知异常"
-                    }
+            when (e.cause) {
+                is HttpException -> "网络请求异常"
+                is ConnectException, is UnknownHostException -> "网络连接异常"
+                is TimeoutException, is InterruptedIOException -> "网络超时"
+                is JsonParseException, is JSONException, is ParseException -> "数据解析异常"
+                else -> {
+                    "未知异常"
                 }
-            )
+            }.also {
+                mResult.value = WanResultDispose.Error(it, e.hashCode())
+                mResult.value = WanResultDispose.ErrorException(it, e.hashCode(), e.cause)
+            }
         }
         .collectLatest {
             when (it.errorCode) {
@@ -131,12 +135,12 @@ suspend fun <T : Any> wanDisposeNetOuter(
                     it.data?.run {
                         mResult.value = WanResultDispose.Success(this)
                     } ?: run {
-                        mResult.value = WanResultDispose.Error("请求数据为空")
+                        mResult.value = WanResultDispose.Error("请求数据为空", it.errorCode)
                     }
                 -1001 -> "未登录的"
-                -1 -> mResult.value = WanResultDispose.CodeError("统一错误码", it.errorCode)
-                404 -> mResult.value = WanResultDispose.CodeError("找不到访问地址", it.errorCode)
-                else -> mResult.value = WanResultDispose.CodeError("未知错误码", it.errorCode)
+                -1 -> mResult.value = WanResultDispose.Error("统一错误码", it.errorCode)
+                404 -> mResult.value = WanResultDispose.Error("找不到访问地址", it.errorCode)
+                else -> mResult.value = WanResultDispose.Error("未知错误码", it.errorCode)
             }
         }
 

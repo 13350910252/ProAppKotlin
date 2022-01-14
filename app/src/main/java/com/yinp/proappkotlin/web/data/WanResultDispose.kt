@@ -13,10 +13,11 @@ sealed class WanResultDispose<T> {
     data class Success<T>(var data: T) : WanResultDispose<T>()
 
     //失败
-    data class Error<T>(val errMsg: String) : WanResultDispose<T>()
+    data class Error<T>(val msg: String, val code: Int) : WanResultDispose<T>()
 
-    //errorCode
-    data class CodeError<T>(val msg: String, val code: Int) : WanResultDispose<T>()
+    //失败带Exception
+    data class ErrorException<T>(val msg: String, val code: Int, val e: Throwable?) :
+        WanResultDispose<T>()
 
     class LS<T> : WanResultDispose<T>()
 }
