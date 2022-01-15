@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
 import androidx.viewbinding.ViewBinding
 import com.yinp.tools.utils.LoadingUtils
+import com.yinp.tools.utils.ToastUtil
 
 /**
  * @author   :yinpeng
@@ -99,6 +101,19 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), View.OnClickListener
 
     protected fun hideLoading() {
         loading.closeAll()
+    }
+
+
+    /**
+     * 显示加载
+     */
+
+    protected fun showToast(text: String?) {
+        ToastUtil.initToast(requireContext(), text)
+    }
+
+    protected fun showToast(@StringRes id: Int) {
+        ToastUtil.initToast(requireContext(), id)
     }
 
     fun goToActivity(intent: Intent) {

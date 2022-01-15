@@ -134,6 +134,7 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
     private fun initData() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getNavigationList()
                 viewModel.navigationListData.collect {
                     when (it) {
                         is WanResultDispose.Start -> showLoading("加载中...")
@@ -159,7 +160,8 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
                             hideLoading()
                         }
                         is WanResultDispose.Error -> {
-
+                            hideLoading()
+                            showToast(it.msg)
                         }
                     }
                 }

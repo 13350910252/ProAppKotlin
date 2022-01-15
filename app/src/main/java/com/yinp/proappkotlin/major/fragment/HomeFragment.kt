@@ -9,8 +9,10 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.TodayUndeterminedFragment
 import com.yinp.proappkotlin.base.BaseFragment
@@ -136,20 +138,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun getBannerList() {
         viewModel.getBannerList()
         lifecycleScope.launch {
-            viewModel.homeBannerData.collect {
-                when (it) {
-                    is WanResultDispose.Start -> showLoading("加载中...")
-                    is WanResultDispose.Success -> {
-                        it.data.let { data ->
-                            listBanner.clear()
-                            listBanner.addAll(data)
-                            bd.topBanner.setAdapter(bannerAdapter)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.homeBannerData.collect {
+                    when (it) {
+                        is WanResultDispose.Start -> showLoading("加载中...")
+                        is WanResultDispose.Success -> {
+                            it.data.let { data ->
+                                listBanner.clear()
+                                listBanner.addAll(data)
+                                bd.topBanner.setAdapter(bannerAdapter)
+                            }
+                            hideLoading()
                         }
-                        hideLoading()
-                    }
-                    is WanResultDispose.Error -> {
-                        hideLoading()
-                        ToastUtil.initToast(requireContext(), it.msg)
+                        is WanResultDispose.Error -> {
+                            hideLoading()
+                            ToastUtil.initToast(requireContext(), it.msg)
+                        }
                     }
                 }
             }

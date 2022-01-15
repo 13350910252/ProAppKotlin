@@ -4,8 +4,10 @@ import android.content.Intent
 import android.widget.EditText
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.constant.SpConstants
 import com.yinp.proappkotlin.study.wanAndroid.data.WanLoginBean
@@ -67,24 +69,31 @@ object DialogShow {
                         //登录的逻辑
                         viewModel.login(account, password)
                         activity.lifecycleScope.launch {
-                            viewModel.wanLoginBean.collect {
-                                when (it) {
-                                    is WanResultDispose.Start -> loadingUtils.show(
-                                        manager,
-                                        "登录中..."
-                                    )
-                                    is WanResultDispose.Success -> {
-                                        loadingUtils.close()
-                                        WanLoginBean.saveUserInfo(it.data, activity)
-                                        MMKVUtils.saveValue(account, SpConstants.WAN_ACCOUNT)
-                                        if (isSkip) {
-                                            activity.startActivity(Intent(activity, T::class.java))
+                            activity.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.wanLoginBean.collect {
+                                    when (it) {
+                                        is WanResultDispose.Start -> loadingUtils.show(
+                                            manager,
+                                            "登录中..."
+                                        )
+                                        is WanResultDispose.Success -> {
+                                            loadingUtils.close()
+                                            WanLoginBean.saveUserInfo(it.data, activity)
+                                            MMKVUtils.saveValue(account, SpConstants.WAN_ACCOUNT)
+                                            if (isSkip) {
+                                                activity.startActivity(
+                                                    Intent(
+                                                        activity,
+                                                        T::class.java
+                                                    )
+                                                )
+                                            }
+                                            dialogFragment.dismiss()
                                         }
-                                        dialogFragment.dismiss()
-                                    }
-                                    is WanResultDispose.Error -> {
-                                        loadingUtils.close()
-                                        ToastUtil.initToast(activity, "登录失败")
+                                        is WanResultDispose.Error -> {
+                                            loadingUtils.close()
+                                            ToastUtil.initToast(activity, "登录失败")
+                                        }
                                     }
                                 }
                             }

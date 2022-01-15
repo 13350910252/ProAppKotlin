@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yinp.proappkotlin.base.BaseFragment
@@ -123,43 +125,45 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
      */
     private fun initData() {
         lifecycleScope.launch {
-            viewModel.wanSquareListData.collect {
-                when (it) {
-                    is WanResultDispose.Start -> if (mLoad) showLoading("加载中...")
-                    is WanResultDispose.Success -> {
-                        Log.d("abcd", "getSquareList: ")
-                        it.data.let { data ->
-                            if (data.datas.isNotEmpty()) {
-                                val length = mDataList.size
-                                if (mPage == 0) {
-                                    mDataList.clear()
-                                    mDataList.addAll(data.datas)
-                                    mAdapter.notifyDataSetChanged()
-                                    bd.baseRefresh.finishRefresh(true)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.wanSquareListData.collect {
+                    when (it) {
+                        is WanResultDispose.Start -> if (mLoad) showLoading("加载中...")
+                        is WanResultDispose.Success -> {
+                            Log.d("abcd", "getSquareList: ")
+                            it.data.let { data ->
+                                if (data.datas.isNotEmpty()) {
+                                    val length = mDataList.size
+                                    if (mPage == 0) {
+                                        mDataList.clear()
+                                        mDataList.addAll(data.datas)
+                                        mAdapter.notifyDataSetChanged()
+                                        bd.baseRefresh.finishRefresh(true)
+                                    } else {
+                                        mDataList.addAll(data.datas)
+                                        mAdapter.notifyItemRangeChanged(length - 1, data.datas.size)
+                                        bd.baseRefresh.finishLoadMore(true)
+                                    }
+                                    bd.baseRefresh.visibility = View.VISIBLE
+                                    bd.bottom.noLl.setVisibility(View.GONE)
                                 } else {
-                                    mDataList.addAll(data.datas)
-                                    mAdapter.notifyItemRangeChanged(length - 1, data.datas.size)
-                                    bd.baseRefresh.finishLoadMore(true)
+                                    if (mPage == 0) {
+                                        bd.baseRefresh.finishRefresh(false)
+                                    } else {
+                                        bd.baseRefresh.finishLoadMore(false)
+                                    }
                                 }
-                                bd.baseRefresh.visibility = View.VISIBLE
-                                bd.bottom.noLl.setVisibility(View.GONE)
-                            } else {
+                            } ?: let {
                                 if (mPage == 0) {
-                                    bd.baseRefresh.finishRefresh(false)
+                                    bd.baseRefresh.visibility = View.GONE
+                                    bd.bottom.noLl.visibility = View.VISIBLE
                                 } else {
                                     bd.baseRefresh.finishLoadMore(false)
                                 }
                             }
-                        } ?: let {
-                            if (mPage == 0) {
-                                bd.baseRefresh.visibility = View.GONE
-                                bd.bottom.noLl.visibility = View.VISIBLE
-                            } else {
-                                bd.baseRefresh.finishLoadMore(false)
-                            }
+                            if (mLoad)
+                                hideLoading()
                         }
-                        if (mLoad)
-                            hideLoading()
                     }
                 }
             }

@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.google.android.flexbox.FlexDirection
@@ -134,46 +136,48 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
             }
         })
         lifecycleScope.launch {
-            viewModel.wanSysListData.collect {
-                if (it is WanAndroidData) {
-                    val listBeans = it.data
-                    if (listBeans.isNullOrEmpty().not()) {
-                        for (item in listBeans!!) {
-                            mDataList.add(
-                                WanSysListData(
-                                    item.courseId,
-                                    item.id,
-                                    item.name,
-                                    item.order,
-                                    item.parentChapterId,
-                                    item.userControlSetTop,
-                                    item.visible,
-                                    true
-                                )
-                            )
-                            item.children?.let {
-                                for (item2 in item.children) {
-                                    mDataList.add(
-                                        WanSysListData(
-                                            item2.courseId,
-                                            item2.id,
-                                            item2.name,
-                                            item2.order,
-                                            item2.parentChapterId,
-                                            item2.userControlSetTop,
-                                            item2.visible,
-                                            false
-                                        )
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.wanSysListData.collect {
+                    if (it is WanAndroidData) {
+                        val listBeans = it.data
+                        if (listBeans.isNullOrEmpty().not()) {
+                            for (item in listBeans!!) {
+                                mDataList.add(
+                                    WanSysListData(
+                                        item.courseId,
+                                        item.id,
+                                        item.name,
+                                        item.order,
+                                        item.parentChapterId,
+                                        item.userControlSetTop,
+                                        item.visible,
+                                        true
                                     )
+                                )
+                                item.children?.let {
+                                    for (item2 in item.children) {
+                                        mDataList.add(
+                                            WanSysListData(
+                                                item2.courseId,
+                                                item2.id,
+                                                item2.name,
+                                                item2.order,
+                                                item2.parentChapterId,
+                                                item2.userControlSetTop,
+                                                item2.visible,
+                                                false
+                                            )
+                                        )
+                                    }
                                 }
                             }
+                            bd.rvList.visibility = View.VISIBLE
+                            bd.bottom.noLl.visibility = View.GONE
+                            adapter.notifyDataSetChanged()
+                        } else {
+                            bd.rvList.visibility = View.GONE
+                            bd.bottom.noLl.visibility = View.VISIBLE
                         }
-                        bd.rvList.visibility = View.VISIBLE
-                        bd.bottom.noLl.visibility = View.GONE
-                        adapter.notifyDataSetChanged()
-                    } else {
-                        bd.rvList.visibility = View.GONE
-                        bd.bottom.noLl.visibility = View.VISIBLE
                     }
                 }
             }

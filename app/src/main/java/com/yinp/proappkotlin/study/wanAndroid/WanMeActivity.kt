@@ -3,8 +3,10 @@ package com.yinp.proappkotlin.study.wanAndroid
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
@@ -112,16 +114,18 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
     private fun getIntegral() {
         viewModel.getIntegralInfo()
         lifecycleScope.launch {
-            viewModel.integralBean.collect {
-                when (it) {
-                    is WanResultDispose.Success -> {
-                        it.data.run {
-                            bd.tvIntegralRanking.text =
-                                "积分：${coinCount} 排行：${rank}"
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.integralBean.collect {
+                    when (it) {
+                        is WanResultDispose.Success -> {
+                            it.data.run {
+                                bd.tvIntegralRanking.text =
+                                    "积分：${coinCount} 排行：${rank}"
+                            }
                         }
-                    }
-                    is WanResultDispose.Error -> {
-                        bd.tvIntegralRanking.text = "积分:--" + " 排行:--"
+                        is WanResultDispose.Error -> {
+                            bd.tvIntegralRanking.text = "积分:--" + " 排行:--"
+                        }
                     }
                 }
             }
@@ -194,7 +198,7 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
                     holder: DialogFragmentHolder,
                     dialogFragment: BaseDialogFragment
                 ) {
-                    holder.setText(R.id.tv_title,"是否登出WanAndroid?")
+                    holder.setText(R.id.tv_title, "是否登出WanAndroid?")
 
                     val tvLeft = holder.getView<TextView>(R.id.tv_left)
                     val tvRight = holder.getView<TextView>(R.id.tv_right)
@@ -215,18 +219,20 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
     private fun loginOut() {
         viewModel.getIntegralInfo()
         lifecycleScope.launch {
-            viewModel.loginOut.collect {
-                when (it) {
-                    is WanResultDispose.Success -> {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loginOut.collect {
+                    when (it) {
+                        is WanResultDispose.Success -> {
 //                        showToast("登出成功")
-                        //清除个人信息
-                        WanLoginBean.clear(mContext)
-                        //退出登录时，清除本地cookie
-                        val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(mContext)
-                        sharedPrefsCookiePersistor.clear()
-                    }
-                    is WanResultDispose.Error -> {
+                            //清除个人信息
+                            WanLoginBean.clear(mContext)
+                            //退出登录时，清除本地cookie
+                            val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(mContext)
+                            sharedPrefsCookiePersistor.clear()
+                        }
+                        is WanResultDispose.Error -> {
 //                        showToast("登出失败")
+                        }
                     }
                 }
             }

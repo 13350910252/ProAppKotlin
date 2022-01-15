@@ -3,8 +3,10 @@ package com.yinp.proappkotlin.study.wanAndroid
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yinp.proappkotlin.R
@@ -74,6 +76,7 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
                     ItemRankListBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
                 )
             }
+
             override fun onBindItem(
                 holder: RecyclerView.ViewHolder?,
                 position: Int,
@@ -144,32 +147,34 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
     private fun getRankList() {
         viewModel.getIntegralRankList(page)
         lifecycleScope.launch {
-            viewModel.rankListBean.collect { it ->
-                when (it) {
-                    is WanResultDispose.Start -> if (isLoad) showLoading("加载中...")
-                    is WanResultDispose.Success -> {
-                        it.data.let { data ->
-                            if (page > 1) bd.baseRefresh.finishLoadMore()
-                            if (data.datas.isNotEmpty()
-                            ) {
-                                val start = dataList.size
-                                dataList.addAll(data.datas)
-                                val end = dataList.size
-                                commonAdapter.notifyItemRangeChanged(start-1, end)
-                                bd.baseRefresh.visibility = View.VISIBLE
-                                bd.bottom.noLl.visibility = View.GONE
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.rankListBean.collect { it ->
+                    when (it) {
+                        is WanResultDispose.Start -> if (isLoad) showLoading("加载中...")
+                        is WanResultDispose.Success -> {
+                            it.data.let { data ->
+                                if (page > 1) bd.baseRefresh.finishLoadMore()
+                                if (data.datas.isNotEmpty()
+                                ) {
+                                    val start = dataList.size
+                                    dataList.addAll(data.datas)
+                                    val end = dataList.size
+                                    commonAdapter.notifyItemRangeChanged(start - 1, end)
+                                    bd.baseRefresh.visibility = View.VISIBLE
+                                    bd.bottom.noLl.visibility = View.GONE
+                                }
+                            } ?: let {
+                                bd.baseRefresh.visibility = View.GONE
+                                bd.bottom.noLl.visibility = View.VISIBLE
                             }
-                        } ?: let {
-                            bd.baseRefresh.visibility = View.GONE
-                            bd.bottom.noLl.visibility = View.VISIBLE
+                            if (isLoad)
+                                hideLoading()
                         }
-                        if (isLoad)
-                            hideLoading()
-                    }
-                    is WanResultDispose.Error -> {
-                        if (isLoad)
-                            hideLoading()
-                        showToast(it.msg)
+                        is WanResultDispose.Error -> {
+                            if (isLoad)
+                                hideLoading()
+                            showToast(it.msg)
+                        }
                     }
                 }
             }
