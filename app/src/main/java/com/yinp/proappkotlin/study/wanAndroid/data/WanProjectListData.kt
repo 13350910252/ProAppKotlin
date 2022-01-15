@@ -10,14 +10,14 @@ import com.yinp.proappkotlin.web.data.WanAndroidData
  */
 data class WanProjectListData(
     val curPage: Int,
-    val datas: List<DataX>?,
+    val datas: List<Data>?,
     val offset: Int,
     val over: Boolean,
     val pageCount: Int,
     val size: Int,
     val total: Int
 ) : WanAndroidData<WanProjectListData>() {
-    data class DataX(
+    data class Data(
         val alreadyInHomePage: Boolean,
         val apkLink: String,
         val audit: Int,

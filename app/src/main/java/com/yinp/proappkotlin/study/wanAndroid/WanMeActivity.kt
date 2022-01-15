@@ -1,6 +1,5 @@
 package com.yinp.proappkotlin.study.wanAndroid
 
-import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.Lifecycle
@@ -57,7 +56,8 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
     }
 
     override fun bindData() {
-        getIntegral()
+        viewModel.getIntegralInfo()
+        initData()
     }
 
     override fun onResume() {
@@ -68,7 +68,7 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
     private fun initUserInfo() {
         val wanLoginBean = WanLoginBean.getUserInfo(mContext)
         if (wanLoginBean != null) {
-            if (TextUtils.isEmpty(wanLoginBean.username)) {
+            if (wanLoginBean.username.isEmpty()) {
                 bd.cuaUserHead.setUserName("登录")
                 bd.tvNickName.text = "请先登录~"
                 mLogin = false
@@ -86,48 +86,34 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
 
     override fun onClick(v: View) {
         super.onClick(v)
-        if (v === bd.tvNickName) {
-            if (!mLogin) {
+        when (v) {
+            bd.tvNickName -> {
+                if (!mLogin) {
 //                setLoginDialog()
-            }
-        } else if (v === bd.llOpenSourceWeb) {
-            JumpWebUtils.startWebView(
-                mContext,
-                "玩Android",
-                "https://www.wanandroid.com/"
-            )
-        } else if (v === bd.llJoinOpenSource) {
-            JumpWebUtils.startWebView(
-                mContext,
-                "WanAndroid——WJX",
-                "https://github.com/wangjianxiandev/WanAndroidMvp"
-            )
-        } else if (v === bd.llIntegralRank) {
-            goToActivity<WanRankActivity>()
-        } else if (v === bd.llCollect) {
-            goToActivity<WanCollectionActivity>()
-        } else if (v === bd.sllLoginOut) {
-            loginOutDialog()
-        }
-    }
-
-    private fun getIntegral() {
-        viewModel.getIntegralInfo()
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.integralBean.collect {
-                    when (it) {
-                        is WanResultDispose.Success -> {
-                            it.data.run {
-                                bd.tvIntegralRanking.text =
-                                    "积分：${coinCount} 排行：${rank}"
-                            }
-                        }
-                        is WanResultDispose.Error -> {
-                            bd.tvIntegralRanking.text = "积分:--" + " 排行:--"
-                        }
-                    }
                 }
+            }
+            bd.llOpenSourceWeb -> {
+                JumpWebUtils.startWebView(
+                    mContext,
+                    "玩Android",
+                    "https://www.wanandroid.com/"
+                )
+            }
+            bd.llJoinOpenSource -> {
+                JumpWebUtils.startWebView(
+                    mContext,
+                    "WanAndroid——WJX",
+                    "https://github.com/wangjianxiandev/WanAndroidMvp"
+                )
+            }
+            bd.llIntegralRank -> {
+                goToActivity<WanRankActivity>()
+            }
+            bd.llCollect -> {
+                goToActivity<WanCollectionActivity>()
+            }
+            bd.sllLoginOut -> {
+                loginOutDialog()
             }
         }
     }
@@ -206,7 +192,7 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
                     tvRight.text = "是"
                     tvLeft.setOnClickListener { dialogFragment.dismiss() }
                     tvRight.setOnClickListener {
-                        loginOut()
+                        viewModel.getIntegralInfo()
                         dialogFragment.dismiss()
                     }
                 }
@@ -216,8 +202,26 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
             )
     }
 
-    private fun loginOut() {
-        viewModel.getIntegralInfo()
+    private fun initData() {
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.integralBean.collect {
+                    when (it) {
+                        is WanResultDispose.Success -> {
+                            it.data.run {
+                                bd.tvIntegralRanking.text =
+                                    "积分：${coinCount} 排行：${rank}"
+                            }
+                        }
+                        is WanResultDispose.Error -> {
+                            bd.tvIntegralRanking.text = "积分:--" + " 排行:--"
+                        }
+                    }
+                }
+            }
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.loginOut.collect {
@@ -227,7 +231,8 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
                             //清除个人信息
                             WanLoginBean.clear(mContext)
                             //退出登录时，清除本地cookie
-                            val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(mContext)
+                            val sharedPrefsCookiePersistor =
+                                SharedPrefsCookiePersistor(mContext)
                             sharedPrefsCookiePersistor.clear()
                         }
                         is WanResultDispose.Error -> {

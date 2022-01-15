@@ -30,24 +30,24 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        when {
-            v === bd.stvOne -> { //玩Android
+        when (v) {
+            bd.stvOne -> { //玩Android
                 goToActivity(WandroidActivity::class.java)
             }
-//            v === bd.stvTwo -> { //学习内容总结
+//            bd.stvTwo -> { //学习内容总结
 //                goToActivity(StudySummarizeActivity::class.java)
 //            }
-//            v === bd.stvThree -> { //视频
+//            bd.stvThree -> { //视频
 //            }
-//            v === bd.stvFour -> { //自定义view
+//            bd.stvFour -> { //自定义view
 //                goToActivity(CustomViewActivity::class.java)
 //            }
-//            v === bd.stvFive -> {
+//            bd.stvFive -> {
 //                goToActivity(MyWorkActivity::class.java)
 //            }
-//            v === bd.stvSix -> {
-//                initTwoSelect()
-//            }
+            bd.stvSix -> {
+                initTwoSelect()
+            }
         }
     }
 
@@ -68,17 +68,15 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
                     viewBinding: ViewBinding
                 ) {
                     mDialogFragment = dialogFragment as CommonDialogFragment
-                    (viewBinding as? ItemTwoSelectBinding)?.let {
-                        it.tsvSelect.setcLickListener(object : TwoSelectView.CLickListener() {
-                            override fun click(isLeft: Boolean) {
-                                if (isLeft) {
-                                    goToActivity(JiGuangLoginActivity::class.java)
-                                } else {
-                                    goToActivity(JiGuangShareActivity::class.java)
-                                }
+                    (viewBinding as? ItemTwoSelectBinding)?.tsvSelect?.setcLickListener(object : TwoSelectView.CLickListener() {
+                        override fun click(isLeft: Boolean) {
+                            if (isLeft) {
+                                goToActivity(JiGuangLoginActivity::class.java)
+                            } else {
+                                goToActivity(JiGuangShareActivity::class.java)
                             }
-                        })
-                    }
+                        }
+                    })
                 }
             }).setAnimStyle(R.style.CenterDialogAnimation).setGravity(BaseDialogFragment.CENTER)
             .setPercent(false, false).show(childFragmentManager)

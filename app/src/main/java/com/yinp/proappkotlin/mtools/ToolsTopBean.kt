@@ -7,7 +7,7 @@ package com.yinp.proappkotlin.mtools
  * describe  :
  */
 data class ToolsTopBean(
-    var title: String? = "",
+    var title: String = "",
     var drawableId: Int = 0,
-    var url: String? = ""
+    var url: String = ""
 )

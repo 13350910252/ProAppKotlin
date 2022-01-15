@@ -28,8 +28,8 @@ import com.yinp.tools.adapter.CommonAdapter
  * describe  :
  */
 class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
-    private val mDataList = mutableListOf<WanProjectListData.DataX>()
-    private lateinit var mAdapter: CommonAdapter<WanProjectListData.DataX>
+    private val mDataList = mutableListOf<WanProjectListData.Data>()
+    private lateinit var mAdapter: CommonAdapter<WanProjectListData.Data>
     private var mPage = 0
     private var mLoad = true
 
@@ -51,7 +51,7 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
     }
 
     private fun initRecycler() {
-        mAdapter = object : CommonAdapter<WanProjectListData.DataX>(requireContext(), mDataList) {
+        mAdapter = object : CommonAdapter<WanProjectListData.Data>(requireContext(), mDataList) {
             override fun setComViewHolder(
                 view: View?,
                 viewType: Int,
@@ -66,7 +66,7 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
             override fun onBindItem(
                 holder: RecyclerView.ViewHolder?,
                 position: Int,
-                item: WanProjectListData.DataX
+                item: WanProjectListData.Data
             ) {
                 val viewHolder = holder as ViewHolder
                 viewHolder.binding.tvTitle.text = AppUtils.getValue(item.title)
@@ -98,7 +98,6 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
         }
         //为上拉加载添加事件
         bd.baseRefresh.setOnLoadMoreListener {
-            mPage++
             mLoad = false
             viewModel.getProjectList(++mPage)
         }

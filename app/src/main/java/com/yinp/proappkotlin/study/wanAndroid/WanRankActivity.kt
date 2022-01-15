@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
     private val dataList = mutableListOf<RankListBean.Data>()
     private lateinit var commonAdapter: CommonAdapter<RankListBean.Data>
-    private var page = 1
+    private var mPage = 1
     private var maxCount = 0
     var isLoad = true
 
@@ -49,7 +49,8 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
         initRecycler()
         refresh()
         isLoad = true
-        getRankList()
+        viewModel.getIntegralRankList(mPage)
+        initData()
     }
 
     override fun onClick(v: View) {
@@ -129,31 +130,27 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
         bd.baseRecycle.adapter = commonAdapter
     }
 
-    internal class ViewHolder(var binding: ItemRankListBinding) : ComViewHolder(
-        binding.root
-    )
+    internal class ViewHolder(var binding: ItemRankListBinding) : ComViewHolder(binding.root)
 
     private fun refresh() {
         //为下来刷新添加事件
         bd.baseRefresh.setEnableRefresh(false)
         //为上拉加载添加事件
         bd.baseRefresh.setOnLoadMoreListener {
-            page++
             isLoad = false
-            getRankList()
+            viewModel.getIntegralRankList(++mPage)
         }
     }
 
-    private fun getRankList() {
-        viewModel.getIntegralRankList(page)
+    private fun initData() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.rankListBean.collect { it ->
+                viewModel.rankListBean.collect {
                     when (it) {
                         is WanResultDispose.Start -> if (isLoad) showLoading("加载中...")
                         is WanResultDispose.Success -> {
                             it.data.let { data ->
-                                if (page > 1) bd.baseRefresh.finishLoadMore()
+                                if (mPage > 1) bd.baseRefresh.finishLoadMore()
                                 if (data.datas.isNotEmpty()
                                 ) {
                                     val start = dataList.size
@@ -163,9 +160,6 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
                                     bd.baseRefresh.visibility = View.VISIBLE
                                     bd.bottom.noLl.visibility = View.GONE
                                 }
-                            } ?: let {
-                                bd.baseRefresh.visibility = View.GONE
-                                bd.bottom.noLl.visibility = View.VISIBLE
                             }
                             if (isLoad)
                                 hideLoading()

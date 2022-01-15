@@ -130,7 +130,6 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
                     when (it) {
                         is WanResultDispose.Start -> if (mLoad) showLoading("加载中...")
                         is WanResultDispose.Success -> {
-                            Log.d("abcd", "getSquareList: ")
                             it.data.let { data ->
                                 if (data.datas.isNotEmpty()) {
                                     val length = mDataList.size

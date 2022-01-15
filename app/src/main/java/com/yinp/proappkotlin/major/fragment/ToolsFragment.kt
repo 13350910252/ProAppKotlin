@@ -91,9 +91,9 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
         }
         topAdapter?.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
             override fun onItemClick(position: Int, view: View?) {
-                if (topList[position].url.isNullOrEmpty().not()) {
+                if (topList[position].url.isNotEmpty()) {
                     goToActivity(Intent().apply {
-                        setClassName(requireContext(), topList[position].url!!)
+                        setClassName(requireContext(), topList[position].url)
                     })
                 }
             }

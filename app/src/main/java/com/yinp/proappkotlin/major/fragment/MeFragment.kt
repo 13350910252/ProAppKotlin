@@ -31,7 +31,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
     override fun initViews() {
         initClick(this, bd.ivHead, bd.sllAddLabel)
         val img = MMKVUtils.getValue(SpConstants.HEAD_PICTURE, "")
-        if (TextUtils.isEmpty(img)) {
+        if (img.isEmpty()) {
             GlideUtils.intoRadius(requireContext(), R.mipmap.default_head, bd.ivHead, 100)
         } else {
             GlideUtils.intoRadius(requireContext(), Uri.parse(img), bd.ivHead, 100, true)

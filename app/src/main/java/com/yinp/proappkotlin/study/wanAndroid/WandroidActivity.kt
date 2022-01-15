@@ -50,6 +50,7 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
         fragments.put(5, WanProjectFragment.getInstance())
         fragments.put(6, WanOfficialAccountFragment.getInstance())
         fragments.put(7, WanProjectClassifyFragment.getInstance())
+
         bd.materialViewPager.adapter = ViewPager2Utils.getAdapter(this, fragments)
         val titleList = mutableListOf("首页", "广场", "导航", "问答", "体系", "项目", "公众号", "项目分类")
         bd.materialIndicator.setBackgroundColor(Color.WHITE)

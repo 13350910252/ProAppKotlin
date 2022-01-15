@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
  * describe  :收藏列表
  */
 class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
-    private val dataList = mutableListOf<CollectionListBean.Data>()
+    private val mDataList = mutableListOf<CollectionListBean.Data>()
     private lateinit var commonAdapter: CommonAdapter<CollectionListBean.Data>
 
     private val viewModel by lazy {
@@ -42,20 +42,22 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
         ViewModelProvider(this)[WanUnifyCollectModel::class.java]
     }
 
-    private var isLoad = true
+    private var mLoad = true
     private var page = 0
+    private var mFirst = false
     override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         bd.header.headerCenterTitle.text = "我的收藏"
         initClick(bd.header.headerBackImg)
         initRecycler()
         refresh()
-        isLoad = true
-        getCollectInfo()
+        initData()
+        mLoad = true
+        viewModel.getCollectList(page)
     }
 
     private fun initRecycler() {
-        commonAdapter = object : CommonAdapter<CollectionListBean.Data>(mContext, dataList) {
+        commonAdapter = object : CommonAdapter<CollectionListBean.Data>(mContext, mDataList) {
             override fun setComViewHolder(
                 view: View?,
                 viewType: Int,
@@ -70,44 +72,48 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
                 )
                 holder.binding.ivCollect.setOnClickListener {
                     val position = holder.absoluteAdapterPosition
-                    if (AppUtils.isLogin(mContext)) {
-                        if (!dataList[position].isCollect) {
-                            collectModel.addCollect(datalist[position].originId)
-                            lifecycleScope.launch {
-                                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                                    collectModel.unifyAddCollect.collect {
-                                        when (it) {
-                                            is WanResultDispose.Success -> {
-                                                dataList[position].isCollect = true
-                                                commonAdapter.notifyItemChanged(position, "")
-                                                showToast("已收藏")
-                                            }
-                                            is WanResultDispose.Error -> {
-                                                showToast("收藏失败")
-                                            }
+                    if (!mFirst) {
+                        mFirst = true
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                collectModel.unifyAddCollect.collect {
+                                    when (it) {
+                                        is WanResultDispose.Success -> {
+                                            mDataList[position].isCollect = true
+                                            commonAdapter.notifyItemChanged(position, "")
+                                            showToast("已收藏")
+                                        }
+                                        is WanResultDispose.Error -> {
+                                            showToast("收藏失败")
                                         }
                                     }
                                 }
                             }
-                        } else {
+                        }
 
-                            collectModel.cancelCollect(datalist[position].originId)
-                            lifecycleScope.launch {
-                                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                                    collectModel.unifyCancelCollect.collect {
-                                        when (it) {
-                                            is WanResultDispose.Success -> {
-                                                dataList[position].isCollect = false
-                                                commonAdapter.notifyItemChanged(position, "")
-                                                showToast("取消收藏")
-                                            }
-                                            is WanResultDispose.Error -> {
-                                                showToast("取消失败")
-                                            }
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                collectModel.unifyCancelCollect.collect {
+                                    when (it) {
+                                        is WanResultDispose.Success -> {
+                                            mDataList[position].isCollect = false
+                                            commonAdapter.notifyItemChanged(position, "")
+                                            showToast("取消收藏")
+                                        }
+                                        is WanResultDispose.Error -> {
+                                            showToast("取消失败")
                                         }
                                     }
                                 }
                             }
+                        }
+
+                    }
+                    if (AppUtils.isLogin(mContext)) {
+                        if (!mDataList[position].isCollect) {
+                            collectModel.addCollect(datalist[position].originId)
+                        } else {
+                            collectModel.cancelCollect(datalist[position].originId)
                         }
                     } else {
                         DialogShow.setLoginDialog<WanMeActivity>(
@@ -137,8 +143,10 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
         }
         commonAdapter.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
             override fun onItemClick(position: Int, view: View?) {
-                val item = dataList[position]
-                JumpWebUtils.startWebView(mContext, item.title, item.link)
+                val item = mDataList[position]
+                if (item.link.isNotEmpty()) {
+                    JumpWebUtils.startWebView(mContext, item.title, item.link)
+                }
             }
         })
         bd.baseRecycle.layoutManager = LinearLayoutManager(mContext)
@@ -150,8 +158,8 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
 
     override fun onClick(v: View) {
         super.onClick(v)
-        if (v === bd.header.headerBackImg) {
-            finish()
+        when (v) {
+            bd.header.headerBackImg -> finish()
         }
     }
 
@@ -159,48 +167,38 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
         //为下来刷新添加事件
         bd.baseRefresh.setOnRefreshListener {
             page = 0
-            isLoad = false
-            getCollectInfo()
+            mLoad = false
+            viewModel.getCollectList(page)
         }
         //为上拉加载添加事件
         bd.baseRefresh.setOnLoadMoreListener {
-            page++
-            isLoad = false
-            getCollectInfo()
+            mLoad = false
+            viewModel.getCollectList(++page)
         }
     }
 
     /**
      * 获取收藏列表
      */
-    private fun getCollectInfo() {
-        viewModel.getCollectList(page)
+    private fun initData() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.collectionListBean.collect {
                     when (it) {
-                        is WanResultDispose.Start -> {
-                            if (isLoad) {
-                                showLoading("加载中...")
-                            }
-                        }
+                        is WanResultDispose.Start -> if (mLoad) showLoading("加载中...")
                         is WanResultDispose.Success -> {
                             it.data.let { data ->
                                 if (data.datas.isNotEmpty()) {
-                                    val start = dataList.size
-                                    dataList.addAll(data.datas)
-                                    val end = dataList.size
+                                    val start = mDataList.size
+                                    mDataList.addAll(data.datas)
+                                    val end = mDataList.size
                                     commonAdapter.notifyItemRangeChanged(start - 1, end)
                                     bd.baseRefresh.visibility = View.VISIBLE
                                     bd.bottom.noLl.visibility = View.GONE
                                 }
-                            } ?: let {
-                                bd.baseRefresh.visibility = View.GONE
-                                bd.bottom.noLl.visibility = View.VISIBLE
                             }
-                            if (isLoad) {
-                                hideLoading()
-                            }
+                            if (mLoad) hideLoading()
+
                         }
                         is WanResultDispose.Error -> {
                             if (page > 0) bd.baseRefresh.finishLoadMore(false)

@@ -66,7 +66,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun initViews() {
         initRecycler()
         initIndicator()
-        getBannerList()
+        viewModel.getBannerList()
+        initData()
     }
 
     private fun initRecycler() {
@@ -135,8 +136,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         ViewPager2Utils.bind(bd.materialIndicator, bd.materialViewPager)
     }
 
-    private fun getBannerList() {
-        viewModel.getBannerList()
+    private fun initData() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.homeBannerData.collect {

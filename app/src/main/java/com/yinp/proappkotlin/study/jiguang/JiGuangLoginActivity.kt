@@ -46,30 +46,30 @@ class JiGuangLoginActivity : BaseActivity<ActivityJiGuangLoginBinding>() {
     }
 
     override fun onClick(v: View) {
-//        super.onClick(v)
-//        when {
-//            v === bd.header.headerBackImg -> {
-//                finish()
-//            }
-//            v === bd.tvLogin -> {
+        super.onClick(v)
+        when (v) {
+            bd.header.headerBackImg -> {
+                finish()
+            }
+//            bd.tvLogin -> {
 //                QQLogin()
 //            }
-//            v === bd.tvShare -> {
+//            bd.tvShare -> {
 //                selectTakePhoto.selectType(this, 1)
 //            }
-//            v === bd.tvQZoneShare -> {
+//            bd.tvQZoneShare -> {
 //                val shareParams = ShareParams()
 //                shareParams.setShareType(Platform.SHARE_TEXT)
 //                shareParams.setText("qq控件分享")
 //                JShareInterface.share(QZone.Name, shareParams, null)
 //            }
-//            v === bd.tvWeixinShare -> {
+//            bd.tvWeixinShare -> {
 //                val shareParams = ShareParams()
 //                shareParams.setShareType(Platform.SHARE_TEXT)
 //                shareParams.setText("Text") //必须
 //                JShareInterface.share(Wechat.Name, shareParams, null)
 //            }
-//        }
+        }
     }
 
 //    private fun QQLogin() {
