@@ -1,11 +1,13 @@
 package com.yinp.proappkotlin.web
 
+import android.util.Log
 import com.google.gson.JsonParseException
 import com.yinp.proappkotlin.web.data.BaseRespData
 import com.yinp.proappkotlin.web.data.WanAndroidCall
 import com.yinp.proappkotlin.web.data.WanAndroidData
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import org.json.JSONException
 import retrofit2.HttpException
@@ -26,6 +28,7 @@ const val BAD_NETWORK = 1002  //网络问题
 const val CONNECT_ERROR = 1003    //连接错误
 const val CONNECT_TIMEOUT = 1004  //连接超时
 
+@FlowPreview
 suspend fun <T : Any> disposeNetOuter(
     mResult: MutableStateFlow<BaseRespData<T>>,
     block: suspend () -> BaseRespData<T>
@@ -42,6 +45,8 @@ suspend fun <T : Any> disposeNetOuter(
     }.flowOn(Dispatchers.IO)
         .onStart {
         }
+        //避免在单位时间内，快输入造成大量的请求
+        .debounce(200)
         .onEmpty {
 
         }
@@ -112,6 +117,7 @@ suspend fun <T : Any> wanDisposeNetOuter(
              */
             mResult.value = WanResultDispose.Start()
         }
+        .debounce(1000)
         .onEmpty {
             mResult.value = WanResultDispose.Error("返回的数据为空", -789)
         }
@@ -130,6 +136,7 @@ suspend fun <T : Any> wanDisposeNetOuter(
             }
         }
         .collectLatest {
+            Log.d("abcd", "wanDisposeNetOuter: ")
             when (it.errorCode) {
                 0 ->
                     it.data?.run {

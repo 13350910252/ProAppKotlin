@@ -120,16 +120,16 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
         ) {
             when (parent.getChildAdapterPosition(view) % space) {
                 0 -> {
-                    outRect.left = AppUtils.dpToPx(context, 20.0f)
-                    outRect.right = AppUtils.dpToPx(context, 10.0f)
+                    outRect.left = AppUtils.dpToPx(20.0f)
+                    outRect.right = AppUtils.dpToPx(10.0f)
                 }
                 1 -> {
-                    outRect.left = AppUtils.dpToPx(context, 10.0f)
-                    outRect.right = AppUtils.dpToPx(context, 10.0f)
+                    outRect.left = AppUtils.dpToPx(10.0f)
+                    outRect.right = AppUtils.dpToPx(10.0f)
                 }
                 else -> {
-                    outRect.left = AppUtils.dpToPx(context, 10.0f)
-                    outRect.right = AppUtils.dpToPx(context, 20.0f)
+                    outRect.left = AppUtils.dpToPx(10.0f)
+                    outRect.right = AppUtils.dpToPx(20.0f)
                 }
             }
         }

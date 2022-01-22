@@ -82,9 +82,9 @@ class AddLabelActivity : BaseActivity<ActivityAddLabelBinding>() {
             override fun getIndicator(context: Context): IPagerIndicator {
                 return LinePagerIndicator(context).apply {
                     mode = LinePagerIndicator.MODE_EXACTLY
-                    lineHeight = AppUtils.dpToPx(context, 0.0f)
-                    lineWidth = AppUtils.dpToPx(context, 56.0f)
-                    roundRadius = AppUtils.dpToPx(context, 3.0f)
+                    lineHeight = AppUtils.dpToPx(0.0f)
+                    lineWidth = AppUtils.dpToPx(56.0f)
+                    roundRadius = AppUtils.dpToPx(3.0f)
                     startInterpolator = AccelerateInterpolator()
                     endInterpolator = DecelerateInterpolator(2.0f)
                     setColors(ContextCompat.getColor(context, R.color.fafafa))

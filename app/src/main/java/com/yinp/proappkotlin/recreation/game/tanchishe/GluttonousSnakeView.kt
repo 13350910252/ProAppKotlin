@@ -91,8 +91,8 @@ class GluttonousSnakeView : View {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val screenWidth = AppUtils.getWidthPixels(context)
-        val screenHeight = AppUtils.getHeightPixels(context)
+        val screenWidth = AppUtils.getWidthPixels()
+        val screenHeight = AppUtils.getHeightPixels()
         mTotalLRWidth = 100 + screenWidth % 100 - mPadding * 2
         mHeight = screenWidth - mTotalLRWidth - mPadding * 2
         mWidth = mHeight

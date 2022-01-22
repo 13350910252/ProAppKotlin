@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Process
 import cn.bmob.v3.Bmob
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
-import com.scwang.smartrefresh.layout.api.*
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.tencent.bugly.crashreport.CrashReport

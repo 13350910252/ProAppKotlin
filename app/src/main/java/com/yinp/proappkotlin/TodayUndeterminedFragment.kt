@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.SparseArray
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -16,7 +15,6 @@ import com.yinp.proappkotlin.databinding.FragmentTodayUndeterminedBinding
 import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.proappkotlin.utils.ViewPager2Utils
 import com.yinp.tools.view.ColorFlipPagerTitleView
-import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
@@ -75,9 +73,9 @@ class TodayUndeterminedFragment : BaseFragment<FragmentTodayUndeterminedBinding>
             override fun getIndicator(context: Context): IPagerIndicator {
                 return LinePagerIndicator(context).apply {
                     mode = LinePagerIndicator.MODE_EXACTLY
-                    lineHeight = AppUtils.dpToPx(context, 4.0f)
-                    lineWidth = AppUtils.dpToPx(context, 56.0f)
-                    roundRadius = AppUtils.dpToPx(context, 2.0f)
+                    lineHeight = AppUtils.dpToPx(4.0f)
+                    lineWidth = AppUtils.dpToPx(56f)
+                    roundRadius = AppUtils.dpToPx(2f)
                     startInterpolator = AccelerateInterpolator()
                     endInterpolator = DecelerateInterpolator(2.0f)
                     setColors(ContextCompat.getColor(context, R.color.ff4d4d))

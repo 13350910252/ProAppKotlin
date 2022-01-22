@@ -8,10 +8,12 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.base.goToActivity
 import com.yinp.proappkotlin.databinding.ActivityWandroidBinding
+import com.yinp.proappkotlin.home.HomeViewModel
 import com.yinp.proappkotlin.study.wanAndroid.dialog.DialogShow
 import com.yinp.proappkotlin.study.wanAndroid.fragment.*
 import com.yinp.proappkotlin.utils.AppUtils
@@ -32,6 +34,9 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
  */
 class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
     private val fragments = SparseArray<Fragment>()
+    private val viewModel by lazy {
+        ViewModelProvider(this)[HomeViewModel::class.java]
+    }
 
     override fun initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this))
@@ -87,9 +92,9 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
             override fun getIndicator(context: Context): IPagerIndicator {
                 return LinePagerIndicator(context).apply {
                     mode = LinePagerIndicator.MODE_EXACTLY
-                    lineHeight = AppUtils.dpToPx(context, 0.0f)
-                    lineWidth = AppUtils.dpToPx(context, 56f)
-                    roundRadius = AppUtils.dpToPx(context, 3.0f)
+                    lineHeight = AppUtils.dpToPx(0.0f)
+                    lineWidth = AppUtils.dpToPx(56f)
+                    roundRadius = AppUtils.dpToPx(3.0f)
                     startInterpolator = AccelerateInterpolator()
                     endInterpolator = DecelerateInterpolator(2.0f)
                     setColors(ContextCompat.getColor(context, R.color.ff4d4d))
@@ -113,6 +118,9 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
                         supportFragmentManager
                     )
                 }
+            }
+            bd.header.headerEnd -> {
+                viewModel.getStickList()
             }
         }
     }

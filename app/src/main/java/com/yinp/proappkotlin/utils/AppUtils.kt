@@ -1,6 +1,7 @@
 package com.yinp.proappkotlin.utils
 
 import android.content.Context
+import android.content.res.Resources
 import android.os.Build
 import android.text.TextUtils
 import android.view.Window
@@ -59,8 +60,8 @@ object AppUtils {
      *
      * @return
      */
-    fun getHeightPixels(context: Context): Int {
-        return context.resources.displayMetrics.heightPixels
+    fun getHeightPixels(): Int {
+        return Resources.getSystem().displayMetrics.heightPixels
     }
 
     /**
@@ -68,8 +69,8 @@ object AppUtils {
      *
      * @return
      */
-    fun getWidthPixels(context: Context): Int {
-        return context.resources.displayMetrics.widthPixels
+    fun getWidthPixels(): Int {
+        return Resources.getSystem().displayMetrics.widthPixels
     }
 
     /**
@@ -77,8 +78,8 @@ object AppUtils {
      * 如果赋值给有数据类型的变量，则会自动转换；如果没有，则可以自己<Int>给定
      * @return
      */
-    inline fun <reified T> dpToPx(context: Context, value: Float): T {
-        val scale = context.resources.displayMetrics.density
+    inline fun <reified T> dpToPx(value: Float): T {
+        val scale = Resources.getSystem().displayMetrics.density
         return when (T::class) {
             Float::class -> (scale * value + 0.5f) as T
             Int::class -> (scale * value + 0.5f).toInt() as T
@@ -92,8 +93,8 @@ object AppUtils {
      * @return
      */
 
-    inline fun <reified T> pxToDp(context: Context, value: Float): T {
-        val scale = context.resources.displayMetrics.density
+    inline fun <reified T> pxToDp(value: Float): T {
+        val scale = Resources.getSystem().displayMetrics.density
         return when (T::class) {
             Float::class -> (value / scale + 0.5f) as T
             Int::class -> (value / scale + 0.5f).toInt() as T

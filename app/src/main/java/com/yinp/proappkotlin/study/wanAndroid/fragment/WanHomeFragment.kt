@@ -69,16 +69,18 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
     }
 
     private fun initBanner() {
-        bd.topBanner.addBannerLifecycleObserver(activity).indicator =
+        bd.topBanner.setAdapter(bannerAdapter).addBannerLifecycleObserver(activity).indicator =
             CircleIndicator(
                 context
             )
         bd.topBanner.setOnBannerListener(OnBannerListener { data: WanHomeBannerData, position: Int ->
-            JumpWebUtils.startWebView(
-                requireContext(),
-                data.title,
-                data.url
-            )
+            viewModel.getStickList()
+            viewModel.getListInfo(mPage)
+//            JumpWebUtils.startWebView(
+//                requireContext(),
+//                data.title,
+//                data.url
+//            )
         })
     }
 
@@ -175,14 +177,14 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
     private fun initData() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.homeBannerData.collect() {
+                viewModel.homeBannerData.collect {
                     when (it) {
                         is WanResultDispose.Start -> if (mLoad) showLoading("加载中...")
                         is WanResultDispose.Success -> {
                             it.data.let { data ->
                                 listBanner.clear()
                                 listBanner.addAll(data)
-                                bd.topBanner.setAdapter(bannerAdapter)
+                                bd.topBanner.setDatas(listBanner)
                             }
                         }
                     }
