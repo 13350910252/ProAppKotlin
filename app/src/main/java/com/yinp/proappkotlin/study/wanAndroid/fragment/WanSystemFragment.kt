@@ -15,7 +15,6 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.yinp.proappkotlin.base.BaseFragment
-import com.yinp.proappkotlin.base.goToActivity
 import com.yinp.proappkotlin.databinding.FragmentWanSystemBinding
 import com.yinp.proappkotlin.databinding.ItemSystemOneBinding
 import com.yinp.proappkotlin.databinding.ItemSystemTwoBinding
@@ -103,8 +102,7 @@ class WanSystemFragment : BaseFragment<FragmentWanSystemBinding>() {
                         is ItemSystemTwoBinding -> it.run {
                             stvValue.text = item.name
                             stvValue.setOnClickListener {
-                                val bundle = Bundle()
-                                goToActivity<WanSysActivity>(bundle)
+                                gotoActivity<WanSysActivity>()
                             }
                         }
                     }

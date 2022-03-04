@@ -1,7 +1,6 @@
 package com.yinp.proappkotlin.major.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
@@ -92,9 +91,7 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
         topAdapter?.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
             override fun onItemClick(position: Int, view: View?) {
                 if (topList[position].url.isNotEmpty()) {
-                    goToActivity(Intent().apply {
-                        setClassName(requireContext(), topList[position].url)
-                    })
+                    gotoActivity(topList[position].url)
                 }
             }
         })

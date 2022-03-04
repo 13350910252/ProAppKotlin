@@ -9,7 +9,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
-import com.yinp.proappkotlin.base.goToActivity
 import com.yinp.proappkotlin.databinding.ActivityWanMeBinding
 import com.yinp.proappkotlin.study.wanAndroid.data.WanLoginBean
 import com.yinp.proappkotlin.study.wanAndroid.model.WanMeModel
@@ -107,10 +106,10 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
                 )
             }
             bd.llIntegralRank -> {
-                goToActivity<WanRankActivity>()
+                gotoActivity<WanRankActivity>()
             }
             bd.llCollect -> {
-                goToActivity<WanCollectionActivity>()
+                gotoActivity<WanCollectionActivity>()
             }
             bd.sllLoginOut -> {
                 loginOutDialog()

@@ -3,7 +3,6 @@ package com.yinp.proappkotlin.major
 //import com.airbnb.lottie.LottieAnimationView
 import android.animation.Animator
 import com.yinp.proappkotlin.base.BaseActivity
-import com.yinp.proappkotlin.base.goToActivity
 import com.yinp.proappkotlin.databinding.ActivitySplashBinding
 import com.yinp.proappkotlin.utils.AppUtils
 
@@ -25,7 +24,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                goToActivity<MajorActivity>()
+                gotoActivity<MajorActivity>()
                 finish()
             }
 

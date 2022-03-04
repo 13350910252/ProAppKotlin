@@ -2,7 +2,6 @@ package com.yinp.proappkotlin.major.fragment
 
 import android.content.Intent
 import android.net.Uri
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
     }
 
     override fun initViews() {
-        initClick(this, bd.ivHead, bd.sllAddLabel)
+        initClick(bd.ivHead, bd.sllAddLabel)
         val img = MMKVUtils.getValue(SpConstants.HEAD_PICTURE, "")
         if (img.isEmpty()) {
             GlideUtils.intoRadius(requireContext(), R.mipmap.default_head, bd.ivHead, 100)
@@ -41,7 +40,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
     override fun onClick(v: View?) {
         when (v) {
             bd.ivHead -> selectTakePhoto.selectType(this@MeFragment, 1)
-            bd.sllAddLabel -> goToActivity(AddLabelActivity::class.java)
+            bd.sllAddLabel -> gotoActivity<AddLabelActivity>()
         }
     }
 

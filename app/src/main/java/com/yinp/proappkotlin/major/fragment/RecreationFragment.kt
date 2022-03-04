@@ -56,9 +56,7 @@ class RecreationFragment : BaseFragment<FragmentRecreationBinding>() {
                 viewHolder.binding.stvStart.setOnClickListener {
                     val url = dataList[viewHolder.absoluteAdapterPosition].url
                     if (!url.isNullOrEmpty()) {
-                        goToActivity(Intent().apply {
-                            setClassName(mContext, url)
-                        })
+                        gotoActivity(url)
                     }
                 }
                 return viewHolder

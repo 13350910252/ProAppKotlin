@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
  */
 class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
     private val bannerAdapter by lazy {
-        WanHomeBannerAdapter(listBanner, requireContext())
+        WanHomeBannerAdapter(listBanner)
     }
     private var listBanner = mutableListOf<HomeBannerData>()
 

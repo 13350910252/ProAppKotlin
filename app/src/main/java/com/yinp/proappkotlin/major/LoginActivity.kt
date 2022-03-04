@@ -2,7 +2,6 @@ package com.yinp.proappkotlin.major
 
 import android.view.View
 import com.yinp.proappkotlin.base.BaseActivity
-import com.yinp.proappkotlin.base.goToActivity
 import com.yinp.proappkotlin.databinding.ActivityLoginBinding
 import com.yinp.proappkotlin.utils.StatusBarUtil
 
@@ -21,7 +20,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            bd.stvLogin -> goToActivity<MajorActivity>()
+            bd.stvLogin -> gotoActivity<MajorActivity>()
         }
     }
 

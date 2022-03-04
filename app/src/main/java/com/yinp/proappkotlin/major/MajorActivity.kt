@@ -1,14 +1,17 @@
 package com.yinp.proappkotlin.major
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.google.android.material.navigation.NavigationBarView
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.databinding.ActivityMajorBinding
+import com.yinp.proappkotlin.home.activity.AddUndeterminedActivity
 import com.yinp.proappkotlin.major.fragment.*
+import com.yinp.proappkotlin.me.AddLabelActivity
 import com.yinp.proappkotlin.utils.StatusBarUtil
 
 /**
@@ -30,7 +33,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this))
         bd.header.headerBackImg.visibility = View.GONE
         bd.header.headerCenterTitle.text = "首页"
-        bd.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bd.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.one -> {
                     bd.header.headerCenterTitle.text = "首页"
@@ -58,10 +61,33 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
         bd.bottomNavigationView.itemIconTintList = null
         bd.bottomNavigationView.itemTextColor = getColorStateList(R.color.selector_8a8a8a_ff4d4d)
         bd.bottomNavigationView.itemIconSize = resources.getDimension(R.dimen._28dp).toInt()
-        bd.bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+        bd.bottomNavigationView.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
 
         fragmentManager = supportFragmentManager
         chooseFragment(0)
+        initClick(bd.header.ivImg)
+    }
+
+    override fun onClick(v: View) {
+        when (v) {
+            bd.header.ivImg -> {
+                homeFragment?.bd?.materialViewPager?.let {
+                    when (it.currentItem) {
+                        0 -> {
+                            gotoActivityForResult<AddUndeterminedActivity> { code, data ->
+                                homeFragment?.todayUndeterminedFragment?.toDoCurFragment?.initDataList()
+                            }
+                        }
+                        1 -> {
+                            gotoActivity<AddLabelActivity>()
+                        }
+                        else -> {
+                            showToast("viewPager2的页数错误")
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -81,7 +107,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 bd.header.ivImg.visibility = View.VISIBLE
                 curFragment = homeFragment
                 fragmentTransaction.show(curFragment!!)
-                fragmentTransaction.commitNow()
+                fragmentTransaction.commitAllowingStateLoss()
             }
             1 -> {
                 studyFragment ?: let {
@@ -94,7 +120,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 bd.header.ivImg.visibility = View.GONE
                 curFragment = studyFragment
                 fragmentTransaction.show(curFragment!!)
-                fragmentTransaction.commitNow()
+                fragmentTransaction.commitAllowingStateLoss()
             }
             2 -> {
                 toolsFragment ?: let {
@@ -107,7 +133,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 bd.header.ivImg.visibility = View.GONE
                 curFragment = toolsFragment
                 fragmentTransaction.show(curFragment!!)
-                fragmentTransaction.commitNow()
+                fragmentTransaction.commitAllowingStateLoss()
             }
             3 -> {
                 recreationFragment ?: let {
@@ -120,7 +146,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 bd.header.ivImg.visibility = View.GONE
                 curFragment = recreationFragment
                 fragmentTransaction.show(curFragment!!)
-                fragmentTransaction.commitNow()
+                fragmentTransaction.commitAllowingStateLoss()
             }
             4 -> {
                 meFragment ?: let {
@@ -133,9 +159,13 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 bd.header.ivImg.visibility = View.GONE
                 curFragment = meFragment
                 fragmentTransaction.show(curFragment!!)
-                fragmentTransaction.commitNow()
+                fragmentTransaction.commitAllowingStateLoss()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        moveTaskToBack(false)
     }
 
     override fun getBinding() = ActivityMajorBinding.inflate(layoutInflater)

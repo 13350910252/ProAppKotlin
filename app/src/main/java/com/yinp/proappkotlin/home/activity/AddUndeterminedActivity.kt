@@ -1,6 +1,7 @@
 package com.yinp.proappkotlin.home.activity
 
 import android.view.View
+import com.yinp.proappkotlin.RESULT_CODE
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.databinding.ActivityAddUndeterminedBinding
 import com.yinp.proappkotlin.utils.StatusBarUtil
@@ -20,9 +21,11 @@ class AddUndeterminedActivity : BaseActivity<ActivityAddUndeterminedBinding>() {
     }
 
     override fun onClick(v: View) {
-        super.onClick(v)
         when (v) {
-            bd.header.headerBackImg -> finish()
+            bd.header.headerBackImg -> {
+                setResult(RESULT_CODE)
+                finish()
+            }
             bd.stvSave -> saveDialog()
         }
     }

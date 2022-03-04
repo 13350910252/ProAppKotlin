@@ -49,7 +49,7 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
     }
 
     override fun initViews() {
-        initClick(this, bd.noData, bd.noTips)
+        initClick(bd.noData, bd.noTips)
         bd.noTips.text = "暂无待做任务，点击添加"
         initRecycler()
         getDataList()

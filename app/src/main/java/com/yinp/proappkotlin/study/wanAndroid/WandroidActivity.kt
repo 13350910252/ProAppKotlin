@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
-import com.yinp.proappkotlin.base.goToActivity
 import com.yinp.proappkotlin.databinding.ActivityWandroidBinding
 import com.yinp.proappkotlin.home.HomeViewModel
 import com.yinp.proappkotlin.study.wanAndroid.dialog.DialogShow
@@ -111,7 +110,7 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
             bd.header.headerBackImg -> finish()
             bd.ivMe -> {
                 if (AppUtils.isLogin(mContext)) {
-                    goToActivity<WanMeActivity>()
+                    gotoActivity<WanMeActivity>()
                 } else {
                     DialogShow.setLoginDialog<WanMeActivity>(
                         mActivity, true,

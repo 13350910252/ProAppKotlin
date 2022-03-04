@@ -25,14 +25,14 @@ import com.yinp.tools.view.TwoSelectView
  */
 class StudyFragment : BaseFragment<FragmentStudyBinding>() {
     override fun initViews() {
-        initClick(this, bd.stvOne, bd.stvTwo, bd.stvThree, bd.stvFour, bd.stvFive, bd.stvSix)
+        initClick(bd.stvOne, bd.stvTwo, bd.stvThree, bd.stvFour, bd.stvFive, bd.stvSix)
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
         when (v) {
             bd.stvOne -> { //玩Android
-                goToActivity(WandroidActivity::class.java)
+                gotoActivity<WandroidActivity>()
             }
 //            bd.stvTwo -> { //学习内容总结
 //                goToActivity(StudySummarizeActivity::class.java)
@@ -71,9 +71,9 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
                     (viewBinding as? ItemTwoSelectBinding)?.tsvSelect?.setcLickListener(object : TwoSelectView.CLickListener() {
                         override fun click(isLeft: Boolean) {
                             if (isLeft) {
-                                goToActivity(JiGuangLoginActivity::class.java)
+                                gotoActivity<JiGuangLoginActivity>()
                             } else {
-                                goToActivity(JiGuangShareActivity::class.java)
+                                gotoActivity<JiGuangShareActivity>()
                             }
                         }
                     })

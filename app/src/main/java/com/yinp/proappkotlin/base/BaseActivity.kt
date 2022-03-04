@@ -3,7 +3,6 @@ package com.yinp.proappkotlin.base
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
@@ -12,13 +11,12 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
 import com.yinp.tools.utils.LoadingUtils
 import com.yinp.tools.utils.ToastUtil
 
-abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClickListener {
+abstract class BaseActivity<VB : ViewBinding> : SkipActivity(), View.OnClickListener {
     protected lateinit var bd: VB
     protected lateinit var mContext: Context
     protected lateinit var mActivity: FragmentActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         bd = getBinding()
         setContentView(bd.root)
         mContext = this
@@ -26,6 +24,7 @@ abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), View.OnClick
 
         StatusBarUtil.setTranslucentStatus(this)
         initViews()
+        super.onCreate(savedInstanceState)
     }
 
     /**

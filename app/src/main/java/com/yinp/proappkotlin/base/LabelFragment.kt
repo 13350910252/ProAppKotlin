@@ -22,7 +22,7 @@ class LabelFragment : BaseFragment<FragmentLabelBinding>() {
     }
 
     override fun initViews() {
-        initClick(this, bd.noData, bd.noTips)
+        initClick( bd.noData, bd.noTips)
         bd.noTips.text = "暂无标签，点击添加"
     }
 

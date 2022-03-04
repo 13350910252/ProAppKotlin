@@ -38,7 +38,7 @@ class TodayUndeterminedFragment : BaseFragment<FragmentTodayUndeterminedBinding>
         initIndicator()
     }
 
-    private val toDoCurFragment by lazy {
+    public val toDoCurFragment by lazy {
         ToDoCurFragment.getInstance()
     }
     private val toDoHistoryFragment by lazy {

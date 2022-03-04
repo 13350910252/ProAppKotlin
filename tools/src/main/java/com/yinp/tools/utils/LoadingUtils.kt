@@ -71,7 +71,6 @@ class LoadingUtils {
                     height = WindowManager.LayoutParams.WRAP_CONTENT
                 }
             }
-
         }
     }
 }
