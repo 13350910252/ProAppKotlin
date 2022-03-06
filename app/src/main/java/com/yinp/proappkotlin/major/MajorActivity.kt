@@ -107,7 +107,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 bd.header.ivImg.visibility = View.VISIBLE
                 curFragment = homeFragment
                 fragmentTransaction.show(curFragment!!)
-                fragmentTransaction.commitAllowingStateLoss()
+                fragmentTransaction.commitNow()
             }
             1 -> {
                 studyFragment ?: let {
@@ -120,7 +120,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 bd.header.ivImg.visibility = View.GONE
                 curFragment = studyFragment
                 fragmentTransaction.show(curFragment!!)
-                fragmentTransaction.commitAllowingStateLoss()
+                fragmentTransaction.commitNow()
             }
             2 -> {
                 toolsFragment ?: let {
@@ -133,7 +133,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 bd.header.ivImg.visibility = View.GONE
                 curFragment = toolsFragment
                 fragmentTransaction.show(curFragment!!)
-                fragmentTransaction.commitAllowingStateLoss()
+                fragmentTransaction.commitNow()
             }
             3 -> {
                 recreationFragment ?: let {
@@ -146,7 +146,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 bd.header.ivImg.visibility = View.GONE
                 curFragment = recreationFragment
                 fragmentTransaction.show(curFragment!!)
-                fragmentTransaction.commitAllowingStateLoss()
+                fragmentTransaction.commitNow()
             }
             4 -> {
                 meFragment ?: let {
@@ -159,7 +159,7 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 bd.header.ivImg.visibility = View.GONE
                 curFragment = meFragment
                 fragmentTransaction.show(curFragment!!)
-                fragmentTransaction.commitAllowingStateLoss()
+                fragmentTransaction.commitNow()
             }
         }
     }

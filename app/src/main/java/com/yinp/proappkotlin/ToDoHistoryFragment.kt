@@ -27,7 +27,7 @@ class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
     private val dataList = mutableListOf<LocaleTaskBean>()
 
     override fun initViews() {
-        bd.noTips.text = "暂无待历史做任务"
+        bd.noTips.text = "暂无待做历史任务"
         initRecycler()
         getDataList()
     }

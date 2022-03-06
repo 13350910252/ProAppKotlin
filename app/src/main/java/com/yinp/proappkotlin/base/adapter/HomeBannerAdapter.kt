@@ -1,6 +1,5 @@
 package com.yinp.proappkotlin.base.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +14,7 @@ import com.youth.banner.adapter.BannerAdapter
  * package   :com.yinp.proappkotlin.base.adapter
  * describe  :
  */
-class HomeBannerAdapter(private var mData: List<HomeBannerData>, private val mContext: Context) :
+class HomeBannerAdapter(private var mData: List<HomeBannerData>) :
     BannerAdapter<HomeBannerData, HomeBannerAdapter.HomeBannerViewHolder>(mData) {
 
     override fun onCreateHolder(parent: ViewGroup?, viewType: Int): HomeBannerViewHolder {
@@ -34,9 +33,9 @@ class HomeBannerAdapter(private var mData: List<HomeBannerData>, private val mCo
         position: Int,
         size: Int
     ) {
-        val entity: HomeBannerData = mData[position]
+        val entity = mDatas[position]
         holder.bind.ivBanner.let {
-            Glide.with(mContext).load(entity.imagePath).into(it)
+            Glide.with(it).load(entity.imagePath).into(it)
         }
     }
 

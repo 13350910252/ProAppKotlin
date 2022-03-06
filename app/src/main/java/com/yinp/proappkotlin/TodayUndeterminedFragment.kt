@@ -38,7 +38,7 @@ class TodayUndeterminedFragment : BaseFragment<FragmentTodayUndeterminedBinding>
         initIndicator()
     }
 
-    public val toDoCurFragment by lazy {
+    val toDoCurFragment by lazy {
         ToDoCurFragment.getInstance()
     }
     private val toDoHistoryFragment by lazy {
@@ -46,7 +46,7 @@ class TodayUndeterminedFragment : BaseFragment<FragmentTodayUndeterminedBinding>
     }
     private val fragments = SparseArray<Fragment>().apply {
         put(0, toDoCurFragment)
-        put(0, toDoHistoryFragment)
+        put(1, toDoHistoryFragment)
     }
 
     private fun initIndicator() {

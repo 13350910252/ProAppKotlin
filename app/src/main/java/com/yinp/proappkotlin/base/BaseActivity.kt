@@ -17,6 +17,7 @@ abstract class BaseActivity<VB : ViewBinding> : SkipActivity(), View.OnClickList
     protected lateinit var mActivity: FragmentActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         bd = getBinding()
         setContentView(bd.root)
         mContext = this
@@ -24,7 +25,6 @@ abstract class BaseActivity<VB : ViewBinding> : SkipActivity(), View.OnClickList
 
         StatusBarUtil.setTranslucentStatus(this)
         initViews()
-        super.onCreate(savedInstanceState)
     }
 
     /**

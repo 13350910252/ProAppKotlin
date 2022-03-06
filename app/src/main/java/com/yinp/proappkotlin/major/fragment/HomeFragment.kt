@@ -2,7 +2,6 @@ package com.yinp.proappkotlin.major.fragment
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -54,12 +53,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
      * 初始化banner
      */
     private val bannerAdapter by lazy {
-        HomeBannerAdapter(listBanner, requireContext())
+        HomeBannerAdapter(listBanner)
     }
-    public val todayUndeterminedFragment by lazy {
+    val todayUndeterminedFragment by lazy {
         TodayUndeterminedFragment.getInstance()
     }
-    public val labelFragment by lazy {
+    val labelFragment by lazy {
         LabelFragment.getInstance()
     }
     private val fragments = SparseArray<Fragment>()
@@ -72,9 +71,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initRecycler() {
-        bd.topBanner.setAdapter(bannerAdapter).addBannerLifecycleObserver(activity)
-            .isAutoLoop(true).indicator =
-            CircleIndicator(context)
+        bd.topBanner.setAdapter(bannerAdapter).addBannerLifecycleObserver(activity).indicator =
+            CircleIndicator(
+                context
+            )
         bd.topBanner.setOnBannerListener(OnBannerListener { data: HomeBannerData, position: Int ->
             JumpWebUtils.startWebView(
                 requireContext(),
