@@ -16,6 +16,7 @@ import com.yinp.proappkotlin.mtools.ToolsTopBean
 import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
+import com.yinp.tools.adapter.SingleViewHolder
 
 /**
  * @author   :yinpeng
@@ -62,23 +63,18 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
-            ): ComViewHolder {
-                return ToolsTopViewHolder(
+            ): SingleViewHolder {
+                return SingleViewHolder(
                     ItemToolsTopListBinding.inflate(
-                        LayoutInflater.from(parent?.context),
+                        mInflater,
                         parent,
                         false
                     )
                 )
             }
 
-            override fun onBindItem(
-                holder: RecyclerView.ViewHolder?,
-                position: Int,
-                item: ToolsTopBean
-            ) {
-                val viewHolder = holder as ToolsTopViewHolder
-                viewHolder.binding.run {
+            override fun onBindItem(holder: SingleViewHolder, position: Int, item: ToolsTopBean) {
+                (holder.binding as ItemToolsTopListBinding).apply {
                     if (item.drawableId == -1) {
                         ivImg.setBackgroundResource(R.mipmap.default1)
                     } else {
@@ -101,9 +97,6 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
             it.adapter = topAdapter
         }
     }
-
-    internal class ToolsTopViewHolder(val binding: ItemToolsTopListBinding) :
-        ComViewHolder(binding.root)
 
     class SpaceItemDecoration(
         private val context: Context, //位移间距

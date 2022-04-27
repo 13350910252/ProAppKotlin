@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentWanHomeBinding
@@ -24,6 +23,7 @@ import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
+import com.yinp.tools.adapter.SingleViewHolder
 import com.yinp.tools.utils.DateUtils
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.listener.OnBannerListener
@@ -90,10 +90,10 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
-            ): ComViewHolder {
-                return ViewHolder(
+            ): SingleViewHolder {
+                return SingleViewHolder(
                     ItemWanHomeListBinding.inflate(
-                        LayoutInflater.from(parent?.context),
+                        mInflater,
                         parent,
                         false
                     )
@@ -101,45 +101,45 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
             }
 
             override fun onBindItem(
-                holder: RecyclerView.ViewHolder?,
+                holder: SingleViewHolder,
                 position: Int,
                 item: WanHomeListData.Data
             ) {
-                val viewHolder = holder as ViewHolder
-                viewHolder.binding.tvTitle.text = item.title
-
-                viewHolder.binding.tvAuthor.text =
-                    "作者：${if (item.author.isNullOrEmpty()) item.shareUser else item.author}"
-                viewHolder.binding.tvType.text =
-                    "分类：${item.superChapterName} ${item.chapterName}"
-                if (item.isStick) {
-                    viewHolder.binding.tvStick.visibility = View.VISIBLE
-                } else {
-                    viewHolder.binding.tvStick.visibility = View.GONE
-                }
-                viewHolder.binding.tvSuperChapter.text = item.superChapterName
-                if (item.collect!!) {
-                    viewHolder.binding.ivCollect.setImageResource(R.mipmap.collecton_s)
-                } else {
-                    viewHolder.binding.ivCollect.setImageResource(R.mipmap.collecton)
-                }
-                val date = DateUtils.toDate(DateUtils.yyyy_MM_dd_HH_mm, item.niceDate)
-                if (date == null) {
-                    viewHolder.binding.tvDate.text = item.niceDate
-                } else {
-                    viewHolder.binding.tvDate.text = DateUtils.format(date)
-                }
-                if (viewHolder.binding.tvDate.text.isNullOrEmpty().not()) {
-                    val value: String = viewHolder.binding.tvDate.text.toString().trim()
-                    if (value.contains("小时") || value.contains("刚刚")) {
-                        viewHolder.binding.tvLatest.visibility = View.VISIBLE
+                (holder.binding as ItemWanHomeListBinding).apply {
+                    tvTitle.text = item.title
+                    tvAuthor.text =
+                        "作者：${if (item.author.isNullOrEmpty()) item.shareUser else item.author}"
+                    tvType.text =
+                        "分类：${item.superChapterName} ${item.chapterName}"
+                    if (item.isStick) {
+                        tvStick.visibility = View.VISIBLE
                     } else {
-                        viewHolder.binding.tvLatest.visibility = View.GONE
+                        tvStick.visibility = View.GONE
                     }
-                } else {
-                    viewHolder.binding.tvLatest.visibility = View.GONE
+                    tvSuperChapter.text = item.superChapterName
+                    if (item.collect!!) {
+                        ivCollect.setImageResource(R.mipmap.collecton_s)
+                    } else {
+                        ivCollect.setImageResource(R.mipmap.collecton)
+                    }
+                    val date = DateUtils.toDate(DateUtils.yyyy_MM_dd_HH_mm, item.niceDate)
+                    if (date == null) {
+                        tvDate.text = item.niceDate
+                    } else {
+                        tvDate.text = DateUtils.format(date)
+                    }
+                    if (tvDate.text.isNullOrEmpty().not()) {
+                        val value: String = tvDate.text.toString().trim()
+                        if (value.contains("小时") || value.contains("刚刚")) {
+                            tvLatest.visibility = View.VISIBLE
+                        } else {
+                            tvLatest.visibility = View.GONE
+                        }
+                    } else {
+                        tvLatest.visibility = View.GONE
+                    }
+                    ivCollect.setOnClickListener { }
                 }
-                viewHolder.binding.ivCollect.setOnClickListener { }
             }
         }
         commonAdapter.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
@@ -152,9 +152,6 @@ class WanHomeFragment : BaseFragment<FragmentWanHomeBinding>() {
         bd.baseRecycle.layoutManager = LinearLayoutManager(context)
         bd.baseRecycle.adapter = commonAdapter
     }
-
-    internal class ViewHolder(val binding: ItemWanHomeListBinding) :
-        ComViewHolder(binding.root)
 
     private fun refresh() {
         //为下来刷新添加事件

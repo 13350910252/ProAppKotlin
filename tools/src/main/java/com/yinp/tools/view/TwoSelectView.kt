@@ -38,13 +38,13 @@ class TwoSelectView : View {
     private val paintTextOne by lazy {
         Paint().apply {
             color = Color.WHITE
-            textSize = ToolsUtils.dpToPx(context, 20f)
+            textSize = ToolsUtils.dpToPx(20f)
         }
     }
     private val paintTextTwo by lazy {
         Paint().apply {
             color = Color.WHITE
-            textSize = ToolsUtils.dpToPx(context, 20f)
+            textSize = ToolsUtils.dpToPx(20f)
         }
     }
     private var textHeight = 0f

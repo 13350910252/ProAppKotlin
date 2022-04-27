@@ -1,11 +1,11 @@
 package com.yinp.proappkotlin.study.wanAndroid
 
 import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.viewbinding.ViewBinding
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
@@ -16,10 +16,8 @@ import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.utils.StatusBarUtil
 import com.yinp.proappkotlin.web.data.WanResultDispose
-import com.yinp.tools.fragment_dialog.BaseDialogFragment
-import com.yinp.tools.fragment_dialog.CommonDialogFragment
-import com.yinp.tools.fragment_dialog.DialogFragmentHolder
-import com.yinp.tools.fragment_dialog.ViewConvertListener
+import com.yinp.tools.databinding.DialogTipsBinding
+import com.yinp.tools.fragment_dialog.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
@@ -177,32 +175,36 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
 //    }
 
     private fun loginOutDialog() {
-        CommonDialogFragment.newInstance(this).setLayoutId(R.layout.dialog_tips)
+        CommonDialogFragment.newInstance().setLayout(DialogTipsBinding.inflate(layoutInflater))
             .setViewConvertListener(object : ViewConvertListener() {
                 override fun convertView(
                     holder: DialogFragmentHolder,
-                    dialogFragment: BaseDialogFragment
+                    dialogFragment: BaseDialogFragment,
+                    viewBinding: ViewBinding
                 ) {
-                    holder.setText(R.id.tv_title, "是否登出WanAndroid?")
+                    (viewBinding as DialogTipsBinding).apply {
+                        tvTitle.text = "是否登出WanAndroid?"
+                        tvLeft.let {
+                            it.text = "否"
+                            it.setOnClickListener { dialogFragment.dismiss() }
+                        }
+                        tvRight.let {
+                            it.text = "是"
+                            it.setOnClickListener {
+                                viewModel.getIntegralInfo()
+                                dialogFragment.dismiss()
+                            }
+                        }
 
-                    val tvLeft = holder.getView<TextView>(R.id.tv_left)
-                    val tvRight = holder.getView<TextView>(R.id.tv_right)
-                    tvLeft.text = "否"
-                    tvRight.text = "是"
-                    tvLeft.setOnClickListener { dialogFragment.dismiss() }
-                    tvRight.setOnClickListener {
-                        viewModel.getIntegralInfo()
-                        dialogFragment.dismiss()
                     }
                 }
-            }).setGravity(BaseDialogFragment.CENTER).setAnimStyle(R.style.CenterDialogAnimation)
+            }).setGravity(CENTER).setAnimStyle(R.style.CenterDialogAnimation)
             .setPercentSize(0.8f, 0f).show(
                 supportFragmentManager
             )
     }
 
     private fun initData() {
-
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.integralBean.collect {

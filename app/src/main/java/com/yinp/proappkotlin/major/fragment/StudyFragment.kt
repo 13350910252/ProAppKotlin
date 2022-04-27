@@ -11,10 +11,7 @@ import com.yinp.proappkotlin.databinding.ItemTwoSelectBinding
 import com.yinp.proappkotlin.study.jiguang.JiGuangLoginActivity
 import com.yinp.proappkotlin.study.jiguang.JiGuangShareActivity
 import com.yinp.proappkotlin.study.wanAndroid.WandroidActivity
-import com.yinp.tools.fragment_dialog.BaseDialogFragment
-import com.yinp.tools.fragment_dialog.CommonDialogFragment
-import com.yinp.tools.fragment_dialog.DialogFragmentHolder
-import com.yinp.tools.fragment_dialog.ViewConvertListener
+import com.yinp.tools.fragment_dialog.*
 import com.yinp.tools.view.TwoSelectView
 
 /**
@@ -54,12 +51,8 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
     private var mDialogFragment: CommonDialogFragment? = null
 
     private fun initTwoSelect() {
-        CommonDialogFragment.newInstance(context).setLayout(
-            ItemTwoSelectBinding.inflate(
-                LayoutInflater.from(
-                    context
-                ), null, false
-            )
+        CommonDialogFragment.newInstance().setLayout(
+            ItemTwoSelectBinding.inflate(layoutInflater)
         )
             .setViewConvertListener(object : ViewConvertListener() {
                 override fun convertView(
@@ -79,7 +72,7 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
                         }
                     })
                 }
-            }).setAnimStyle(R.style.CenterDialogAnimation).setGravity(BaseDialogFragment.CENTER)
+            }).setAnimStyle(R.style.CenterDialogAnimation).setGravity(CENTER)
             .setPercent(false, false).show(childFragmentManager)
     }
 

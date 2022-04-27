@@ -36,30 +36,20 @@ class ColorCircleView : View {
             style = Paint.Style.FILL
         }
     }
-    private var radius = 0
-
-    private fun init(context: Context, attrs: AttributeSet?) {
-        val ta = context.obtainStyledAttributes(attrs, R.styleable.ColorCircleView)
-        val bgColor = ta.getColor(R.styleable.ColorCircleView_bgColor, 0)
-        ta.recycle()
-
-        background = null
-        circlePaint.color = bgColor
+    private val radius by lazy {
+        if (height > width) {
+            width / 2
+        } else {
+            height / 2
+        }
     }
 
-    private var isFirst = true
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        if (isFirst) {
-            isFirst = false
-            val height: Int = height
-            val width: Int = width
-            radius = if (height > width) {
-                width / 2
-            } else {
-                height / 2
-            }
+    private fun init(context: Context, attrs: AttributeSet?) {
+        context.obtainStyledAttributes(attrs, R.styleable.ColorCircleView).apply {
+            circlePaint.color = getColor(R.styleable.ColorCircleView_bgColor, 0)
+            recycle()
         }
+        background = null
     }
 
     override fun onDraw(canvas: Canvas?) {

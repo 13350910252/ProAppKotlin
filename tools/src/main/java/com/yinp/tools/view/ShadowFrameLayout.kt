@@ -1,7 +1,6 @@
 package com.yinp.tools.view
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
@@ -62,25 +61,26 @@ class ShadowFrameLayout : FrameLayout {
 
     //初始化各个参数和画笔
     private fun init(context: Context, attrs: AttributeSet?) {
-        val array: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.ShadowFrameLayout)
-        isPaddingLeft = array.getBoolean(R.styleable.ShadowFrameLayout_sl_padding_left, true)
-        isPaddingTop = array.getBoolean(R.styleable.ShadowFrameLayout_sl_padding_top, true)
-        isPaddingRight = array.getBoolean(R.styleable.ShadowFrameLayout_sl_padding_right, true)
-        isPaddingBottom = array.getBoolean(R.styleable.ShadowFrameLayout_sl_padding_bottom, true)
-        mShadowColor = array.getColor(
-            R.styleable.ShadowFrameLayout_sl_shadow_color,
-            resources.getColor(R.color.shadow_color)
-        ) //必须要一个透明度
-        mBackgroundColor = array.getColor(
-            R.styleable.ShadowFrameLayout_sl_background_color,
-            resources.getColor(R.color.white)
-        )
-        mShadowLimit = array.getDimension(R.styleable.ShadowFrameLayout_sl_shadow_width, 4f)
-        mCornerRadius = array.getDimension(R.styleable.ShadowFrameLayout_sl_corner_radius, 0f)
-        isWidgetBorder = array.getBoolean(R.styleable.ShadowFrameLayout_sl_widget_border, true)
-        array.recycle()
-        mShadowLimit = ToolsUtils.dpToPx(context, mShadowLimit)
-        mCornerRadius = ToolsUtils.dpToPx(context, mCornerRadius) //决定边角的圆角
+        context.obtainStyledAttributes(attrs, R.styleable.ShadowFrameLayout).apply {
+            isPaddingLeft = getBoolean(R.styleable.ShadowFrameLayout_sl_padding_left, true)
+            isPaddingTop = getBoolean(R.styleable.ShadowFrameLayout_sl_padding_top, true)
+            isPaddingRight = getBoolean(R.styleable.ShadowFrameLayout_sl_padding_right, true)
+            isPaddingBottom = getBoolean(R.styleable.ShadowFrameLayout_sl_padding_bottom, true)
+            mShadowColor = getColor(
+                R.styleable.ShadowFrameLayout_sl_shadow_color,
+                resources.getColor(R.color.shadow_color)
+            ) //必须要一个透明度
+            mBackgroundColor = getColor(
+                R.styleable.ShadowFrameLayout_sl_background_color,
+                resources.getColor(R.color.white)
+            )
+            mShadowLimit = getDimension(R.styleable.ShadowFrameLayout_sl_shadow_width, 4f)
+            mCornerRadius = getDimension(R.styleable.ShadowFrameLayout_sl_corner_radius, 0f)
+            isWidgetBorder = getBoolean(R.styleable.ShadowFrameLayout_sl_widget_border, true)
+            recycle()
+        }
+        mShadowLimit = ToolsUtils.dpToPx(mShadowLimit)
+        mCornerRadius = ToolsUtils.dpToPx(mCornerRadius) //决定边角的圆角
 
         setPad()
     }
@@ -94,7 +94,7 @@ class ShadowFrameLayout : FrameLayout {
 
     private fun setBackgroundCompat(w: Int, h: Int) {
         val bitmap = createBitmap(w, h)
-        val drawable = BitmapDrawable(bitmap)
+        val drawable = BitmapDrawable(context.resources, bitmap)
         background = drawable
     }
 

@@ -35,6 +35,4 @@ abstract class ComViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     interface OnItemClickListener {
         fun onItemClick(position: Int, view: View?)
     }
-
-
 }

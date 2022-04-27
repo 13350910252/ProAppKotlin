@@ -9,7 +9,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -25,6 +24,7 @@ import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
+import com.yinp.tools.adapter.SingleViewHolder
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -62,19 +62,19 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
-            ): ComViewHolder {
+            ): SingleViewHolder {
                 return if (viewType == 0) {
-                    ViewHolder(
+                    SingleViewHolder(
                         ItemSystemOneBinding.inflate(
-                            LayoutInflater.from(parent?.context),
+                            mInflater,
                             parent,
                             false
                         )
                     )
                 } else {
-                    ViewHolder(
+                    SingleViewHolder(
                         ItemSystemTwoBinding.inflate(
-                            LayoutInflater.from(parent?.context),
+                            mInflater,
                             parent,
                             false
                         )
@@ -90,12 +90,8 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
                 }
             }
 
-            override fun onBindItem(
-                holder: RecyclerView.ViewHolder?,
-                position: Int,
-                item: NavigationData
-            ) {
-                (holder as? ViewHolder)?.binding.let {
+            override fun onBindItem(holder: SingleViewHolder, position: Int, item: NavigationData) {
+                holder.binding.let {
                     when (it) {
                         is ItemSystemOneBinding -> it.run {
                             tvTitle.text = item.name
@@ -124,9 +120,6 @@ class WanNavigationFragment : BaseFragment<FragmentWanNavigationBinding>() {
         }
         bd.rvList.adapter = mAdapter
     }
-
-    private class ViewHolder(val binding: ViewBinding) :
-        ComViewHolder(binding.root)
 
     /**
      * 获取导航列表

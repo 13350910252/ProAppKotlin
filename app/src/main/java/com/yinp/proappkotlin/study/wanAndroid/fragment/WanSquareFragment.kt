@@ -1,7 +1,6 @@
 package com.yinp.proappkotlin.study.wanAndroid.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentWanSquareBinding
 import com.yinp.proappkotlin.databinding.ItemWanSquareBinding
@@ -20,6 +18,7 @@ import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
+import com.yinp.tools.adapter.SingleViewHolder
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -59,10 +58,10 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
-            ): ComViewHolder {
-                return ViewHolder(
+            ): SingleViewHolder {
+                return SingleViewHolder(
                     ItemWanSquareBinding.inflate(
-                        LayoutInflater.from(parent?.context),
+                        mInflater,
                         parent,
                         false
                     )
@@ -70,25 +69,26 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
             }
 
             override fun onBindItem(
-                holder: RecyclerView.ViewHolder?,
+                holder: SingleViewHolder,
                 position: Int,
                 item: WanSquareListData.Data
             ) {
-                val viewHolder = holder as ViewHolder
-                if (item.fresh) {
-                    viewHolder.binding.tvLatest.visibility = View.VISIBLE
-                } else {
-                    viewHolder.binding.tvLatest.visibility = View.GONE
+                (holder.binding as ItemWanSquareBinding).apply {
+                    if (item.fresh) {
+                        tvLatest.visibility = View.VISIBLE
+                    } else {
+                        tvLatest.visibility = View.GONE
+                    }
+                    ivCollect.isSelected = item.collect
+                    tvTitle.text = item.title
+                    val person = if (item.author.isEmpty()) {
+                        item.shareUser.ifEmpty { "暂无" }
+                    } else {
+                        item.author
+                    }
+                    tvSharePerson.text = "分享人：$person"
+                    tvTime.text = item.niceDate
                 }
-                viewHolder.binding.ivCollect.isSelected = item.collect
-                viewHolder.binding.tvTitle.text = item.title
-                val person = if (item.author.isEmpty()) {
-                    item.shareUser.ifEmpty { "暂无" }
-                } else {
-                    item.author
-                }
-                viewHolder.binding.tvSharePerson.text = "分享人：$person"
-                viewHolder.binding.tvTime.text = item.niceDate
             }
         }
         mAdapter.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
@@ -103,8 +103,6 @@ class WanSquareFragment : BaseFragment<FragmentWanSquareBinding>() {
         bd.baseRecycle.setHasFixedSize(true)
         bd.baseRecycle.adapter = mAdapter
     }
-
-    internal class ViewHolder(val binding: ItemWanSquareBinding) : ComViewHolder(binding.root)
 
     private fun refresh() {
         //为下来刷新添加事件

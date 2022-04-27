@@ -17,19 +17,15 @@ import com.yinp.proappkotlin.R
  * package   :com.yinp.proappkotlin.view
  * describe  :
  */
-class PermissionDialog : Dialog {
-    private var context: Activity? = null
-    private var title: String? = null
-    private var permissions: List<String>? = null
-
-    constructor(activity: Activity, title: String?, permissions: List<String>?) : super(
-        activity,
-        R.style.NormalDialogStyle
-    ) {
-        context = activity
-        this.title = title
-        this.permissions = permissions
-    }
+class PermissionDialog(
+    activity: Activity,
+    private var title: String?,
+    private var permissions: List<String>?
+) : Dialog(
+    activity,
+    R.style.NormalDialogStyle
+) {
+    private var context: Activity? = activity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +42,8 @@ class PermissionDialog : Dialog {
         setCancelable(false)
         setCanceledOnTouchOutside(false)
         tvTitle.text = title
-        tvLeft.setOnClickListener { v: View? -> dismiss() }
-        tvRight.setOnClickListener { v: View? ->
+        tvLeft.setOnClickListener { dismiss() }
+        tvRight.setOnClickListener {
             XXPermissions.startPermissionActivity(context, permissions)
             dismiss()
         }

@@ -11,32 +11,7 @@ import android.widget.RelativeLayout
  * package   :com.yinp.tools.view
  * describe  :
  */
-class CustomDialogContentView : RelativeLayout {
-    constructor(context: Context?) : super(context, null) {
-
-    }
-
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs, 0) {
-
-    }
-
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr,
-        0
-    ) {
-
-    }
-
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes) {
-
-    }
+class CustomDialogContentView(context: Context) : RelativeLayout(context) {
 
     /**
      * 对事件进行拦截，不会穿透

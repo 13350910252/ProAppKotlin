@@ -14,7 +14,7 @@
         <flag name="checked" value="3" />
         <flag name="focused " value="4" />
     </attr>
-    <attr name="bgColor" format="color"/>
+    <attr name="bgColor" format="color" />
 
 
     <declare-styleable name="ShapeTextView">
@@ -97,7 +97,7 @@
         <attr name="peculiarCircleDx" format="integer" />
     </declare-styleable>
     <declare-styleable name="ColorCircleView">
-        <attr name="bgColor"/>
+        <attr name="bgColor" />
     </declare-styleable>
     <declare-styleable name="ColorCircleLinearLayout">
         <attr name="ccll_bgColor" format="color" />
@@ -138,12 +138,12 @@
 
     <declare-styleable name="RankLinearLayout">
         <!--        背景颜色-->
-        <attr name="bgColor"/>
+        <attr name="rllBgColor" format="color" />
         <!--        进度比例-->
-        <attr name="schedule" format="float" />
+        <attr name="rllSchedule" format="float" />
         <!--        动画时长-->
-        <attr name="duration" format="integer" />
+        <attr name="rllDuration" format="integer" />
         <!--        是否开始动画-->
-        <attr name="isStart" format="boolean" />
+        <attr name="rllIsStart" format="boolean" />
     </declare-styleable>
 </resources>

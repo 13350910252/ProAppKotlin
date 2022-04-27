@@ -1,7 +1,6 @@
 package com.yinp.tools.view
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
@@ -73,10 +72,6 @@ class CustomScrollView : View {
     private val TEXT_ALPHA_MIN = 120
     private val TEXT_ALPHA_RANGE = 135
 
-    constructor(context: Context) : super(context) {
-        initPaint(null)
-    }
-
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         initPaint(attrs)
     }
@@ -127,17 +122,16 @@ class CustomScrollView : View {
     private var unSelectedColor: Drawable? = null
 
     private fun initPaint(attrs: AttributeSet?) {
-        val osa:TypedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomScrollView)
-        osa.let {
-            maxTextSize = it.getInteger(R.styleable.CustomScrollView_textMaxSize, 18).toFloat()
-            minTextSize = it.getInteger(R.styleable.CustomScrollView_textMinSize, 14).toFloat()
-            selectedColor = it.getDrawable(R.styleable.CustomScrollView_selectedColor)
-            unSelectedColor = it.getDrawable(R.styleable.CustomScrollView_unSelectedColor)
+        context.obtainStyledAttributes(attrs, R.styleable.CustomScrollView) .apply{
+            maxTextSize = getInteger(R.styleable.CustomScrollView_textMaxSize, 18).toFloat()
+            minTextSize = getInteger(R.styleable.CustomScrollView_textMinSize, 14).toFloat()
+            selectedColor = getDrawable(R.styleable.CustomScrollView_selectedColor)
+            unSelectedColor = getDrawable(R.styleable.CustomScrollView_unSelectedColor)
+        recycle()
         }
-        osa.recycle()
 
-        minTextSize = ToolsUtils.dpToPx(context, minTextSize)
-        maxTextSize = ToolsUtils.dpToPx(context, maxTextSize)
+        minTextSize = ToolsUtils.dpToPx(minTextSize)
+        maxTextSize = ToolsUtils.dpToPx(maxTextSize)
 
         if (selectedColor is ColorDrawable && unSelectedColor is ColorDrawable) {
             mLightColor = (selectedColor as ColorDrawable).color //被选中的颜色

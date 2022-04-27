@@ -63,7 +63,6 @@ class CustomDialogView : FrameLayout {
     private var rectContent: Rect? = null
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs, 0) {
-
         initFirstView()
     }
 
@@ -73,7 +72,6 @@ class CustomDialogView : FrameLayout {
         defStyleAttr,
         0
     ) {
-
         initFirstView()
     }
 
@@ -100,19 +98,19 @@ class CustomDialogView : FrameLayout {
         if (isFirstLoad) {
             dialogBgView = getChildAt(0)
             dialogContentView = getChildAt(1)
-            bgWidth = dialogBgView.getWidth()
-            bgHeight = dialogBgView.getHeight()
-            contentWidth = dialogContentView.getWidth()
-            contentHeight = dialogContentView.getHeight()
+            bgWidth = dialogBgView.width
+            bgHeight = dialogBgView.height
+            contentWidth = dialogContentView.width
+            contentHeight = dialogContentView.height
             isFirstLoad = false
             rectContent = Rect(
-                dialogContentView.getLeft(),
-                dialogContentView.getTop(),
-                dialogContentView.getRight(),
-                dialogContentView.getBottom()
+                dialogContentView.left,
+                dialogContentView.top,
+                dialogContentView.right,
+                dialogContentView.bottom
             )
         }
-        dialogContentView!!.layout(0, -contentHeight, contentWidth, 0)
+        dialogContentView.layout(0, -contentHeight, contentWidth, 0)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -137,8 +135,8 @@ class CustomDialogView : FrameLayout {
             return
         }
         //清理动画
-        dialogContentView!!.clearAnimation()
-        dialogBgView!!.clearAnimation()
+        dialogContentView.clearAnimation()
+        dialogBgView.clearAnimation()
         isCanEnd = false
         isStarting = true
         val alphaAnimator = ObjectAnimator.ofFloat(dialogBgView, "alpha", 0f, 0.6f)
@@ -162,8 +160,8 @@ class CustomDialogView : FrameLayout {
             return
         }
         //清理动画
-        dialogContentView!!.clearAnimation()
-        dialogBgView!!.clearAnimation()
+        dialogContentView.clearAnimation()
+        dialogBgView.clearAnimation()
         isCanEnd = false
         isStarting = false
         val alphaOb = ObjectAnimator.ofFloat(dialogBgView, "alpha", 0.6f, 0f)

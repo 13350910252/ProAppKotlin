@@ -1,5 +1,6 @@
 package com.yinp.tools
 
+import android.view.Gravity
 import androidx.annotation.IntDef
 
 /**
@@ -25,3 +26,5 @@ const val state_pressed = android.R.attr.state_pressed
 const val state_selected = android.R.attr.state_selected
 const val state_checked = android.R.attr.state_checked
 const val state_focused = android.R.attr.state_focused
+
+val MNONE = LazyThreadSafetyMode.NONE

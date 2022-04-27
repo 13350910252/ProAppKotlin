@@ -18,11 +18,17 @@ import com.yinp.tools.R
  */
 class CustomUserAvatar : AppCompatImageView {
 
-    private var mPaintText: Paint? = null
+    private val mPaintText by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG)
+    }
 
-    private var mPaintBackground: Paint? = null
+    private val mPaintBackground by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG)
+    }
 
-    private var mRect: Rect? = null
+    private val mRect by lazy {
+        Rect()
+    }
 
     private var mUserName: String? = null
 
@@ -40,45 +46,38 @@ class CustomUserAvatar : AppCompatImageView {
 
     private fun init() {
         setLayerType(LAYER_TYPE_SOFTWARE, null)
-        mPaintText = Paint(Paint.ANTI_ALIAS_FLAG)
-        mPaintBackground = Paint(Paint.ANTI_ALIAS_FLAG)
-        mRect = Rect()
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         // 绘制发光效果
         val color = ContextCompat.getColor(context, R.color.white)
-        mPaintBackground!!.color = color
-        mPaintBackground!!.style = Paint.Style.FILL
-        mPaintBackground!!.maskFilter = BlurMaskFilter(10f, BlurMaskFilter.Blur.SOLID)
+        mPaintBackground.color = color
+        mPaintBackground.style = Paint.Style.FILL
+        mPaintBackground.maskFilter = BlurMaskFilter(10f, BlurMaskFilter.Blur.SOLID)
         canvas.drawCircle(
             (width / 2).toFloat(), (width / 2).toFloat(), ((width - 20) / 2).toFloat(),
-            mPaintBackground!!
+            mPaintBackground
         )
         // 设置文本大小
-        mPaintText!!.textSize = (width / 3).toFloat()
+        mPaintText.textSize = (width / 3).toFloat()
         // 设置文本颜色跟随应用主题颜色
-        mPaintText!!.color = ContextCompat.getColor(context, R.color.ff4d4d)
+        mPaintText.color = ContextCompat.getColor(context, R.color.ff4d4d)
         // 设置画笔粗细
-        mPaintText!!.strokeWidth = 5f
+        mPaintText.strokeWidth = 5f
         // 设置阴影半径
-        mPaintText!!.setShadowLayer(5f, 5f, 5f, ContextCompat.getColor(context, R.color.black))
+        mPaintText.setShadowLayer(5f, 5f, 5f, ContextCompat.getColor(context, R.color.black))
         // 绘制文字的最小矩形
-        mPaintText!!.getTextBounds(mUserName, 0, 1, mRect)
-        val fontMetricsInt = mPaintText!!.fontMetricsInt
+        mPaintText.getTextBounds(mUserName, 0, 1, mRect)
+        val fontMetricsInt = mPaintText.fontMetricsInt
         // baseLine上面是负值，下面是正值
         // 所以getHeight()/2-fontMetricsInt.descent 将文本的bottom线抬高至控件的1/2处
         // + (fontMetricsInt.bottom - fontMetricsInt.top) / 2：(fontMetricsInt.bottom - fontMetricsInt.top) 文本的辅助线（top+bottom)/2就是文本的中位线（我是这样理解的）恰好在控件中位线处
         val baseLine =
             height / 2 - fontMetricsInt.descent + (fontMetricsInt.bottom - fontMetricsInt.top) / 2
         // 水平居中
-        mPaintText!!.textAlign = Paint.Align.CENTER
-        canvas.drawText(mUserName!!, (width / 2).toFloat(), baseLine.toFloat(), mPaintText!!)
+        mPaintText.textAlign = Paint.Align.CENTER
+        mUserName?.let { canvas.drawText(it, (width / 2).toFloat(), baseLine.toFloat(), mPaintText) }
     }
 
 

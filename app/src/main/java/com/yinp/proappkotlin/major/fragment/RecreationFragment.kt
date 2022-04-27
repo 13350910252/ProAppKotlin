@@ -1,17 +1,16 @@
 package com.yinp.proappkotlin.major.fragment
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.base.bean.BaseBean
 import com.yinp.proappkotlin.databinding.FragmentRecreationBinding
 import com.yinp.proappkotlin.databinding.ItemRecreationListBinding
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
+import com.yinp.tools.adapter.SingleViewHolder
 
 /**
  * @author   :yinpeng
@@ -45,15 +44,16 @@ class RecreationFragment : BaseFragment<FragmentRecreationBinding>() {
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
-            ): ComViewHolder {
-                val viewHolder = ViewHolder(
+            ): SingleViewHolder {
+                val viewHolder = SingleViewHolder(
                     ItemRecreationListBinding.inflate(
                         LayoutInflater.from(parent?.context),
                         parent,
                         false
                     )
                 )
-                viewHolder.binding.stvStart.setOnClickListener {
+                val binding = viewHolder.binding as ItemRecreationListBinding
+                binding.stvStart.setOnClickListener {
                     val url = dataList[viewHolder.absoluteAdapterPosition].url
                     if (!url.isNullOrEmpty()) {
                         gotoActivity(url)
@@ -62,13 +62,8 @@ class RecreationFragment : BaseFragment<FragmentRecreationBinding>() {
                 return viewHolder
             }
 
-            override fun onBindItem(
-                holder: RecyclerView.ViewHolder?,
-                position: Int,
-                item: BaseBean
-            ) {
-                val viewHolder = holder as ViewHolder
-                viewHolder.binding.run {
+            override fun onBindItem(holder: SingleViewHolder, position: Int, item: BaseBean) {
+                (holder.binding as ItemRecreationListBinding).apply {
                     tvTitle.text = item.title
                     tvIntroduce.text = item.content
                 }
@@ -78,9 +73,6 @@ class RecreationFragment : BaseFragment<FragmentRecreationBinding>() {
         bd.rvList.setHasFixedSize(true)
         bd.rvList.adapter = adapter
     }
-
-    internal class ViewHolder(val binding: ItemRecreationListBinding) :
-        ComViewHolder(binding.root)
 
     override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
         FragmentRecreationBinding.inflate(inflater, parent, false)

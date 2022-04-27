@@ -1,7 +1,6 @@
 package com.yinp.tools.shap_view
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.BitmapShader
 import android.graphics.Color
 import android.graphics.Shader
@@ -22,7 +21,7 @@ import com.yinp.tools.utils.ToolsUtils
  */
 class ShapeRelativeLayout : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(context, attrs)
+        init(attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -30,7 +29,7 @@ class ShapeRelativeLayout : RelativeLayout {
         attrs,
         defStyleAttr
     ) {
-        init(context, attrs)
+        init(attrs)
     }
 
     private var oneDrawable: Drawable? = null
@@ -44,17 +43,18 @@ class ShapeRelativeLayout : RelativeLayout {
     private var rightBottomRadius: Int = 0
 
 
-    private fun init(context: Context, attrs: AttributeSet?) {
-        val ta: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.ShapeRelativeLayout)
-        oneDrawable = ta.getDrawable(R.styleable.ShapeRelativeLayout_oneBg)
-        twoDrawable = ta.getDrawable(R.styleable.ShapeRelativeLayout_twoBg)
-        radius = ta.getInteger(R.styleable.ShapeRelativeLayout_radius, 0)
-        leftTopRadius = ta.getInteger(R.styleable.ShapeRelativeLayout_lt_radius, 0)
-        leftBottomRadius = ta.getInteger(R.styleable.ShapeRelativeLayout_lb_radius, 0)
-        rightTopRadius = ta.getInteger(R.styleable.ShapeRelativeLayout_rt_radius, 0)
-        rightBottomRadius = ta.getInteger(R.styleable.ShapeRelativeLayout_rb_radius, 0)
-        state = ta.getInt(R.styleable.ShapeRelativeLayout_state, 0)
-        ta.recycle()
+    private fun init(attrs: AttributeSet?) {
+        context.obtainStyledAttributes(attrs, R.styleable.ShapeRelativeLayout).apply {
+            oneDrawable = getDrawable(R.styleable.ShapeRelativeLayout_oneBg)
+            twoDrawable = getDrawable(R.styleable.ShapeRelativeLayout_twoBg)
+            radius = getInteger(R.styleable.ShapeRelativeLayout_radius, 0)
+            leftTopRadius = getInteger(R.styleable.ShapeRelativeLayout_lt_radius, 0)
+            leftBottomRadius = getInteger(R.styleable.ShapeRelativeLayout_lb_radius, 0)
+            rightTopRadius = getInteger(R.styleable.ShapeRelativeLayout_rt_radius, 0)
+            rightBottomRadius = getInteger(R.styleable.ShapeRelativeLayout_rb_radius, 0)
+            state = getInt(R.styleable.ShapeRelativeLayout_state, 0)
+            recycle()
+        }
         if (state != 0) {
             setOnClickListener { }
             isState = true
@@ -263,7 +263,7 @@ class ShapeRelativeLayout : RelativeLayout {
     private fun initShape(radius: Int) {
         var radius = radius
         if (radius != 0) {
-            radius = ToolsUtils.dpToPx(context, radius)
+            radius = ToolsUtils.dpToPx(radius)
             val outerRadii = floatArrayOf(
                 radius.toFloat(),
                 radius.toFloat(),
@@ -293,10 +293,10 @@ class ShapeRelativeLayout : RelativeLayout {
         rightBottomRadius: Int
     ) {
         if (leftBottomRadius != 0 || leftTopRadius != 0 || rightTopRadius != 0 || rightBottomRadius != 0) {
-            this.leftBottomRadius = ToolsUtils.dpToPx(context, leftBottomRadius)
-            this.leftTopRadius = ToolsUtils.dpToPx(context, leftTopRadius)
-            this.rightTopRadius = ToolsUtils.dpToPx(context, rightTopRadius)
-            this.rightBottomRadius = ToolsUtils.dpToPx(context, rightBottomRadius)
+            this.leftBottomRadius = ToolsUtils.dpToPx(leftBottomRadius)
+            this.leftTopRadius = ToolsUtils.dpToPx(leftTopRadius)
+            this.rightTopRadius = ToolsUtils.dpToPx(rightTopRadius)
+            this.rightBottomRadius = ToolsUtils.dpToPx(rightBottomRadius)
             val outerRadii = floatArrayOf(
                 leftTopRadius.toFloat(),
                 leftTopRadius.toFloat(),

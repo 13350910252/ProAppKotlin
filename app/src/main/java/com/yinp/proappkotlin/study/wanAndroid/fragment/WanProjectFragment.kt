@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentWanProjectBinding
 import com.yinp.proappkotlin.databinding.ItemWanProjectBinding
@@ -20,6 +19,7 @@ import com.yinp.proappkotlin.utils.JumpWebUtils
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
+import com.yinp.tools.adapter.SingleViewHolder
 
 /**
  * @author   :yinpeng
@@ -56,24 +56,25 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
-            ): ComViewHolder {
-                val itemWanProjectBinding: ItemWanProjectBinding = ItemWanProjectBinding.inflate(
-                    layoutInflater, parent, false
+            ): SingleViewHolder {
+                val itemWanProjectBinding = ItemWanProjectBinding.inflate(
+                    mInflater, parent, false
                 )
-                return ViewHolder(itemWanProjectBinding)
+                return SingleViewHolder(itemWanProjectBinding)
             }
 
             override fun onBindItem(
-                holder: RecyclerView.ViewHolder?,
+                holder: SingleViewHolder,
                 position: Int,
                 item: WanProjectListData.Data
             ) {
-                val viewHolder = holder as ViewHolder
-                viewHolder.binding.tvTitle.text = AppUtils.getValue(item.title)
-                viewHolder.binding.tvContent.text = AppUtils.getValue(item.desc)
-                viewHolder.binding.tvAuthor.text =
-                    "作者：" + if (item.author.isNullOrEmpty()) item.shareUser else item.author
-                viewHolder.binding.tvDate.text = AppUtils.getValue(item.niceShareDate)
+                (holder.binding as ItemWanProjectBinding).apply {
+                    tvTitle.text = AppUtils.getValue(item.title)
+                    tvContent.text = AppUtils.getValue(item.desc)
+                    tvAuthor.text =
+                        "作者：" + if (item.author.isNullOrEmpty()) item.shareUser else item.author
+                    tvDate.text = AppUtils.getValue(item.niceShareDate)
+                }
             }
         }
         mAdapter.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
@@ -149,8 +150,6 @@ class WanProjectFragment : BaseFragment<FragmentWanProjectBinding>() {
             }
         }
     }
-
-    internal class ViewHolder(val binding: ItemWanProjectBinding) : ComViewHolder(binding.root)
 
     override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
         FragmentWanProjectBinding.inflate(inflater, parent, false)

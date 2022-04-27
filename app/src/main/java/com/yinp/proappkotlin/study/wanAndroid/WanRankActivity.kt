@@ -1,6 +1,5 @@
 package com.yinp.proappkotlin.study.wanAndroid
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
@@ -8,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.constant.HttpUrl
@@ -21,6 +19,7 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
+import com.yinp.tools.adapter.SingleViewHolder
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -72,18 +71,18 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
-            ): ComViewHolder {
-                return ViewHolder(
-                    ItemRankListBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
+            ): SingleViewHolder {
+                return SingleViewHolder(
+                    ItemRankListBinding.inflate(mInflater, parent, false)
                 )
             }
 
             override fun onBindItem(
-                holder: RecyclerView.ViewHolder?,
+                holder: SingleViewHolder,
                 position: Int,
                 item: RankListBean.Data
             ) {
-                (holder as ViewHolder).binding.run {
+                (holder.binding as ItemRankListBinding).apply {
                     tvIntegral.text = "${item.coinCount}"
                     tvName.text = item.username
                     tvRanking.background = null
@@ -129,8 +128,6 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
         bd.baseRecycle.setHasFixedSize(true)
         bd.baseRecycle.adapter = commonAdapter
     }
-
-    internal class ViewHolder(var binding: ItemRankListBinding) : ComViewHolder(binding.root)
 
     private fun refresh() {
         //为下来刷新添加事件

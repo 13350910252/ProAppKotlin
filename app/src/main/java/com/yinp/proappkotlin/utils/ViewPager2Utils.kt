@@ -60,7 +60,7 @@ object ViewPager2Utils {
     fun getAdapter(
         fragmentActivity: FragmentActivity,
         fragments: List<Fragment>
-    ): FragmentStateAdapter? {
+    ): FragmentStateAdapter {
         return MFragmentStateAdapter(fragmentActivity, fragments, -1)
     }
 
@@ -68,7 +68,7 @@ object ViewPager2Utils {
         fragmentActivity: FragmentActivity,
         fragments: List<Fragment>,
         position: Int
-    ): FragmentStateAdapter? {
+    ): FragmentStateAdapter {
         return MFragmentStateAdapter(fragmentActivity, fragments, position)
     }
 
@@ -80,7 +80,7 @@ object ViewPager2Utils {
         fragmentManager: FragmentManager,
         lifecycle: Lifecycle,
         fragments: List<Fragment>
-    ): FragmentStateAdapter? {
+    ): FragmentStateAdapter {
         return MFragmentStateAdapter(fragmentManager, lifecycle, fragments)
     }
 

@@ -1,6 +1,5 @@
 package com.yinp.proappkotlin.study.wanAndroid
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
@@ -8,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.databinding.ActivityWanCollectionBinding
 import com.yinp.proappkotlin.databinding.ItemWanCollectListBinding
@@ -22,6 +20,7 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
 import com.yinp.proappkotlin.web.data.WanResultDispose
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
+import com.yinp.tools.adapter.SingleViewHolder
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -62,15 +61,16 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
-            ): ComViewHolder {
-                val holder = ViewHolder(
+            ): SingleViewHolder {
+                val holder = SingleViewHolder(
                     ItemWanCollectListBinding.inflate(
-                        LayoutInflater.from(parent?.context),
+                        mInflater,
                         parent,
                         false
                     )
                 )
-                holder.binding.ivCollect.setOnClickListener {
+                val binding = holder.binding as ItemWanCollectListBinding
+                binding.ivCollect.setOnClickListener {
                     val position = holder.absoluteAdapterPosition
                     if (!mFirst) {
                         mFirst = true
@@ -111,13 +111,13 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
                     }
                     if (AppUtils.isLogin(mContext)) {
                         if (!mDataList[position].isCollect) {
-                            collectModel.addCollect(datalist[position].originId)
+                            collectModel.addCollect(mDataList[position].originId)
                         } else {
-                            collectModel.cancelCollect(datalist[position].originId)
+                            collectModel.cancelCollect(mDataList[position].originId)
                         }
                     } else {
                         DialogShow.setLoginDialog<WanMeActivity>(
-                            mActivity, false, supportFragmentManager
+                            mActivity, false
                         )
                     }
                 }
@@ -125,20 +125,20 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
             }
 
             override fun onBindItem(
-                holder: RecyclerView.ViewHolder?,
+                holder: SingleViewHolder,
                 position: Int,
                 item: CollectionListBean.Data
             ) {
-                val viewHolder = holder as ViewHolder
-                viewHolder.binding.tvTitle.text = AppUtils.getValue(item.title)
-
-//                HtmlImageGetter htmlImageGetter = new HtmlImageGetter(viewHolder.binding.htvContent);
+                (holder.binding as ItemWanCollectListBinding).apply {
+                    tvTitle.text = AppUtils.getValue(item.title)
+//                HtmlImageGetter htmlImageGetter = new HtmlImageGetter(htvContent);
 //                htmlImageGetter.enableCompressImage(true, 100);
-//                viewHolder.binding.htvContent.setHtml(item.getDesc(), htmlImageGetter);
-                viewHolder.binding.tvAuthor.text = item.author
-                viewHolder.binding.tvTime.text = item.niceDate
-                viewHolder.binding.tvChapterName.text = item.chapterName
-                viewHolder.binding.ivCollect.isSelected = item.isCollect
+//                htvContent.setHtml(item.getDesc(), htmlImageGetter);
+                    tvAuthor.text = item.author
+                    tvTime.text = item.niceDate
+                    tvChapterName.text = item.chapterName
+                    ivCollect.isSelected = item.isCollect
+                }
             }
         }
         commonAdapter.setOnItemClickListener(object : ComViewHolder.OnItemClickListener {
@@ -153,8 +153,6 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
         bd.baseRecycle.setHasFixedSize(true)
         bd.baseRecycle.adapter = commonAdapter
     }
-
-    internal class ViewHolder(val binding: ItemWanCollectListBinding) : ComViewHolder(binding.root)
 
     override fun onClick(v: View) {
         super.onClick(v)

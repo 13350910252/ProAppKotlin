@@ -113,8 +113,7 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
                     gotoActivity<WanMeActivity>()
                 } else {
                     DialogShow.setLoginDialog<WanMeActivity>(
-                        mActivity, true,
-                        supportFragmentManager
+                        mActivity, true
                     )
                 }
             }

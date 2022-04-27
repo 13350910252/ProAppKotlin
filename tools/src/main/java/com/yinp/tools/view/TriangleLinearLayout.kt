@@ -62,19 +62,20 @@ class TriangleLinearLayout : LinearLayout {
 
 
     private fun init(context: Context, attrs: AttributeSet?) {
-        val ta = context.obtainStyledAttributes(attrs, R.styleable.TriangleLinearLayout)
-        triangleWidth = ta.getInteger(R.styleable.TriangleLinearLayout_triangle_width, 8)
-        triangleHeight = ta.getInteger(R.styleable.TriangleLinearLayout_triangle_height, 8)
-        triangleColor = ta.getColor(R.styleable.TriangleLinearLayout_triangle_color, 0)
-        trianglePosition = ta.getInteger(R.styleable.TriangleLinearLayout_triangle_position, 1)
-        distance = ta.getInteger(R.styleable.TriangleLinearLayout_distance, 0)
-        contentColor = ta.getColor(R.styleable.TriangleLinearLayout_content_color, 0)
-        contentCorners = ta.getInteger(R.styleable.TriangleLinearLayout_content_corners, 0)
-        ta.recycle()
-        triangleWidth = ToolsUtils.dpToPx(context, triangleWidth)
-        triangleHeight = ToolsUtils.dpToPx(context, triangleHeight) as Int
-        contentCorners = ToolsUtils.dpToPx(context, contentCorners)
-        distance = ToolsUtils.dpToPx(context, distance)
+        context.obtainStyledAttributes(attrs, R.styleable.TriangleLinearLayout).apply {
+            triangleWidth = getInteger(R.styleable.TriangleLinearLayout_triangle_width, 8)
+            triangleHeight = getInteger(R.styleable.TriangleLinearLayout_triangle_height, 8)
+            triangleColor = getColor(R.styleable.TriangleLinearLayout_triangle_color, 0)
+            trianglePosition = getInteger(R.styleable.TriangleLinearLayout_triangle_position, 1)
+            distance = getInteger(R.styleable.TriangleLinearLayout_distance, 0)
+            contentColor = getColor(R.styleable.TriangleLinearLayout_content_color, 0)
+            contentCorners = getInteger(R.styleable.TriangleLinearLayout_content_corners, 0)
+            recycle()
+        }
+        triangleWidth = ToolsUtils.dpToPx(triangleWidth)
+        triangleHeight = ToolsUtils.dpToPx(triangleHeight) as Int
+        contentCorners = ToolsUtils.dpToPx(contentCorners)
+        distance = ToolsUtils.dpToPx(distance)
         if (triangleColor == 0) {
             triangleColor = contentColor
         }

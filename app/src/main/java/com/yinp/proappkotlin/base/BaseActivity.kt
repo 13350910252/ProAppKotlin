@@ -67,15 +67,15 @@ abstract class BaseActivity<VB : ViewBinding> : SkipActivity(), View.OnClickList
      * 显示加载
      */
     private val loading by lazy {
-        LoadingUtils()
+        LoadingUtils(supportFragmentManager)
     }
 
     protected fun showLoading(text: String) {
-        loading.show(supportFragmentManager, text)
+        loading.show(text)
     }
 
     protected fun showLoading(text: String, tag: String) {
-        loading.show(supportFragmentManager, text, tag)
+        loading.show(text, tag)
     }
 
     protected fun hideLoading(tag: String) {

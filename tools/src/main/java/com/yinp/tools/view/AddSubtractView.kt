@@ -89,7 +89,7 @@ class AddSubtractView : LinearLayout {
         Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
             color = strokeColor
             style = Paint.Style.STROKE
-            strokeWidth = ToolsUtils.dpToPx(context, strokeWidth * 1.0f)
+            strokeWidth = ToolsUtils.dpToPx(strokeWidth * 1.0f)
         }
     }
     var strokeColor = 0//边框的颜色
@@ -105,55 +105,58 @@ class AddSubtractView : LinearLayout {
     var addTextColor = 0
     var valueTextColor: Int = 0
     var subtractTextColor: Int = 0
-    private var startValue:Int = 0 //默认显示的数值
+    private var startValue: Int = 0 //默认显示的数值
     var isClickAdd = false
     var isClickSubtract: Boolean = false
 
 
     private fun init(attrs: AttributeSet?) {
         isFirst = true
-        val ta = context.obtainStyledAttributes(attrs, R.styleable.AddSubtractView)
-        radius = ta.getInteger(R.styleable.AddSubtractView_mRadius, 0)
-        strokeColor = ta.getColor(
-            R.styleable.AddSubtractView_mStrokeColor, ContextCompat.getColor(
-                context, R.color.gray_e5e5e5
+        context.obtainStyledAttributes(attrs, R.styleable.AddSubtractView).apply {
+
+
+            radius = getInteger(R.styleable.AddSubtractView_mRadius, 0)
+            strokeColor = getColor(
+                R.styleable.AddSubtractView_mStrokeColor, ContextCompat.getColor(
+                    context, R.color.gray_e5e5e5
+                )
             )
-        )
-        strokeWidth = ta.getInteger(R.styleable.AddSubtractView_mStrokeWidth, 1) //dp
-        addLeftRightPd = ta.getInteger(R.styleable.AddSubtractView_addLeftRightPd, 4)
-        subtractLeftRightPd = ta.getInteger(R.styleable.AddSubtractView_subtractLeftRightPd, 4)
-        valueLeftRightPd = ta.getInteger(R.styleable.AddSubtractView_valueLeftRightPd, 8)
-        topBottomPad = ta.getInteger(R.styleable.AddSubtractView_topBottomPad, 4)
-        maxEms = ta.getInteger(R.styleable.AddSubtractView_maxEms, 8)
-        addTextSize = ta.getInteger(R.styleable.AddSubtractView_addTextSize, 12)
-        valueTextSize = ta.getInteger(R.styleable.AddSubtractView_valueTextSize, 14)
-        subtractTextSize = ta.getInteger(R.styleable.AddSubtractView_subtractTextSize, 12)
-        addTextColor = ta.getColor(
-            R.styleable.AddSubtractView_addTextColor, ContextCompat.getColor(
-                context, R.color.gray_e5e5e5
+            strokeWidth = getInteger(R.styleable.AddSubtractView_mStrokeWidth, 1) //dp
+            addLeftRightPd = getInteger(R.styleable.AddSubtractView_addLeftRightPd, 4)
+            subtractLeftRightPd = getInteger(R.styleable.AddSubtractView_subtractLeftRightPd, 4)
+            valueLeftRightPd = getInteger(R.styleable.AddSubtractView_valueLeftRightPd, 8)
+            topBottomPad = getInteger(R.styleable.AddSubtractView_topBottomPad, 4)
+            maxEms = getInteger(R.styleable.AddSubtractView_maxEms, 8)
+            addTextSize = getInteger(R.styleable.AddSubtractView_addTextSize, 12)
+            valueTextSize = getInteger(R.styleable.AddSubtractView_valueTextSize, 14)
+            subtractTextSize = getInteger(R.styleable.AddSubtractView_subtractTextSize, 12)
+            addTextColor = getColor(
+                R.styleable.AddSubtractView_addTextColor, ContextCompat.getColor(
+                    context, R.color.gray_e5e5e5
+                )
             )
-        )
-        valueTextColor = ta.getColor(
-            R.styleable.AddSubtractView_valueTextColor, ContextCompat.getColor(
-                context, R.color.gray_e5e5e5
+            valueTextColor = getColor(
+                R.styleable.AddSubtractView_valueTextColor, ContextCompat.getColor(
+                    context, R.color.gray_e5e5e5
+                )
             )
-        )
-        subtractTextColor = ta.getColor(
-            R.styleable.AddSubtractView_subtractTextColor, ContextCompat.getColor(
-                context, R.color.gray_e5e5e5
+            subtractTextColor = getColor(
+                R.styleable.AddSubtractView_subtractTextColor, ContextCompat.getColor(
+                    context, R.color.gray_e5e5e5
+                )
             )
-        )
-        startValue = ta.getInteger(R.styleable.AddSubtractView_defaultValue, 0)
-        ta.recycle()
+            startValue = getInteger(R.styleable.AddSubtractView_defaultValue, 0)
+            recycle()
+        }
         if (maxEms > 8) {
             maxEms = 8
         }
 
-        radius = ToolsUtils.dpToPx(context, radius)
-        addLeftRightPd = ToolsUtils.dpToPx(context, addLeftRightPd)
-        subtractLeftRightPd = ToolsUtils.dpToPx(context, subtractLeftRightPd)
-        valueLeftRightPd = ToolsUtils.dpToPx(context, valueLeftRightPd)
-        topBottomPad = ToolsUtils.dpToPx(context, topBottomPad)
+        radius = ToolsUtils.dpToPx(radius)
+        addLeftRightPd = ToolsUtils.dpToPx(addLeftRightPd)
+        subtractLeftRightPd = ToolsUtils.dpToPx(subtractLeftRightPd)
+        valueLeftRightPd = ToolsUtils.dpToPx(valueLeftRightPd)
+        topBottomPad = ToolsUtils.dpToPx(topBottomPad)
         /**
          * 将视图添加进去
          */
@@ -210,7 +213,7 @@ class AddSubtractView : LinearLayout {
 //                    fun onNext(aLong: Long?) {
 //                        val data = value!!.text.toString().toInt()
 //                        if (data != 0) {
-//                            value.setText(--data.toString())
+//                            value.setText(--datoString())
 //                        }
 //                    }
 //                })
@@ -227,7 +230,7 @@ class AddSubtractView : LinearLayout {
 //                    fun onSubscribe(d: Disposable?) {}
 //                    fun onNext(aLong: Long?) {
 //                        val data = value!!.text.toString().toInt()
-//                        value.setText(++data.toString())
+//                        value.setText(++datoString())
 //                    }
 //                })
 //            true

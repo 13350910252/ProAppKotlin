@@ -1,7 +1,11 @@
 package com.yinp.proappkotlin.recreation
 
 import android.content.Context
-import android.graphics.*
+import android.content.res.Resources
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
@@ -24,7 +28,7 @@ import javax.xml.parsers.DocumentBuilderFactory
  */
 class MapView : View {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs, 0) {
-        init(context)
+        init()
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -32,22 +36,19 @@ class MapView : View {
         attrs,
         defStyleAttr
     ) {
-        init(context)
+        init()
     }
 
-    var mContext: Context? = null
-    var mItemList = mutableListOf<ProvinceItem>() //省
-
-    val mPaint by lazy {
+    private var mItemList = mutableListOf<ProvinceItem>() //省
+    private val mPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG)
     }
-    var totalRect: RectF? = null
-    private var scale = 1.0f //中国地图的缩放比例
+    private var totalRect: RectF? = null
+    private var mScale = 1.0f //中国地图的缩放比例
 
     private var isEnd = false
 
-    private fun init(context: Context) {
-        mContext = context
+    private fun init() {
         mThread.start()
     }
 
@@ -59,7 +60,7 @@ class MapView : View {
         if (totalRect != null) {
             //当所有的地图Path加载出来以后，requestLayout()会调用方法，就有值了。
             val mapWidth = totalRect!!.width().toDouble()
-            scale = (width / mapWidth).toFloat() //获取控件高度为了让地图能缩放到和控件宽高适配
+            mScale = (width / mapWidth).toFloat() //获取控件高度为了让地图能缩放到和控件宽高适配
         }
         setMeasuredDimension(
             MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
@@ -73,7 +74,7 @@ class MapView : View {
     private val mThread: Thread = object : Thread() {
         override fun run() {
             super.run()
-            val inputStream = mContext!!.resources.openRawResource(R.raw.chinasvg)
+            val inputStream = Resources.getSystem().openRawResource(R.raw.chinasvg)
             val factory = DocumentBuilderFactory.newInstance() //获取DocumentBuilderFactory实例
             var builder: DocumentBuilder?
             try {
@@ -151,9 +152,9 @@ class MapView : View {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             if (!isEnd) {
-                handleTouch(event.x / scale, event.y / scale)
+                handleTouch(event.x / mScale, event.y / mScale)
             } else {
-                Toast.makeText(mContext, "恭喜你，四色地图已经完成", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "恭喜你，四色地图已经完成", Toast.LENGTH_SHORT).show()
             }
         }
         return super.onTouchEvent(event)
@@ -166,18 +167,15 @@ class MapView : View {
      * @param y
      */
     private fun handleTouch(x: Float, y: Float) {
-        if (mItemList == null) {
-            return
-        }
         val selectItem: ProvinceItem? = null
-        for (i in mItemList!!.indices) {
-            if (mItemList!![i].isContains(x, y)) {
+        for (i in mItemList.indices) {
+            if (mItemList[i].isContains(x, y)) {
                 Log.d("abcd", "handleTouch: $i")
-                if (!FCM_judge.judge(mItemList!!, i, mColor)) {
-                    mItemList!![i].selectColor = mColor
+                if (!FCM_judge.judge(mItemList, i, mColor)) {
+                    mItemList[i].selectColor = mColor
                     postInvalidate()
                 } else {
-                    Toast.makeText(mContext, "相邻省颜色不能相同", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "相邻省颜色不能相同", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -219,14 +217,14 @@ class MapView : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (mItemList.isNotEmpty()) {
-            canvas.scale(scale, scale) //把画布缩放匹配到本控件的宽高控件有多大，地图就放大或缩小到适应
+            canvas.scale(mScale, mScale) //把画布缩放匹配到本控件的宽高控件有多大，地图就放大或缩小到适应
             for (provinceItem in mItemList) {
                 provinceItem.drawItem(canvas, mPaint)
             }
             if (isFull()) {
                 //在这里添加游戏结束的处理
                 isEnd = true
-                Toast.makeText(mContext, "恭喜你，四色地图已经完成", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "恭喜你，四色地图已经完成", Toast.LENGTH_SHORT).show()
             }
         }
     }

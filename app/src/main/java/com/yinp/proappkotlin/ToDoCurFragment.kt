@@ -19,10 +19,8 @@ import com.yinp.proappkotlin.room.DatabaseManager
 import com.yinp.proappkotlin.room.bean.LocaleTaskBean
 import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
-import com.yinp.tools.fragment_dialog.BaseDialogFragment
-import com.yinp.tools.fragment_dialog.CommonDialogFragment
-import com.yinp.tools.fragment_dialog.DialogFragmentHolder
-import com.yinp.tools.fragment_dialog.ViewConvertListener
+import com.yinp.tools.adapter.SingleViewHolder
+import com.yinp.tools.fragment_dialog.*
 
 /**
  * @author   :yinpeng
@@ -90,22 +88,18 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
-            ): ComViewHolder {
-                return LocaleTaskViewHolder(
+            ): SingleViewHolder {
+                return SingleViewHolder(
                     ItemTodayUndeterminedListBinding.inflate(
-                        LayoutInflater.from(parent?.context),
+                        mInflater,
                         parent,
                         false
                     )
                 )
             }
 
-            override fun onBindItem(
-                holder: RecyclerView.ViewHolder?,
-                position: Int,
-                item: LocaleTaskBean
-            ) {
-                (holder as? LocaleTaskViewHolder)?.binding?.run {
+            override fun onBindItem(holder: SingleViewHolder, position: Int, item: LocaleTaskBean) {
+                (holder.binding as ItemTodayUndeterminedListBinding).apply {
                     if (item.title.isNotEmpty()) {
                         tvTitle.text = item.title
                         tvTitle.visibility = View.VISIBLE
@@ -236,7 +230,7 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
     }
 
     private fun saveDialog(title: String, position: Int, type: String) {
-        CommonDialogFragment.newInstance(context).setLayout(
+        CommonDialogFragment.newInstance().setLayout(
             DialogTipBinding.inflate(
                 LayoutInflater.from(
                     context
@@ -258,7 +252,7 @@ class ToDoCurFragment : BaseFragment<FragmentToDoCurBinding>() {
                         }
                     }
                 }
-            }).setAnimStyle(BaseDialogFragment.CENTER).setGravity(BaseDialogFragment.CENTER)
+            }).setAnimStyle(CENTER).setGravity(CENTER)
             .setPercentSize(0.9f, 0f).show(
                 childFragmentManager
             )

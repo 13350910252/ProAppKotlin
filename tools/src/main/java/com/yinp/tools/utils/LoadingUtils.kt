@@ -7,6 +7,8 @@ import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.yinp.tools.R
 
 /**
@@ -15,25 +17,17 @@ import com.yinp.tools.R
  * package   :com.yinp.myapplication.show
  * describe  :
  */
-class LoadingUtils {
-    private lateinit var dialogFragment: LoadingDialog
+class LoadingUtils(val mManager: FragmentManager, val tag: String = "") : DefaultLifecycleObserver {
+    private lateinit var mDialogFragment: LoadingDialog
     private val dialogList = mutableListOf<LoadingDialog>()
 
-    fun show(manager: FragmentManager, text: String) {
-        show(manager, text, "")
+    fun show(text: String, tag: String = "") {
+        mDialogFragment = LoadingDialog(text)
+        dialogList.add(mDialogFragment)
+        mDialogFragment.show(mManager, tag)
     }
 
-    fun show(manager: FragmentManager, text: String, tag: String) {
-        dialogFragment = LoadingDialog(text)
-        dialogList.add(dialogFragment)
-        dialogFragment.show(manager, tag)
-    }
-
-    fun close() {
-        close("")
-    }
-
-    fun close(tag: String) {
+    fun close(tag: String = "") {
         for (item in dialogList) {
             if (item.tag == tag) {
                 item.dismiss()
@@ -46,6 +40,10 @@ class LoadingUtils {
             item.dismiss()
         }
         dialogList.clear()
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        closeAll()
     }
 
     class LoadingDialog(var text: String) : DialogFragment() {

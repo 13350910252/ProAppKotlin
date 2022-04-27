@@ -1,14 +1,12 @@
 package com.yinp.tools.shap_view
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.BitmapShader
 import android.graphics.Color
 import android.graphics.Shader
 import android.graphics.drawable.*
 import android.graphics.drawable.shapes.RoundRectShape
 import android.util.AttributeSet
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.yinp.tools.*
 import com.yinp.tools.utils.ToolsUtils
@@ -22,7 +20,7 @@ import com.yinp.tools.utils.ToolsUtils
  */
 class ShapeConstraintLayout : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(context, attrs)
+        init(attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -30,7 +28,7 @@ class ShapeConstraintLayout : ConstraintLayout {
         attrs,
         defStyleAttr
     ) {
-        init(context, attrs)
+        init(attrs)
     }
 
     private var oneDrawable: Drawable? = null
@@ -46,20 +44,20 @@ class ShapeConstraintLayout : ConstraintLayout {
     private var rightTopRadius: Int = 0
     private var rightBottomRadius: Int = 0
 
-    private fun init(context: Context, attrs: AttributeSet?) {
-        val ta: TypedArray =
-            context.obtainStyledAttributes(attrs, R.styleable.ShapeConstraintLayout)
-        oneDrawable = ta.getDrawable(R.styleable.ShapeConstraintLayout_oneBg)
-        twoDrawable = ta.getDrawable(R.styleable.ShapeConstraintLayout_twoBg)
-        radius = ta.getInteger(R.styleable.ShapeConstraintLayout_radius, 0)
-        leftTopRadius = ta.getInteger(R.styleable.ShapeConstraintLayout_lt_radius, 0)
-        leftBottomRadius = ta.getInteger(R.styleable.ShapeConstraintLayout_lb_radius, 0)
-        rightTopRadius = ta.getInteger(R.styleable.ShapeConstraintLayout_rt_radius, 0)
-        rightBottomRadius = ta.getInteger(R.styleable.ShapeConstraintLayout_rb_radius, 0)
-        state = ta.getInt(R.styleable.ShapeConstraintLayout_state, 0)
-        ta.recycle()
+    private fun init(attrs: AttributeSet?) {
+        context.obtainStyledAttributes(attrs, R.styleable.ShapeConstraintLayout).apply {
+            oneDrawable = getDrawable(R.styleable.ShapeConstraintLayout_oneBg)
+            twoDrawable = getDrawable(R.styleable.ShapeConstraintLayout_twoBg)
+            radius = getInteger(R.styleable.ShapeConstraintLayout_radius, 0)
+            leftTopRadius = getInteger(R.styleable.ShapeConstraintLayout_lt_radius, 0)
+            leftBottomRadius = getInteger(R.styleable.ShapeConstraintLayout_lb_radius, 0)
+            rightTopRadius = getInteger(R.styleable.ShapeConstraintLayout_rt_radius, 0)
+            rightBottomRadius = getInteger(R.styleable.ShapeConstraintLayout_rb_radius, 0)
+            state = getInt(R.styleable.ShapeConstraintLayout_state, 0)
+            recycle()
+        }
         if (state != 0) {
-            setOnClickListener { v: View? -> }
+            setOnClickListener { }
             isState = true
         }
         if (radius != 0) {
@@ -266,7 +264,7 @@ class ShapeConstraintLayout : ConstraintLayout {
     private fun initShape(radius: Int) {
         var radius = radius
         if (radius != 0) {
-            radius = ToolsUtils.dpToPx(context, radius)
+            radius = ToolsUtils.dpToPx(radius)
             val outerRadii = floatArrayOf(
                 radius.toFloat(),
                 radius.toFloat(),
@@ -296,10 +294,10 @@ class ShapeConstraintLayout : ConstraintLayout {
         rightBottomRadius: Int
     ) {
         if (leftBottomRadius != 0 || leftTopRadius != 0 || rightTopRadius != 0 || rightBottomRadius != 0) {
-            this.leftBottomRadius = ToolsUtils.dpToPx(context, leftBottomRadius)
-            this.leftTopRadius = ToolsUtils.dpToPx(context, leftTopRadius)
-            this.rightTopRadius = ToolsUtils.dpToPx(context, rightTopRadius)
-            this.rightBottomRadius = ToolsUtils.dpToPx(context, rightBottomRadius)
+            this.leftBottomRadius = ToolsUtils.dpToPx(leftBottomRadius)
+            this.leftTopRadius = ToolsUtils.dpToPx(leftTopRadius)
+            this.rightTopRadius = ToolsUtils.dpToPx(rightTopRadius)
+            this.rightBottomRadius = ToolsUtils.dpToPx(rightBottomRadius)
             val outerRadii = floatArrayOf(
                 leftTopRadius.toFloat(),
                 leftTopRadius.toFloat(),

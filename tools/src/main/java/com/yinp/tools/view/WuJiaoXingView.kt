@@ -34,13 +34,15 @@ class WuJiaoXingView : View {
             color = Color.YELLOW
         }
     }
-    private var paint1: Paint? = null
+    private val paint1 by lazy {
+        Paint().apply {
+            style = Paint.Style.STROKE
+            color = Color.RED
+            strokeWidth = 8f
+        }
+    }
 
     private fun init() {
-        paint1 = Paint()
-        paint1!!.style = Paint.Style.STROKE
-        paint1!!.color = Color.RED
-        paint1!!.strokeWidth = 8f
     }
 
     private var centerX = 0f
@@ -73,7 +75,7 @@ class WuJiaoXingView : View {
             lineTo(0f, centerY)
             lineTo(centerX + x, height.toFloat())
             close()
-        }, paint1!!)
+        }, paint1)
     }
 
     private fun drawKuang(canvas: Canvas) {}

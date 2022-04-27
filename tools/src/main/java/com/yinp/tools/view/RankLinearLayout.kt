@@ -28,7 +28,12 @@ class RankLinearLayout : LinearLayout {
         initBase(context, attrs)
     }
 
-    private var paint: Paint? = null
+    private val paint by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = bgColor
+            style = Paint.Style.FILL
+        }
+    }
     private var percent = 0f
     private var percentWidth = 0f
     private var duration = 0
@@ -36,15 +41,13 @@ class RankLinearLayout : LinearLayout {
     private var isStart = false
 
     private fun initBase(context: Context, attrs: AttributeSet?) {
-        val array = context.obtainStyledAttributes(attrs, R.styleable.RankLinearLayout)
-        bgColor = array.getColor(R.styleable.RankLinearLayout_bgColor, 0)
-        percentWidth = array.getFloat(R.styleable.RankLinearLayout_schedule, 0f)
-        duration = array.getInteger(R.styleable.RankLinearLayout_duration, 600)
-        isStart = array.getBoolean(R.styleable.RankLinearLayout_isStart, false)
-        array.recycle()
-        paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint!!.color = bgColor
-        paint!!.style = Paint.Style.FILL
+        context.obtainStyledAttributes(attrs, R.styleable.RankLinearLayout).apply {
+            bgColor = getColor(R.styleable.RankLinearLayout_rllBgColor, 0)
+            percentWidth = getFloat(R.styleable.RankLinearLayout_rllSchedule, 0f)
+            duration = getInteger(R.styleable.RankLinearLayout_rllDuration, 600)
+            isStart = getBoolean(R.styleable.RankLinearLayout_rllIsStart, false)
+            recycle()
+        }
         setWillNotDraw(false)
         if (isStart) {
             setAnimator()
@@ -85,6 +88,6 @@ class RankLinearLayout : LinearLayout {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawRect(0f, 0f, right * percent, measuredHeight.toFloat(), paint!!)
+        canvas.drawRect(0f, 0f, right * percent, measuredHeight.toFloat(), paint)
     }
 }

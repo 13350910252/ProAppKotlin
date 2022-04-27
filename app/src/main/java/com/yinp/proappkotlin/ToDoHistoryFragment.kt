@@ -12,8 +12,8 @@ import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentToDoHistoryBinding
 import com.yinp.proappkotlin.databinding.ItemHistoryUndeterminedListBinding
 import com.yinp.proappkotlin.room.bean.LocaleTaskBean
-import com.yinp.tools.adapter.ComViewHolder
 import com.yinp.tools.adapter.CommonAdapter
+import com.yinp.tools.adapter.SingleViewHolder
 
 /**
  * @author   :yinpeng
@@ -44,22 +44,18 @@ class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
                 view: View?,
                 viewType: Int,
                 parent: ViewGroup?
-            ): ComViewHolder {
-                return LocaleTaskViewHolder(
+            ): SingleViewHolder {
+                return SingleViewHolder(
                     ItemHistoryUndeterminedListBinding.inflate(
-                        LayoutInflater.from(parent?.context),
+                        mInflater,
                         parent,
                         false
                     )
                 )
             }
 
-            override fun onBindItem(
-                holder: RecyclerView.ViewHolder?,
-                position: Int,
-                item: LocaleTaskBean
-            ) {
-                (holder as? LocaleTaskViewHolder)?.binding?.run {
+            override fun onBindItem(holder: SingleViewHolder, position: Int, item: LocaleTaskBean) {
+                (holder.binding as ItemHistoryUndeterminedListBinding).apply {
                     if (!TextUtils.isEmpty(item.title)) {
                         tvTitle.text = item.title
                         tvTitle.visibility = View.VISIBLE
@@ -157,9 +153,6 @@ class ToDoHistoryFragment : BaseFragment<FragmentToDoHistoryBinding>() {
 //            }
 //        }
     }
-
-    internal class LocaleTaskViewHolder(val binding: ItemHistoryUndeterminedListBinding) :
-        ComViewHolder(binding.root)
 
     override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
         FragmentToDoHistoryBinding.inflate(inflater, parent, false)

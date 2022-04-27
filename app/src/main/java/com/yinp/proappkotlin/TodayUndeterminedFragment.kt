@@ -14,6 +14,7 @@ import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentTodayUndeterminedBinding
 import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.proappkotlin.utils.ViewPager2Utils
+import com.yinp.tools.MNONE
 import com.yinp.tools.view.ColorFlipPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -38,10 +39,10 @@ class TodayUndeterminedFragment : BaseFragment<FragmentTodayUndeterminedBinding>
         initIndicator()
     }
 
-    val toDoCurFragment by lazy {
+    val toDoCurFragment by lazy(MNONE) {
         ToDoCurFragment.getInstance()
     }
-    private val toDoHistoryFragment by lazy {
+    private val toDoHistoryFragment by lazy(MNONE) {
         ToDoHistoryFragment.getInstance()
     }
     private val fragments = SparseArray<Fragment>().apply {

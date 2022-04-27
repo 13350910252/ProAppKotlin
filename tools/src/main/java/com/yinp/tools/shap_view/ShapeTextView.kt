@@ -1,7 +1,6 @@
 package com.yinp.tools.shap_view
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.BitmapShader
 import android.graphics.Color
 import android.graphics.Shader
@@ -21,7 +20,7 @@ import com.yinp.tools.utils.ToolsUtils
  */
 class ShapeTextView : AppCompatTextView {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(context, attrs)
+        init(attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -29,7 +28,7 @@ class ShapeTextView : AppCompatTextView {
         attrs,
         defStyleAttr
     ) {
-        init(context, attrs)
+        init(attrs)
     }
 
     private var oneDrawable: Drawable? = null
@@ -43,17 +42,19 @@ class ShapeTextView : AppCompatTextView {
     private var rightBottomRadius: Int = 0
 
 
-    private fun init(context: Context, attrs: AttributeSet?) {
-        val ta: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.ShapeTextView)
-        oneDrawable = ta.getDrawable(R.styleable.ShapeTextView_oneBg)
-        twoDrawable = ta.getDrawable(R.styleable.ShapeTextView_twoBg)
-        radius = ta.getInteger(R.styleable.ShapeTextView_radius, 0)
-        leftTopRadius = ta.getInteger(R.styleable.ShapeTextView_lt_radius, 0)
-        leftBottomRadius = ta.getInteger(R.styleable.ShapeTextView_lb_radius, 0)
-        rightTopRadius = ta.getInteger(R.styleable.ShapeTextView_rt_radius, 0)
-        rightBottomRadius = ta.getInteger(R.styleable.ShapeTextView_rb_radius, 0)
-        state = ta.getInt(R.styleable.ShapeTextView_state, 0)
-        ta.recycle()
+    private fun init(attrs: AttributeSet?) {
+        context.obtainStyledAttributes(attrs, R.styleable.ShapeTextView).apply {
+            oneDrawable = getDrawable(R.styleable.ShapeTextView_oneBg)
+            twoDrawable = getDrawable(R.styleable.ShapeTextView_twoBg)
+            radius = getInteger(R.styleable.ShapeTextView_radius, 0)
+            leftTopRadius = getInteger(R.styleable.ShapeTextView_lt_radius, 0)
+            leftBottomRadius = getInteger(R.styleable.ShapeTextView_lb_radius, 0)
+            rightTopRadius = getInteger(R.styleable.ShapeTextView_rt_radius, 0)
+            rightBottomRadius = getInteger(R.styleable.ShapeTextView_rb_radius, 0)
+            state = getInt(R.styleable.ShapeTextView_state, 0)
+            recycle()
+        }
+
         if (state != 0) {
             setOnClickListener { }
             isState = true
@@ -262,7 +263,7 @@ class ShapeTextView : AppCompatTextView {
     private fun initShape(radius: Int) {
         var radius = radius
         if (radius != 0) {
-            radius = ToolsUtils.dpToPx(context, radius)
+            radius = ToolsUtils.dpToPx(radius)
             val outerRadii = floatArrayOf(
                 radius.toFloat(),
                 radius.toFloat(),
@@ -296,10 +297,10 @@ class ShapeTextView : AppCompatTextView {
         this.leftBottomRadius = leftBottomRadius
         this.rightBottomRadius = rightBottomRadius
         if (leftBottomRadius != 0 || leftTopRadius != 0 || rightTopRadius != 0 || rightBottomRadius != 0) {
-            this.leftBottomRadius = ToolsUtils.dpToPx(context, leftBottomRadius)
-            this.leftTopRadius = ToolsUtils.dpToPx(context, leftTopRadius)
-            this.rightTopRadius = ToolsUtils.dpToPx(context, rightTopRadius)
-            this.rightBottomRadius = ToolsUtils.dpToPx(context, rightBottomRadius)
+            this.leftBottomRadius = ToolsUtils.dpToPx(leftBottomRadius)
+            this.leftTopRadius = ToolsUtils.dpToPx(leftTopRadius)
+            this.rightTopRadius = ToolsUtils.dpToPx(rightTopRadius)
+            this.rightBottomRadius = ToolsUtils.dpToPx(rightBottomRadius)
             val outerRadii = floatArrayOf(
                 leftTopRadius.toFloat(),
                 leftTopRadius.toFloat(),

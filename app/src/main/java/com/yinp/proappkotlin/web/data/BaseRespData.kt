@@ -6,5 +6,4 @@ package com.yinp.proappkotlin.web.data
  * package   :com.yinp.proappkotlin.web
  * describe  :
  */
-open class BaseRespData<T> {
-}
+open class BaseRespData<T>

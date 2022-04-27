@@ -1,6 +1,7 @@
 package com.yinp.tools.utils
 
 import android.content.Context
+import android.content.res.Resources
 
 /**
  * @author   :yinpeng
@@ -23,33 +24,19 @@ object ToolsUtils {
      */
     fun getWidthPixels(context: Context) = context.resources.displayMetrics.widthPixels
 
-    /**
-     * dp转px
-     *
-     * @return
-     */
-    fun dpToPx(context: Context, value: Float): Float {
-        val scale = context.resources.displayMetrics.density
-        return scale * value + 0.5f
+    inline fun <reified T> dpToPx(value: T): T {
+        return when (T::class) {
+            Float::class -> (Resources.getSystem().displayMetrics.density * value as Float + 0.5f) as T
+            Int::class -> (Resources.getSystem().displayMetrics.density * value as Int + 0.5f).toInt() as T
+            else -> throw RuntimeException()
+        }
     }
 
-    fun dpToPx(context: Context, value: Int): Int {
-        val scale = context.resources.displayMetrics.density
-        return (scale * value + 0.5f).toInt()
-    }
-
-    /**
-     * px转dp
-     *
-     * @return
-     */
-    fun pxToDp(context: Context, value: Float): Float {
-        val scale = context.resources.displayMetrics.density
-        return value / scale + 0.5f
-    }
-
-    fun pxToDp(context: Context, value: Int): Int {
-        val scale = context.resources.displayMetrics.density
-        return (value / scale + 0.5f).toInt()
+    inline fun <reified T> pxToDp(value: T): T {
+        return when (T::class) {
+            Float::class -> (Resources.getSystem().displayMetrics.density / value as Float + 0.5f) as T
+            Int::class -> (Resources.getSystem().displayMetrics.density / value as Int + 0.5f).toInt() as T
+            else -> throw RuntimeException()
+        }
     }
 }

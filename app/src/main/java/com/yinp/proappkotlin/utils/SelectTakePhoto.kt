@@ -21,10 +21,7 @@ import com.yinp.proappkotlin.SELECT_PHOTO
 import com.yinp.proappkotlin.TAKE_PHOTO
 import com.yinp.proappkotlin.databinding.DialogSelectTakePhotoBinding
 import com.yinp.proappkotlin.view.PermissionDialog
-import com.yinp.tools.fragment_dialog.BaseDialogFragment
-import com.yinp.tools.fragment_dialog.CommonDialogFragment
-import com.yinp.tools.fragment_dialog.DialogFragmentHolder
-import com.yinp.tools.fragment_dialog.ViewConvertListener
+import com.yinp.tools.fragment_dialog.*
 import java.io.File
 import java.io.IOException
 
@@ -39,7 +36,7 @@ class SelectTakePhoto {
     var type = 0
 
     fun selectType(activity: FragmentActivity, requestCode: Int) {
-        CommonDialogFragment.newInstance(activity).setLayout(
+        CommonDialogFragment.newInstance().setLayout(
             DialogSelectTakePhotoBinding.inflate(
                 LayoutInflater.from(activity),
                 null,
@@ -66,13 +63,13 @@ class SelectTakePhoto {
                     }
                     binding.tvCancel.setOnClickListener { v -> dialogFragment.dismiss() }
                 }
-            }).setAnimStyle(R.style.BottomDialogAnimation).setGravity(BaseDialogFragment.BOTTOM)
+            }).setAnimStyle(R.style.BottomDialogAnimation).setGravity(BOTTOM)
             .setPercent(true, false)
             .show(activity.supportFragmentManager)
     }
 
     fun selectType(fragment: Fragment, requestCode: Int) {
-        CommonDialogFragment.newInstance(fragment.context).setLayout(
+        CommonDialogFragment.newInstance().setLayout(
             DialogSelectTakePhotoBinding.inflate(
                 LayoutInflater.from(fragment.context),
                 null,
@@ -99,7 +96,7 @@ class SelectTakePhoto {
                     }
                     binding.tvCancel.setOnClickListener { v -> dialogFragment.dismiss() }
                 }
-            }).setAnimStyle(R.style.BottomDialogAnimation).setGravity(BaseDialogFragment.BOTTOM)
+            }).setAnimStyle(R.style.BottomDialogAnimation).setGravity(BOTTOM)
             .setPercentSize(0f, 0f).show(fragment.childFragmentManager)
     }
 
