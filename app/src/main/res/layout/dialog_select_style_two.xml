@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:lt_radius="10"
-    app:oneBg="@color/fafafa"
-    app:rt_radius="10">
+    app:sllLtRadius="10"
+    app:sllOneBg="@color/fafafa"
+    app:sllRtRadius="10">
 
     <TextView
         android:id="@+id/tv_title"
@@ -41,7 +41,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/textSize_16sp"
         android:textStyle="bold"
-        app:oneBg="@color/ff4d4d"
-        app:radius="10"
-        app:state="pressed" />
+        app:stvOneBg="@color/ff4d4d"
+        app:stvRadius="10"
+        app:stvState="pressed" />
 </com.yinp.tools.shap_view.ShapeLinearLayout>

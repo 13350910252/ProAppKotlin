@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:lt_radius="10"
-    app:oneBg="@color/white"
-    app:rt_radius="10">
+    app:sllLtRadius="10"
+    app:sllOneBg="@color/white"
+    app:sllRtRadius="10">
 
     <RelativeLayout
         android:layout_width="match_parent"

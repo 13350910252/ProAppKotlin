@@ -38,7 +38,6 @@ class WanMeActivity : BaseActivity<ActivityWanMeBinding>() {
     }
 
     override fun initViews() {
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         bd.header.headerCenterTitle.text = "我的"
         initClick(
             bd.tvNickName,

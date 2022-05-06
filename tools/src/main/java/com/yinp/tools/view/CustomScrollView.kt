@@ -15,7 +15,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.yinp.tools.R
-import com.yinp.tools.utils.ToolsUtils
+import com.yinp.tools.dpToPx
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.ArrayList
@@ -83,6 +83,7 @@ class CustomScrollView : View {
     ) {
         initPaint(attrs)
     }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     constructor(
         context: Context?,
@@ -122,16 +123,16 @@ class CustomScrollView : View {
     private var unSelectedColor: Drawable? = null
 
     private fun initPaint(attrs: AttributeSet?) {
-        context.obtainStyledAttributes(attrs, R.styleable.CustomScrollView) .apply{
+        context.obtainStyledAttributes(attrs, R.styleable.CustomScrollView).apply {
             maxTextSize = getInteger(R.styleable.CustomScrollView_textMaxSize, 18).toFloat()
             minTextSize = getInteger(R.styleable.CustomScrollView_textMinSize, 14).toFloat()
             selectedColor = getDrawable(R.styleable.CustomScrollView_selectedColor)
             unSelectedColor = getDrawable(R.styleable.CustomScrollView_unSelectedColor)
-        recycle()
+            recycle()
         }
 
-        minTextSize = ToolsUtils.dpToPx(minTextSize)
-        maxTextSize = ToolsUtils.dpToPx(maxTextSize)
+        minTextSize = minTextSize.dpToPx()
+        maxTextSize = maxTextSize.dpToPx()
 
         if (selectedColor is ColorDrawable && unSelectedColor is ColorDrawable) {
             mLightColor = (selectedColor as ColorDrawable).color //被选中的颜色
@@ -312,6 +313,7 @@ class CustomScrollView : View {
     fun setOnSelectListener(listener: OnSelectListener?) {
         mOnSelectListener = listener
     }
+
     /**
      * 销毁资源
      */

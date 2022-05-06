@@ -8,9 +8,9 @@
     android:layout_marginEnd="@dimen/_14dp"
     android:layout_marginBottom="@dimen/_10dp"
     android:orientation="vertical"
-    app:oneBg="@color/white"
-    app:radius="16"
-    app:state="pressed">
+    app:sllOneBg="@color/white"
+    app:sllRadius="16"
+    app:sllState="pressed">
 
     <LinearLayout
         android:layout_width="match_parent"

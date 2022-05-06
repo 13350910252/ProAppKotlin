@@ -19,8 +19,8 @@
         android:layout_marginEnd="14dp"
         android:orientation="vertical"
         android:paddingBottom="20dp"
-        app:oneBg="@color/ff8080"
-        app:radius="10">
+        app:sllOneBg="@color/ff8080"
+        app:sllRadius="10">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_login_account"
@@ -79,6 +79,6 @@
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="@color/white"
-        app:radius="10"
-        app:oneBg="@color/ff4d4d" />
+        app:stvRadius="10"
+        app:stvOneBg="@color/ff4d4d" />
 </LinearLayout>

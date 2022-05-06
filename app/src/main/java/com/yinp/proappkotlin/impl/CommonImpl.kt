@@ -1,7 +1,10 @@
 package com.yinp.proappkotlin.impl
 
+import android.view.View
 import androidx.fragment.app.FragmentActivity
+import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.interfaces.ICommon
+import com.yinp.proappkotlin.utils.StatusBarUtil
 import com.yinp.tools.utils.LoadingUtils
 
 /**
@@ -11,16 +14,21 @@ import com.yinp.tools.utils.LoadingUtils
  */
 class CommonImpl : ICommon {
     private lateinit var mActivity: FragmentActivity
-    override fun startCommon(activity: FragmentActivity, vararg method: () -> Unit) {
+    override fun startCommon(activity: FragmentActivity, vararg methods: () -> Unit) {
         mActivity = activity
-
+        for (method in methods) {
+            method.invoke()
+        }
     }
 
     /**
      * 沉浸式
      */
     override fun initImmersion() {
-
+        StatusBarUtil.setTranslucentStatus(mActivity)
+        mActivity.findViewById<View>(R.id.view_status).apply {
+            layoutParams.height = StatusBarUtil.getStatusBarHeight(mActivity)
+        }
     }
 
     /**

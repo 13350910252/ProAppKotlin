@@ -7,11 +7,13 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
 import com.yinp.proappkotlin.R
-import com.yinp.proappkotlin.utils.StatusBarUtil
+import com.yinp.proappkotlin.impl.CommonImpl
+import com.yinp.proappkotlin.interfaces.ICommon
 import com.yinp.tools.utils.LoadingUtils
 import com.yinp.tools.utils.ToastUtil
 
-abstract class BaseActivity<VB : ViewBinding> : SkipActivity(), View.OnClickListener {
+abstract class BaseActivity<VB : ViewBinding> : SkipActivity(), View.OnClickListener,
+    ICommon by CommonImpl() {
     protected lateinit var bd: VB
     protected lateinit var mContext: Context
     protected lateinit var mActivity: FragmentActivity
@@ -23,23 +25,9 @@ abstract class BaseActivity<VB : ViewBinding> : SkipActivity(), View.OnClickList
         mContext = this
         mActivity = this
 
-        StatusBarUtil.setTranslucentStatus(this)
+        startCommon(this, { initImmersion() })
         initViews()
     }
-
-    /**
-     * 设置占位View的高度，主要是用于浸入式状态栏
-     *
-     * @param height 状态栏高度
-     */
-    protected fun setStatusBarHeight(height: Int) {
-        findViewById<View>(R.id.view_status).apply {
-            layoutParams.also {
-                it.height = height
-            }
-        }
-    }
-
     /**
      * 初始化点击事件
      */
@@ -63,27 +51,20 @@ abstract class BaseActivity<VB : ViewBinding> : SkipActivity(), View.OnClickList
     protected open fun bindData() {}
 
 
-    /**
-     * 显示加载
-     */
-    private val loading by lazy {
-        LoadingUtils(supportFragmentManager)
-    }
-
     protected fun showLoading(text: String) {
-        loading.show(text)
+        loadingUtils.show(text)
     }
 
     protected fun showLoading(text: String, tag: String) {
-        loading.show(text, tag)
+        loadingUtils.show(text, tag)
     }
 
     protected fun hideLoading(tag: String) {
-        loading.close(tag)
+        loadingUtils.close(tag)
     }
 
     protected fun hideLoading() {
-        loading.closeAll()
+        loadingUtils.closeAll()
     }
 
 

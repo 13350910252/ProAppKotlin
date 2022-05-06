@@ -73,35 +73,6 @@ object AppUtils {
         return Resources.getSystem().displayMetrics.widthPixels
     }
 
-    /**
-     * dp转px
-     * 如果赋值给有数据类型的变量，则会自动转换；如果没有，则可以自己<Int>给定
-     * @return
-     */
-    inline fun <reified T> dpToPx(value: Float): T {
-        val scale = Resources.getSystem().displayMetrics.density
-        return when (T::class) {
-            Float::class -> (scale * value + 0.5f) as T
-            Int::class -> (scale * value + 0.5f).toInt() as T
-            else -> throw IllegalStateException("Type not supported")
-        }
-    }
-
-    /**
-     * px转dp
-     *
-     * @return
-     */
-
-    inline fun <reified T> pxToDp(value: Float): T {
-        val scale = Resources.getSystem().displayMetrics.density
-        return when (T::class) {
-            Float::class -> (value / scale + 0.5f) as T
-            Int::class -> (value / scale + 0.5f).toInt() as T
-            else -> throw IllegalStateException("Type not supported")
-        }
-    }
-
     fun getValue(value: String?): String {
         if (value.isNullOrEmpty()) {
             return "  "

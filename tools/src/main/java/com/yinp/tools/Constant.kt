@@ -26,5 +26,6 @@ const val state_pressed = android.R.attr.state_pressed
 const val state_selected = android.R.attr.state_selected
 const val state_checked = android.R.attr.state_checked
 const val state_focused = android.R.attr.state_focused
+const val state_enabled = android.R.attr.state_enabled
 
 val MNONE = LazyThreadSafetyMode.NONE

@@ -12,9 +12,9 @@
     android:paddingTop="@dimen/_12dp"
     android:paddingEnd="@dimen/_14dp"
     android:paddingBottom="@dimen/_16dp"
-    app:oneBg="@color/white"
-    app:radius="5"
-    app:state="pressed">
+    app:sllOneBg="@color/white"
+    app:sllRadius="5"
+    app:sllState="pressed">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,9 +62,9 @@
             android:text="开始游戏"
             android:textColor="@color/white"
             android:textSize="@dimen/textSize_16sp"
-            app:oneBg="@color/ff4d4d"
-            app:radius="10"
-            app:state="pressed" />
+            app:stvOneBg="@color/ff4d4d"
+            app:stvRadius="10"
+            app:stvState="pressed" />
 
         <com.yinp.tools.shap_view.ShapeTextView
             android:id="@+id/stv_record"
@@ -76,9 +76,9 @@
             android:text="游戏记录"
             android:textColor="@color/white"
             android:textSize="@dimen/textSize_16sp"
-            app:oneBg="@color/ff4d4d"
-            app:radius="10"
-            app:state="pressed" />
+            app:stvOneBg="@color/ff4d4d"
+            app:stvRadius="10"
+            app:stvState="pressed" />
     </LinearLayout>
 
     <LinearLayout

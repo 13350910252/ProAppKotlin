@@ -30,7 +30,6 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
     private lateinit var fragmentManager: FragmentManager
     private lateinit var fragmentTransaction: FragmentTransaction
     override fun initViews() {
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this))
         bd.header.headerBackImg.visibility = View.GONE
         bd.header.headerCenterTitle.text = "首页"
         bd.bottomNavigationView.setOnItemSelectedListener { item ->

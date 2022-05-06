@@ -41,14 +41,16 @@ class ShapeLinearLayout : LinearLayout {
      */
     private fun init(attrs: AttributeSet?) {
         context.obtainStyledAttributes(attrs, R.styleable.ShapeLinearLayout).apply {
-            oneDrawable = getDrawable(R.styleable.ShapeLinearLayout_oneBg)
-            twoDrawable = getDrawable(R.styleable.ShapeLinearLayout_twoBg)
-            val radius = getInteger(R.styleable.ShapeLinearLayout_radius, 0)
-            val leftTopRadius = getInteger(R.styleable.ShapeLinearLayout_lt_radius, 0).toFloat()
-            val leftBottomRadius = getInteger(R.styleable.ShapeLinearLayout_lb_radius, 0).toFloat()
-            val rightTopRadius = getInteger(R.styleable.ShapeLinearLayout_rt_radius, 0).toFloat()
-            val rightBottomRadius = getInteger(R.styleable.ShapeLinearLayout_rb_radius, 0).toFloat()
-            mState = getInt(R.styleable.ShapeLinearLayout_state, 0)
+            oneDrawable = getDrawable(R.styleable.ShapeLinearLayout_sllOneBg)
+            twoDrawable = getDrawable(R.styleable.ShapeLinearLayout_sllTwoBg)
+            val radius = getInteger(R.styleable.ShapeLinearLayout_sllRadius, 0)
+            val leftTopRadius = getInteger(R.styleable.ShapeLinearLayout_sllLtRadius, 0).toFloat()
+            val leftBottomRadius =
+                getInteger(R.styleable.ShapeLinearLayout_sllLbRadius, 0).toFloat()
+            val rightTopRadius = getInteger(R.styleable.ShapeLinearLayout_sllRtRadius, 0).toFloat()
+            val rightBottomRadius =
+                getInteger(R.styleable.ShapeLinearLayout_sllRbRadius, 0).toFloat()
+            mState = getInt(R.styleable.ShapeLinearLayout_sllState, 0)
             recycle()
             if (mState != 0) {
                 setOnClickListener {}
@@ -141,33 +143,46 @@ class ShapeLinearLayout : LinearLayout {
         }
     }
 
+
     private fun initState(drawable1: Drawable?, drawable2: Drawable?) {
         when (mState) {
             1 -> {
-                stateListDrawable.addState(intArrayOf(-state_pressed), drawable1)
-                stateListDrawable.addState(intArrayOf(state_pressed), drawable2)
+                addSate(drawable2, state_pressed)
             }
             2 -> {
-                stateListDrawable.addState(intArrayOf(-state_selected), drawable1)
-                stateListDrawable.addState(intArrayOf(state_selected), drawable2)
+                addSate(drawable2, state_selected)
             }
-            3 -> {
-                stateListDrawable.addState(intArrayOf(-state_checked), drawable1)
-                stateListDrawable.addState(intArrayOf(state_checked), drawable2)
+            3 -> {//state_pressed and state_selected
+                addSate(drawable2, state_pressed)
+                addSate(drawable2, state_selected)
             }
             4 -> {
-                stateListDrawable.addState(intArrayOf(-state_focused), drawable1)
-                stateListDrawable.addState(intArrayOf(state_focused), drawable2)
+                addSate(drawable2, state_checked)
+            }
+            5 -> {//state_pressed and state_checked
+                addSate(drawable2, state_pressed)
+                addSate(drawable2, state_checked)
+            }
+            6 -> {//state_selected and state_checked
+                addSate(drawable2, state_selected)
+                addSate(drawable2, state_checked)
+            }
+            8 -> {
+                addSate(drawable2, state_focused)
             }
         }
+        stateListDrawable.addState(intArrayOf(state_checked), drawable1)
     }
 
-    private val stateListDrawable by lazy(MNONE) {
+    private fun addSate(drawable: Drawable?, state: Int) {
+        stateListDrawable.addState(intArrayOf(state), drawable)
+    }
+
+    private val stateListDrawable by lazy(LazyThreadSafetyMode.NONE) {
         StateListDrawable()
     }
     private var roundRectShape: RoundRectShape? = null
 
-    //所有圆角
     fun setRadius(radius: Int) {
         initShape(radius)
     }
@@ -187,7 +202,7 @@ class ShapeLinearLayout : LinearLayout {
      * @param color
      */
     fun setColor(color: Int) {
-        setColor(color, mState)
+        setColor(color, DEFAULT)
     }
 
     fun setColor(color: Int, @AndroidState state: Int) {
@@ -225,13 +240,20 @@ class ShapeLinearLayout : LinearLayout {
      * @param radius
      */
     private fun initShape(radius: Int) {
+        var radius = radius
         if (radius != 0) {
-            roundRectShape =
-                RoundRectShape(
-                    List(8) { ToolsUtils.dpToPx(radius.toFloat()) }.toFloatArray(),
-                    null,
-                    null
-                )
+            radius = radius.dpToPx()
+            val outerRadii = floatArrayOf(
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat(),
+                radius.toFloat()
+            )
+            roundRectShape = RoundRectShape(outerRadii, null, null)
         }
     }
 
@@ -260,7 +282,9 @@ class ShapeLinearLayout : LinearLayout {
                     rightBottomRadius,
                     leftBottomRadius,
                     leftBottomRadius
-                ).map { ToolsUtils.dpToPx(it) }.toFloatArray(), null, null
+                ).map {
+                    it.toFloat().dpToPx()
+                }.toFloatArray(), null, null
             )
         }
     }
@@ -269,25 +293,27 @@ class ShapeLinearLayout : LinearLayout {
      * 颜色
      */
     private fun setBg(color: Int): Drawable {
-        val shapeDrawable = if (roundRectShape == null) {
+        return if (roundRectShape == null) {
             ShapeDrawable()
         } else {
             ShapeDrawable(roundRectShape)
+        }.apply {
+            paint.color = color
+            setMBackGround(this)
         }
-        shapeDrawable.paint.color = color
-        setMBackGround(shapeDrawable)
-        return shapeDrawable
     }
 
     /**
      * xml写的gradientDrawable
      */
     private fun setBg(drawable: GradientDrawable?): Drawable? {
-        if (drawable == null) {
-            return null
+        return when (drawable) {
+            null -> null
+            else -> {
+                setMBackGround(drawable)
+                drawable
+            }
         }
-        setMBackGround(drawable)
-        return drawable
     }
 
     /**
@@ -298,19 +324,21 @@ class ShapeLinearLayout : LinearLayout {
     }
 
     private fun setBg(drawable: BitmapDrawable?): Drawable? {
-        if (drawable == null) {
-            return null
+        return when (drawable) {
+            null -> null
+            else -> {
+                val bitmapShader =
+                    BitmapShader(drawable.bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+                if (roundRectShape == null) {
+                    ShapeDrawable()
+                } else {
+                    ShapeDrawable(roundRectShape)
+                }.apply {
+                    paint.shader = bitmapShader
+                    setMBackGround(this)
+                }
+            }
         }
-        val bitmapShader =
-            BitmapShader(drawable.bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-        val shapeDrawable: ShapeDrawable = if (roundRectShape == null) {
-            ShapeDrawable()
-        } else {
-            ShapeDrawable(roundRectShape)
-        }
-        shapeDrawable.paint.shader = bitmapShader
-        setMBackGround(shapeDrawable)
-        return shapeDrawable
     }
 
     private fun setMBackGround(drawable: Drawable?) {
@@ -325,18 +353,23 @@ class ShapeLinearLayout : LinearLayout {
      * @return
      */
     private fun getHexString(color: Int): String {
-        if (color == 0 || color == -1) {
-            return "#e6e6e6"
+        return when (color) {
+            0, -1 -> "#e6e6e6"
+            else -> {
+                val oldColor =
+                    color and -0x1000000 or (color and 0x00ff0000) or (color and 0x0000ff00) or (color and 0x000000ff)
+                val oldC = Integer.toHexString(oldColor)
+                when {
+                    oldC.startsWith("00") || oldC == "ffffffff" -> "#e6e6e6"
+                    else -> {
+                        val s = "#"
+                        val colorStr =
+                            color and -0x4d000000 or (color and 0x00ff0000) or (color and 0x0000ff00) or (color and 0x000000ff)
+                        s.plus(Integer.toHexString(colorStr))
+                    }
+                }
+            }
         }
-        val oldColor =
-            color and -0x1000000 or (color and 0x00ff0000) or (color and 0x0000ff00) or (color and 0x000000ff)
-        val oldC = Integer.toHexString(oldColor)
-        if (oldC.startsWith("00") || oldC == "ffffffff") {
-            return "#e6e6e6"
-        }
-        var s = "#"
-        val colorStr =
-            color and -0x4d000000 or (color and 0x00ff0000) or (color and 0x0000ff00) or (color and 0x000000ff)
-        return s.plus(Integer.toHexString(colorStr))
     }
+
 }

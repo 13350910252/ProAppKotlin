@@ -19,7 +19,6 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
 class JiGuangLoginActivity : BaseActivity<ActivityJiGuangLoginBinding>() {
     override fun initViews() {
         bd.header.headerCenterTitle.text = "极光登录"
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         initClick(
             bd.header.headerBackImg,
             bd.tvLogin,

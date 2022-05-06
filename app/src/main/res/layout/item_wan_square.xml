@@ -9,9 +9,9 @@
     android:layout_marginEnd="@dimen/_14dp"
     android:orientation="vertical"
     android:paddingBottom="@dimen/_16dp"
-    app:oneBg="@color/white"
-    app:radius="8"
-    app:state="pressed">
+    app:sllOneBg="@color/white"
+    app:sllRadius="8"
+    app:sllState="pressed">
 
     <RelativeLayout
         android:layout_width="match_parent"

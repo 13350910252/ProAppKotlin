@@ -12,6 +12,7 @@ import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseFragment
 import com.yinp.proappkotlin.databinding.FragmentToolsBinding
 import com.yinp.proappkotlin.databinding.ItemToolsTopListBinding
+import com.yinp.proappkotlin.dpToPx
 import com.yinp.proappkotlin.mtools.ToolsTopBean
 import com.yinp.proappkotlin.utils.AppUtils
 import com.yinp.tools.adapter.ComViewHolder
@@ -110,16 +111,16 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
         ) {
             when (parent.getChildAdapterPosition(view) % space) {
                 0 -> {
-                    outRect.left = AppUtils.dpToPx(20.0f)
-                    outRect.right = AppUtils.dpToPx(10.0f)
+                    outRect.left = 20.dpToPx()
+                    outRect.right = 10.dpToPx()
                 }
                 1 -> {
-                    outRect.left = AppUtils.dpToPx(10.0f)
-                    outRect.right = AppUtils.dpToPx(10.0f)
+                    outRect.left = 10.dpToPx()
+                    outRect.right = 10.dpToPx()
                 }
                 else -> {
-                    outRect.left = AppUtils.dpToPx(10.0f)
-                    outRect.right = AppUtils.dpToPx(20.0f)
+                    outRect.left = 10.dpToPx()
+                    outRect.right = 20.dpToPx()
                 }
             }
         }

@@ -1,72 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="oneBg" format="reference|color" />
-    <attr name="twoBg" format="reference|color" />
-    <attr name="radius" format="integer" />
-    <attr name="lt_radius" format="integer" />
-    <attr name="rt_radius" format="integer" />
-    <attr name="lb_radius" format="integer" />
-    <attr name="rb_radius" format="integer" />
-    <attr name="alpha_percent" format="float" />
-    <attr name="state" format="flags">
-        <flag name="pressed" value="1" />
-        <flag name="selected" value="2" />
-        <flag name="checked" value="3" />
-        <flag name="focused " value="4" />
-    </attr>
     <attr name="bgColor" format="color" />
-
-
     <declare-styleable name="ShapeTextView">
-        <attr name="oneBg" />
-        <attr name="twoBg" />
-        <attr name="radius" />
-        <attr name="lt_radius" />
-        <attr name="rt_radius" />
-        <attr name="lb_radius" />
-        <attr name="rb_radius" />
-        <attr name="state" />
-        <attr name="alpha_percent" />
+        <attr name="stvOneBg" format="reference|color" />
+        <attr name="stvTwoBg" format="reference|color" />
+        <attr name="stvRadius" format="integer" />
+        <attr name="stvLtRadius" format="integer" />
+        <attr name="stvRtRadius" format="integer" />
+        <attr name="stvLbRadius" format="integer" />
+        <attr name="stvRbRadius" format="integer" />
+        <attr name="stvSelectTextColor" format="color" />
+        <attr name="stvNormalTextColor" format="color" />
+        <attr name="stvState" format="flags">
+            <flag name="pressed" value="1" />
+            <flag name="selected" value="2" />
+            <flag name="checked" value="4" />
+            <flag name="focused " value="8" />
+        </attr>
     </declare-styleable>
     <declare-styleable name="ShapeLinearLayout">
-        <attr name="oneBg" />
-        <attr name="twoBg" />
-        <attr name="radius" />
-        <attr name="lt_radius" />
-        <attr name="rt_radius" />
-        <attr name="lb_radius" />
-        <attr name="rb_radius" />
-        <attr name="state" />
+        <attr name="sllOneBg" format="reference|color" />
+        <attr name="sllTwoBg" format="reference|color" />
+        <attr name="sllRadius" format="integer" />
+        <attr name="sllLtRadius" format="integer" />
+        <attr name="sllRtRadius" format="integer" />
+        <attr name="sllLbRadius" format="integer" />
+        <attr name="sllRbRadius" format="integer"/>
+        <attr name="sllState" format="flags">
+            <flag name="pressed" value="1" />
+            <flag name="selected" value="2" />
+            <flag name="checked" value="4" />
+            <flag name="focused " value="8" />
+        </attr>
     </declare-styleable>
     <declare-styleable name="ShapeRelativeLayout">
-        <attr name="oneBg" />
-        <attr name="twoBg" />
-        <attr name="radius" />
-        <attr name="lt_radius" />
-        <attr name="rt_radius" />
-        <attr name="lb_radius" />
-        <attr name="rb_radius" />
-        <attr name="state" />
+        <attr name="srlOneBg" format="reference|color" />
+        <attr name="srlTwoBg" format="reference|color" />
+        <attr name="srlRadius" format="integer" />
+        <attr name="srlLtRadius" format="integer" />
+        <attr name="srlRtRadius" format="integer" />
+        <attr name="srlLbRadius" format="integer" />
+        <attr name="srlRbRadius" format="integer" />
+        <attr name="srlState" format="flags">
+            <flag name="pressed" value="1" />
+            <flag name="selected" value="2" />
+            <flag name="checked" value="4" />
+            <flag name="focused " value="8" />
+        </attr>
     </declare-styleable>
     <declare-styleable name="ShapeConstraintLayout">
-        <attr name="oneBg" />
-        <attr name="twoBg" />
-        <attr name="radius" />
-        <attr name="lt_radius" />
-        <attr name="rt_radius" />
-        <attr name="lb_radius" />
-        <attr name="rb_radius" />
-        <attr name="state" />
+        <attr name="sclOneBg" format="reference|color" />
+        <attr name="sclTwoBg" format="reference|color" />
+        <attr name="sclRadius" format="integer" />
+        <attr name="sclLtRadius" format="integer" />
+        <attr name="sclRtRadius" format="integer" />
+        <attr name="sclLbRadius" format="integer" />
+        <attr name="sclRbRadius" format="integer" />
+        <attr name="sclState" format="flags">
+            <flag name="pressed" value="1" />
+            <flag name="selected" value="2" />
+            <flag name="checked" value="4" />
+            <flag name="focused " value="8" />
+        </attr>
     </declare-styleable>
     <declare-styleable name="ShapeFrameLayout">
-        <attr name="oneBg" />
-        <attr name="twoBg" />
-        <attr name="radius" />
-        <attr name="lt_radius" />
-        <attr name="rt_radius" />
-        <attr name="lb_radius" />
-        <attr name="rb_radius" />
-        <attr name="state" />
+        <attr name="sflOneBg" format="reference|color" />
+        <attr name="sflTwoBg" format="reference|color" />
+        <attr name="sflRadius" format="integer" />
+        <attr name="sflLtRadius" format="integer" />
+        <attr name="sflRtRadius" format="integer" />
+        <attr name="sflLbRadius" format="integer" />
+        <attr name="sflRbRadius" format="integer" />
+        <attr name="sflState" format="flags">
+            <flag name="pressed" value="1" />
+            <flag name="selected" value="2" />
+            <flag name="checked" value="4" />
+            <flag name="focused " value="8" />
+        </attr>
     </declare-styleable>
     <declare-styleable name="CustomScrollView">
         <attr name="textMaxSize" format="integer" />

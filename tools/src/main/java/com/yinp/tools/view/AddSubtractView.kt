@@ -21,6 +21,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.yinp.tools.R
+import com.yinp.tools.dpToPx
 import com.yinp.tools.utils.ToolsUtils
 import java.util.*
 
@@ -89,7 +90,7 @@ class AddSubtractView : LinearLayout {
         Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
             color = strokeColor
             style = Paint.Style.STROKE
-            strokeWidth = ToolsUtils.dpToPx(strokeWidth * 1.0f)
+            strokeWidth = strokeWidth * 1.0f.dpToPx()
         }
     }
     var strokeColor = 0//边框的颜色
@@ -152,11 +153,11 @@ class AddSubtractView : LinearLayout {
             maxEms = 8
         }
 
-        radius = ToolsUtils.dpToPx(radius)
-        addLeftRightPd = ToolsUtils.dpToPx(addLeftRightPd)
-        subtractLeftRightPd = ToolsUtils.dpToPx(subtractLeftRightPd)
-        valueLeftRightPd = ToolsUtils.dpToPx(valueLeftRightPd)
-        topBottomPad = ToolsUtils.dpToPx(topBottomPad)
+        radius = radius.dpToPx()
+        addLeftRightPd = addLeftRightPd.dpToPx()
+        subtractLeftRightPd = subtractLeftRightPd.dpToPx()
+        valueLeftRightPd = valueLeftRightPd.dpToPx()
+        topBottomPad = topBottomPad.dpToPx()
         /**
          * 将视图添加进去
          */

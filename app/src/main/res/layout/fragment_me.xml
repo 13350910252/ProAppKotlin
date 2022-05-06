@@ -71,9 +71,9 @@
             android:paddingTop="@dimen/_20dp"
             android:paddingEnd="@dimen/_14dp"
             android:paddingBottom="@dimen/_20dp"
-            app:lt_radius="10"
-            app:oneBg="@color/white"
-            app:rt_radius="10">
+            app:sllLtRadius="10"
+            app:sllOneBg="@color/white"
+            app:sllRtRadius="10">
 
             <com.yinp.tools.shap_view.ShapeLinearLayout
                 android:id="@+id/sll_add_label"
@@ -83,9 +83,9 @@
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_10dp"
                 android:paddingEnd="@dimen/_10dp"
-                app:oneBg="@color/fafafa"
-                app:radius="10"
-                app:state="pressed">
+                app:sllOneBg="@color/fafafa"
+                app:sllRadius="10"
+                app:sllState="pressed">
 
                 <ImageView
                     android:layout_width="wrap_content"

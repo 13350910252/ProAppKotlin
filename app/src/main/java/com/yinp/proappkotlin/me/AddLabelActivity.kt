@@ -12,8 +12,7 @@ import com.yinp.proappkotlin.TodayUndeterminedFragment
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.base.LabelFragment
 import com.yinp.proappkotlin.databinding.ActivityAddLabelBinding
-import com.yinp.proappkotlin.utils.AppUtils
-import com.yinp.proappkotlin.utils.StatusBarUtil
+import com.yinp.proappkotlin.dpToPx
 import com.yinp.proappkotlin.utils.ViewPager2Utils
 import com.yinp.proappkotlin.view.SimplePagerTitlePictureView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -31,7 +30,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 class AddLabelActivity : BaseActivity<ActivityAddLabelBinding>() {
     private val fragments = SparseArray<Fragment>()
     override fun initViews() {
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         initClick(bd.header.headerBackImg)
         initIndicator();
     }
@@ -82,9 +80,9 @@ class AddLabelActivity : BaseActivity<ActivityAddLabelBinding>() {
             override fun getIndicator(context: Context): IPagerIndicator {
                 return LinePagerIndicator(context).apply {
                     mode = LinePagerIndicator.MODE_EXACTLY
-                    lineHeight = AppUtils.dpToPx(0.0f)
-                    lineWidth = AppUtils.dpToPx(56.0f)
-                    roundRadius = AppUtils.dpToPx(3.0f)
+                    lineHeight = 0.0f.dpToPx()
+                    lineWidth = 56.0f.dpToPx()
+                    roundRadius = 3.0f.dpToPx()
                     startInterpolator = AccelerateInterpolator()
                     endInterpolator = DecelerateInterpolator(2.0f)
                     setColors(ContextCompat.getColor(context, R.color.fafafa))

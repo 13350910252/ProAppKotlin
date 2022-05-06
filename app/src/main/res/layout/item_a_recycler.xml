@@ -8,8 +8,8 @@
     android:layout_marginTop="@dimen/_10dp"
     android:layout_marginEnd="@dimen/_14dp"
     android:orientation="vertical"
-    app:oneBg="@color/white"
-    app:radius="10">
+    app:sllOneBg="@color/white"
+    app:sllRadius="10">
 
     <TextView
         android:id="@+id/tv_title"

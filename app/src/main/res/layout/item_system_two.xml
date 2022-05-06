@@ -18,8 +18,8 @@
         android:paddingTop="3dp"
         android:paddingEnd="@dimen/_10dp"
         android:paddingBottom="3dp"
-        app:oneBg="@color/f0f0f0"
-        app:radius="16"
-        app:state="pressed"
+        app:stvOneBg="@color/f0f0f0"
+        app:stvRadius="16"
+        app:stvState="pressed"
         tools:text="handler" />
 </LinearLayout>

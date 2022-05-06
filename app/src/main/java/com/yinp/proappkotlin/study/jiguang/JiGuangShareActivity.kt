@@ -12,7 +12,6 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
  */
 class JiGuangShareActivity : BaseActivity<ActivityJiGuangShareBinding>() {
     override fun initViews() {
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this))
         bd.header.headerCenterTitle.text = "极光分享"
         initClick(bd.header.headerBackImg)
     }

@@ -13,8 +13,8 @@
         android:layout_marginTop="@dimen/_20dp"
         android:layout_marginEnd="@dimen/_14dp"
         android:orientation="vertical"
-        app:oneBg="@color/white"
-        app:radius="16">
+        app:sllOneBg="@color/white"
+        app:sllRadius="16">
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,8 +42,8 @@
                 android:text="wanAndroid"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:oneBg="@color/white"
-                app:state="pressed" />
+                app:stvOneBg="@color/white"
+                app:stvState="pressed" />
 
             <com.yinp.tools.shap_view.ShapeTextView
                 android:id="@+id/stv_two"
@@ -56,8 +56,8 @@
                 android:text="学习内容总结"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:oneBg="@color/white"
-                app:state="pressed" />
+                app:stvOneBg="@color/white"
+                app:stvState="pressed" />
 
             <com.yinp.tools.shap_view.ShapeTextView
                 android:id="@+id/stv_three"
@@ -70,8 +70,8 @@
                 android:text="视频"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:oneBg="@color/white"
-                app:state="pressed" />
+                app:stvOneBg="@color/white"
+                app:stvState="pressed" />
         </LinearLayout>
 
         <LinearLayout
@@ -90,9 +90,9 @@
                 android:text="自定义view"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:lb_radius="16"
-                app:oneBg="@color/white"
-                app:state="pressed" />
+                app:stvLbRadius="16"
+                app:stvOneBg="@color/white"
+                app:stvState="pressed" />
 
             <com.yinp.tools.shap_view.ShapeTextView
                 android:id="@+id/stv_five"
@@ -105,8 +105,8 @@
                 android:text="工作中的通用"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:oneBg="@color/white"
-                app:state="pressed" />
+                app:stvOneBg="@color/white"
+                app:stvState="pressed" />
 
             <com.yinp.tools.shap_view.ShapeTextView
                 android:id="@+id/stv_six"
@@ -119,9 +119,9 @@
                 android:text="极光登录和分享"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:oneBg="@color/white"
-                app:rb_radius="16"
-                app:state="pressed" />
+                app:stvOneBg="@color/white"
+                app:stvRbRadius="16"
+                app:stvState="pressed" />
         </LinearLayout>
     </com.yinp.tools.shap_view.ShapeLinearLayout>
 
@@ -132,8 +132,8 @@
         android:layout_marginTop="@dimen/_20dp"
         android:layout_marginEnd="@dimen/_14dp"
         android:orientation="vertical"
-        app:oneBg="@color/white"
-        app:radius="16">
+        app:sllOneBg="@color/white"
+        app:sllRadius="16">
 
         <TextView
             android:layout_width="wrap_content"
@@ -160,8 +160,8 @@
                 android:text="测试"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:oneBg="@color/white"
-                app:state="pressed" />
+                app:stvOneBg="@color/white"
+                app:stvState="pressed" />
 
             <com.yinp.tools.shap_view.ShapeTextView
                 android:layout_width="0dp"
@@ -173,8 +173,8 @@
                 android:text="测试"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:oneBg="@color/white"
-                app:state="pressed" />
+                app:stvOneBg="@color/white"
+                app:stvState="pressed" />
 
             <com.yinp.tools.shap_view.ShapeTextView
                 android:layout_width="0dp"
@@ -186,8 +186,8 @@
                 android:text="测试"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:oneBg="@color/white"
-                app:state="pressed" />
+                app:stvOneBg="@color/white"
+                app:stvState="pressed" />
         </LinearLayout>
 
         <LinearLayout
@@ -205,9 +205,9 @@
                 android:text="测试"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:lb_radius="16"
-                app:oneBg="@color/white"
-                app:state="pressed" />
+                app:stvLbRadius="16"
+                app:stvOneBg="@color/white"
+                app:stvState="pressed" />
 
             <com.yinp.tools.shap_view.ShapeTextView
                 android:layout_width="0dp"
@@ -219,8 +219,8 @@
                 android:text="测试"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:oneBg="@color/white"
-                app:state="pressed" />
+                app:stvOneBg="@color/white"
+                app:stvState="pressed" />
 
             <com.yinp.tools.shap_view.ShapeTextView
                 android:layout_width="0dp"
@@ -232,9 +232,9 @@
                 android:text="测试"
                 android:textColor="@color/black666"
                 android:textSize="@dimen/textSize_16sp"
-                app:oneBg="@color/white"
-                app:rb_radius="16"
-                app:state="pressed" />
+                app:stvOneBg="@color/white"
+                app:stvRbRadius="16"
+                app:stvState="pressed" />
         </LinearLayout>
     </com.yinp.tools.shap_view.ShapeLinearLayout>
 

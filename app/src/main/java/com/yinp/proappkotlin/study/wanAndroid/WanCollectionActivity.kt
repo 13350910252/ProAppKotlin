@@ -45,7 +45,6 @@ class WanCollectionActivity : BaseActivity<ActivityWanCollectionBinding>() {
     private var page = 0
     private var mFirst = false
     override fun initViews() {
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         bd.header.headerCenterTitle.text = "我的收藏"
         initClick(bd.header.headerBackImg)
         initRecycler()

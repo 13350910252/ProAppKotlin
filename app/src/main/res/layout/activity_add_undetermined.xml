@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/fafafa"
     android:orientation="vertical"
-    tools:context=".module.task.activity.AddUndeterminedActivity">
+    tools:context=".home.activity.AddUndeterminedActivity">
 
     <include
         android:id="@+id/header"
@@ -31,8 +31,8 @@
                 android:layout_marginTop="@dimen/_10dp"
                 android:layout_marginEnd="@dimen/_14dp"
                 android:orientation="vertical"
-                app:oneBg="@color/white"
-                app:radius="10">
+                app:sllOneBg="@color/white"
+                app:sllRadius="10">
 
                 <EditText
                     android:id="@+id/et_title"
@@ -62,8 +62,8 @@
                 android:layout_marginTop="@dimen/_10dp"
                 android:layout_marginEnd="@dimen/_14dp"
                 android:orientation="vertical"
-                app:oneBg="@color/white"
-                app:radius="10">
+                app:sllOneBg="@color/white"
+                app:sllRadius="10">
 
                 <EditText
                     android:id="@+id/et_content"
@@ -101,7 +101,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/textSize_16sp"
         android:textStyle="bold"
-        app:oneBg="@color/ff4d4d"
-        app:radius="10"
-        app:state="pressed" />
+        app:stvOneBg="@color/ff4d4d"
+        app:stvRadius="10"
+        app:stvState="pressed" />
 </LinearLayout>

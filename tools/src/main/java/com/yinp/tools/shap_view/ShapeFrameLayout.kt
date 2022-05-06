@@ -7,7 +7,6 @@ import android.graphics.Shader
 import android.graphics.drawable.*
 import android.graphics.drawable.shapes.RoundRectShape
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 import com.yinp.tools.*
 import com.yinp.tools.utils.ToolsUtils
@@ -34,184 +33,165 @@ class ShapeFrameLayout : FrameLayout {
 
     private var oneDrawable: Drawable? = null
     private var twoDrawable: Drawable? = null
-    private var state = 0
+    private var mState = 0
 
-    private var radius = 0
-    private var leftBottomRadius: Int = 0
-    private var leftTopRadius: Int = 0
-    private var rightTopRadius: Int = 0
-    private var rightBottomRadius: Int = 0
-
-
+    /**
+     * 四个圆角
+     */
     private fun init(attrs: AttributeSet?) {
         context.obtainStyledAttributes(attrs, R.styleable.ShapeFrameLayout).apply {
-            oneDrawable = getDrawable(R.styleable.ShapeFrameLayout_oneBg)
-            twoDrawable = getDrawable(R.styleable.ShapeFrameLayout_twoBg)
-            radius = getInteger(R.styleable.ShapeFrameLayout_radius, 0)
-            leftTopRadius = getInteger(R.styleable.ShapeFrameLayout_lt_radius, 0)
-            leftBottomRadius = getInteger(R.styleable.ShapeFrameLayout_lb_radius, 0)
-            rightTopRadius = getInteger(R.styleable.ShapeFrameLayout_rt_radius, 0)
-            rightBottomRadius = getInteger(R.styleable.ShapeFrameLayout_rb_radius, 0)
-            state = getInt(R.styleable.ShapeFrameLayout_state, 0)
+            oneDrawable = getDrawable(R.styleable.ShapeFrameLayout_sflOneBg)
+            twoDrawable = getDrawable(R.styleable.ShapeFrameLayout_sflTwoBg)
+            val radius = getInteger(R.styleable.ShapeFrameLayout_sflRadius, 0)
+            val leftTopRadius = getInteger(R.styleable.ShapeFrameLayout_sflLtRadius, 0).toFloat()
+            val leftBottomRadius =
+                getInteger(R.styleable.ShapeFrameLayout_sflLbRadius, 0).toFloat()
+            val rightTopRadius = getInteger(R.styleable.ShapeFrameLayout_sflRtRadius, 0).toFloat()
+            val rightBottomRadius =
+                getInteger(R.styleable.ShapeFrameLayout_sflRbRadius, 0).toFloat()
+            mState = getInt(R.styleable.ShapeFrameLayout_sflState, 0)
             recycle()
-        }
-        if (state != 0) {
-            setOnClickListener { }
-            isState = true
-        }
-        if (radius != 0) {
-            initShape(radius)
-        } else {
-            initShape(leftTopRadius, rightTopRadius, leftBottomRadius, rightBottomRadius)
+            if (mState != 0) {
+                setOnClickListener {}
+                mIsState = true
+            }
+            if (radius != 0) {
+                initShape(radius)
+            } else {
+                initShape(leftTopRadius, rightTopRadius, leftBottomRadius, rightBottomRadius)
+            }
         }
         fill(oneDrawable, twoDrawable)
     }
 
-    private var isState = false
+    private var mIsState = false
 
     private fun fill(oneD: Drawable?, twoD: Drawable?) {
-        if (oneD != null && twoD != null) {
-            if (oneD is BitmapDrawable && twoD is BitmapDrawable) {
-                if (isState) {
-                    initState(setBg(oneD as BitmapDrawable?), setBg(twoD as BitmapDrawable?))
-                    setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg(oneD as BitmapDrawable?))
-                }
-            } else if (oneD is BitmapDrawable && twoD is GradientDrawable) {
-                if (isState) {
-                    initState(setBg(oneD as BitmapDrawable?), setBg(twoD as GradientDrawable?))
-                    setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg(oneD as BitmapDrawable?))
-                }
-            } else if (oneD is BitmapDrawable && twoD is ColorDrawable) {
-                if (isState) {
-                    initState(setBg(oneD as BitmapDrawable?), setBg(twoD.color))
-                    setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg(oneD as BitmapDrawable?))
-                }
-            } else if (twoD is BitmapDrawable && oneD is GradientDrawable) {
-                if (isState) {
-                    initState(setBg(twoD as BitmapDrawable?), setBg(oneD as GradientDrawable?))
-                    setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg(twoD as BitmapDrawable?))
-                }
-            } else if (twoD is BitmapDrawable && oneD is ColorDrawable) {
-                if (isState) {
-                    initState(setBg(twoD as BitmapDrawable?), setBg(oneD.color))
-                    setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg(twoD as BitmapDrawable?))
-                }
-            } else if (oneD is GradientDrawable && twoD is GradientDrawable) {
-                if (isState) {
-                    initState(setBg(oneD as GradientDrawable?), setBg(twoD as GradientDrawable?))
-                    setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg(oneD as GradientDrawable?))
-                }
-            } else if (oneD is GradientDrawable && twoD is ColorDrawable) {
-                if (isState) {
-                    initState(setBg(oneD as GradientDrawable?), setBg(twoD.color))
-                    setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg(oneD as GradientDrawable?))
-                }
-            } else if (twoD is GradientDrawable && oneD is ColorDrawable) {
-                if (isState) {
-                    initState(setBg(twoD as GradientDrawable?), setBg(oneD.color))
-                    setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg(twoD as GradientDrawable?))
-                }
-            } else if (oneD is ColorDrawable && twoD is ColorDrawable) {
-                if (isState) {
-                    initState(setBg(oneD.color), setBg(twoD.color))
-                    setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg(oneD.color))
-                }
+        val a: Int
+        val b: Int
+        var one = when (oneD) {
+            is BitmapDrawable -> {
+                a = 0
+                setBg(oneD)
             }
-        } else if (oneD != null) { //在一种颜色的情况下，自动设置75%不透明度的颜色
-            if (oneD is BitmapDrawable) {
-                setMBackGround(setBg(oneD as BitmapDrawable?))
-            } else if (oneD is GradientDrawable) {
-                setMBackGround(setBg(oneD as GradientDrawable?))
-            } else {
-                if (isState) {
-                    val twoColor = getHexString((oneD as ColorDrawable).color)
-                    initState(setBg(oneD.color), setBg(Color.parseColor(twoColor)))
-                    setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg((oneD as ColorDrawable).color))
-                }
+            is GradientDrawable -> {
+                a = 1
+                setBg(oneD)
             }
-        } else if (twoD != null) {
-            if (twoD is BitmapDrawable) {
-                setMBackGround(setBg(twoD as BitmapDrawable?))
-            } else if (twoD is GradientDrawable) {
-                setMBackGround(setBg(twoD as GradientDrawable?))
-            } else {
-                if (isState) {
-                    val twoColor = getHexString((twoD as ColorDrawable).color)
-                    initState(setBg(twoD.color), setBg(Color.parseColor(twoColor)))
+            is ColorDrawable -> {
+                a = 2
+                setBg(oneD.color)
+            }
+            else -> {
+                a = 3
+                null
+            }
+        }
+        var two = when (twoD) {
+            is BitmapDrawable -> {
+                b = 0
+                setBg(twoD)
+            }
+            is GradientDrawable -> {
+                b = 1
+                setBg(twoD)
+            }
+            is ColorDrawable -> {
+                b = 2
+                setBg(twoD.color)
+            }
+            else -> {
+                b = 3
+                null
+            }
+        }
+        if (mIsState) {
+            when {
+                oneD != null && twoD != null -> {
+                    initState(one, two)
                     setMBackGround(stateListDrawable)
-                } else {
-                    setMBackGround(setBg((twoD as ColorDrawable).color))
+                }
+                oneD == null && twoD != null -> {
+                    if (twoD is ColorDrawable)
+                        one = setBg(Color.parseColor(getHexString((twoD).color)))
+                    initState(one, two)
+                    setMBackGround(stateListDrawable)
+                }
+                oneD != null && twoD == null -> {
+                    if (oneD is ColorDrawable)
+                        two = setBg(Color.parseColor(getHexString((oneD).color)))
+                    initState(one, two)
+                    setMBackGround(stateListDrawable)
+                }
+                else -> {
+                    setBackgroundColor(Color.WHITE)
                 }
             }
         } else {
-            setBackgroundColor(Color.WHITE)
+            when {
+                a == 3 && b == 3 -> {
+                    setBackgroundColor(Color.WHITE)
+                }
+                a <= b -> {
+                    setMBackGround(one)
+                }
+                else -> {
+                    setMBackGround(two)
+                }
+            }
         }
     }
+
 
     private fun initState(drawable1: Drawable?, drawable2: Drawable?) {
-        stateListDrawable = StateListDrawable()
-        when (state) {
+        when (mState) {
             1 -> {
-                stateListDrawable!!.addState(intArrayOf(-state_pressed), drawable1)
-                stateListDrawable!!.addState(intArrayOf(state_pressed), drawable2)
+                addSate(drawable2, state_pressed)
             }
             2 -> {
-                stateListDrawable!!.addState(intArrayOf(-state_selected), drawable1)
-                stateListDrawable!!.addState(intArrayOf(state_selected), drawable2)
+                addSate(drawable2, state_selected)
             }
-            3 -> {
-                stateListDrawable!!.addState(intArrayOf(-state_checked), drawable1)
-                stateListDrawable!!.addState(intArrayOf(state_checked), drawable2)
+            3 -> {//state_pressed and state_selected
+                addSate(drawable2, state_pressed)
+                addSate(drawable2, state_selected)
             }
             4 -> {
-                stateListDrawable!!.addState(intArrayOf(-state_focused), drawable1)
-                stateListDrawable!!.addState(intArrayOf(state_focused), drawable2)
+                addSate(drawable2, state_checked)
+            }
+            5 -> {//state_pressed and state_checked
+                addSate(drawable2, state_pressed)
+                addSate(drawable2, state_checked)
+            }
+            6 -> {//state_selected and state_checked
+                addSate(drawable2, state_selected)
+                addSate(drawable2, state_checked)
+            }
+            8 -> {
+                addSate(drawable2, state_focused)
             }
         }
+        stateListDrawable.addState(intArrayOf(state_checked), drawable1)
     }
 
-    private var stateListDrawable: StateListDrawable? = null
+    private fun addSate(drawable: Drawable?, state: Int) {
+        stateListDrawable.addState(intArrayOf(state), drawable)
+    }
+
+    private val stateListDrawable by lazy(LazyThreadSafetyMode.NONE) {
+        StateListDrawable()
+    }
     private var roundRectShape: RoundRectShape? = null
 
-    private var color = 0
-    private var drawable: Drawable? = null
-
-
     fun setRadius(radius: Int) {
-        this.radius = radius
         initShape(radius)
     }
 
     fun setRadius(
-        leftBottomRadius: Int,
-        leftTopRadius: Int,
-        rightTopRadius: Int,
-        rightBottomRadius: Int
+        leftBottomRadius: Float,
+        leftTopRadius: Float,
+        rightTopRadius: Float,
+        rightBottomRadius: Float
     ) {
-        this.leftBottomRadius = leftBottomRadius
-        this.leftTopRadius = leftTopRadius
-        this.rightTopRadius = rightTopRadius
-        this.rightBottomRadius = rightBottomRadius
         initShape(leftBottomRadius, leftTopRadius, rightTopRadius, rightBottomRadius)
     }
 
@@ -225,13 +205,12 @@ class ShapeFrameLayout : FrameLayout {
     }
 
     fun setColor(color: Int, @AndroidState state: Int) {
-        this.color = color
-        this.state = state
+        this.mState = state
         if (state != 0) {
-            setOnClickListener { v: View? -> }
-            isState = true
+            setOnClickListener { }
+            mIsState = true
         }
-        if (isState) {
+        if (mIsState) {
             val twoColor = getHexString(color)
             initState(setBg(color), setBg(Color.parseColor(twoColor)))
             setMBackGround(stateListDrawable)
@@ -241,7 +220,6 @@ class ShapeFrameLayout : FrameLayout {
     }
 
     fun setDrawable(drawable: Drawable?) {
-        this.drawable = drawable
         when (drawable) {
             is BitmapDrawable -> {
                 setMBackGround(setBg(drawable as BitmapDrawable?))
@@ -263,7 +241,7 @@ class ShapeFrameLayout : FrameLayout {
     private fun initShape(radius: Int) {
         var radius = radius
         if (radius != 0) {
-            radius = ToolsUtils.dpToPx(radius)
+            radius = radius.dpToPx()
             val outerRadii = floatArrayOf(
                 radius.toFloat(),
                 radius.toFloat(),
@@ -287,61 +265,54 @@ class ShapeFrameLayout : FrameLayout {
      * @param rightBottomRadius
      */
     private fun initShape(
-        leftTopRadius: Int,
-        rightTopRadius: Int,
-        leftBottomRadius: Int,
-        rightBottomRadius: Int
+        leftTopRadius: Float,
+        rightTopRadius: Float,
+        leftBottomRadius: Float,
+        rightBottomRadius: Float
     ) {
-        if (leftBottomRadius != 0 || leftTopRadius != 0 || rightTopRadius != 0 || rightBottomRadius != 0) {
-            this.leftBottomRadius = ToolsUtils.dpToPx(leftBottomRadius)
-            this.leftTopRadius = ToolsUtils.dpToPx(leftTopRadius)
-            this.rightTopRadius = ToolsUtils.dpToPx(rightTopRadius)
-            this.rightBottomRadius = ToolsUtils.dpToPx(rightBottomRadius)
-            val outerRadii = floatArrayOf(
-                leftTopRadius.toFloat(),
-                leftTopRadius.toFloat(),
-                rightTopRadius.toFloat(),
-                rightTopRadius.toFloat(),
-                rightBottomRadius.toFloat(),
-                rightBottomRadius.toFloat(),
-                leftBottomRadius.toFloat(),
-                leftBottomRadius.toFloat()
+        if (leftBottomRadius != 0f || leftTopRadius != 0f || rightTopRadius != 0f || rightBottomRadius != 0f) {
+            roundRectShape = RoundRectShape(
+                mutableListOf(
+                    leftTopRadius,
+                    leftTopRadius,
+                    rightTopRadius,
+                    rightTopRadius,
+                    rightBottomRadius,
+                    rightBottomRadius,
+                    leftBottomRadius,
+                    leftBottomRadius
+                ).map {
+                    it.toFloat().dpToPx()
+                }.toFloatArray(), null, null
             )
-            roundRectShape = RoundRectShape(outerRadii, null, null)
         }
     }
 
     /**
      * 颜色
      */
-    fun setColorBg() {
-        setBg(color)
-    }
-
     private fun setBg(color: Int): Drawable {
-        val shapeDrawable: ShapeDrawable = if (roundRectShape == null) {
+        return if (roundRectShape == null) {
             ShapeDrawable()
         } else {
             ShapeDrawable(roundRectShape)
+        }.apply {
+            paint.color = color
+            setMBackGround(this)
         }
-        shapeDrawable.paint.color = color
-        setMBackGround(shapeDrawable)
-        return shapeDrawable
     }
 
     /**
      * xml写的gradientDrawable
      */
-    fun setGradientBg() {
-        setBg(oneDrawable as GradientDrawable?)
-    }
-
     private fun setBg(drawable: GradientDrawable?): Drawable? {
-        if (drawable == null) {
-            return null
+        return when (drawable) {
+            null -> null
+            else -> {
+                setMBackGround(drawable)
+                drawable
+            }
         }
-        setMBackGround(drawable)
-        return drawable
     }
 
     /**
@@ -352,19 +323,21 @@ class ShapeFrameLayout : FrameLayout {
     }
 
     private fun setBg(drawable: BitmapDrawable?): Drawable? {
-        if (drawable == null) {
-            return null
+        return when (drawable) {
+            null -> null
+            else -> {
+                val bitmapShader =
+                    BitmapShader(drawable.bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+                if (roundRectShape == null) {
+                    ShapeDrawable()
+                } else {
+                    ShapeDrawable(roundRectShape)
+                }.apply {
+                    paint.shader = bitmapShader
+                    setMBackGround(this)
+                }
+            }
         }
-        val bitmapShader =
-            BitmapShader(drawable.bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-        val shapeDrawable: ShapeDrawable = if (roundRectShape == null) {
-            ShapeDrawable()
-        } else {
-            ShapeDrawable(roundRectShape)
-        }
-        shapeDrawable.paint.shader = bitmapShader
-        setMBackGround(shapeDrawable)
-        return shapeDrawable
     }
 
     private fun setMBackGround(drawable: Drawable?) {
@@ -379,19 +352,23 @@ class ShapeFrameLayout : FrameLayout {
      * @return
      */
     private fun getHexString(color: Int): String {
-        if (color == 0 || color == -1) {
-            return "#e6e6e6"
+        return when (color) {
+            0, -1 -> "#e6e6e6"
+            else -> {
+                val oldColor =
+                    color and -0x1000000 or (color and 0x00ff0000) or (color and 0x0000ff00) or (color and 0x000000ff)
+                val oldC = Integer.toHexString(oldColor)
+                when {
+                    oldC.startsWith("00") || oldC == "ffffffff" -> "#e6e6e6"
+                    else -> {
+                        val s = "#"
+                        val colorStr =
+                            color and -0x4d000000 or (color and 0x00ff0000) or (color and 0x0000ff00) or (color and 0x000000ff)
+                        s.plus(Integer.toHexString(colorStr))
+                    }
+                }
+            }
         }
-        val oldColor =
-            color and -0x1000000 or (color and 0x00ff0000) or (color and 0x0000ff00) or (color and 0x000000ff)
-        val oldC = Integer.toHexString(oldColor)
-        if (oldC.startsWith("00") || oldC == "ffffffff") {
-            return "#e6e6e6"
-        }
-        var s = "#"
-        val colorStr =
-            color and -0x4d000000 or (color and 0x00ff0000) or (color and 0x0000ff00) or (color and 0x000000ff)
-        s += Integer.toHexString(colorStr)
-        return s
     }
+
 }

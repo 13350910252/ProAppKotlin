@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.base.BaseActivity
 import com.yinp.proappkotlin.databinding.ActivityWandroidBinding
+import com.yinp.proappkotlin.dpToPx
 import com.yinp.proappkotlin.home.HomeViewModel
 import com.yinp.proappkotlin.study.wanAndroid.dialog.DialogShow
 import com.yinp.proappkotlin.study.wanAndroid.fragment.*
@@ -38,7 +39,6 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
     }
 
     override fun initViews() {
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this))
         bd.header.headerCenterTitle.text = "玩Android"
         bd.header.headerEnd.setImageResource(R.mipmap.common_software)
         initClick(bd.header.headerBackImg, bd.header.headerEnd, bd.ivMe)
@@ -91,9 +91,9 @@ class WandroidActivity : BaseActivity<ActivityWandroidBinding>() {
             override fun getIndicator(context: Context): IPagerIndicator {
                 return LinePagerIndicator(context).apply {
                     mode = LinePagerIndicator.MODE_EXACTLY
-                    lineHeight = AppUtils.dpToPx(0.0f)
-                    lineWidth = AppUtils.dpToPx(56f)
-                    roundRadius = AppUtils.dpToPx(3.0f)
+                    lineHeight = 0.0f.dpToPx()
+                    lineWidth = 56f.dpToPx()
+                    roundRadius = 3.0f.dpToPx()
                     startInterpolator = AccelerateInterpolator()
                     endInterpolator = DecelerateInterpolator(2.0f)
                     setColors(ContextCompat.getColor(context, R.color.ff4d4d))

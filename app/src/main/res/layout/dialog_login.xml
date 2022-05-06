@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:oneBg="@color/white"
-    app:radius="10">
+    app:sllOneBg="@color/white"
+    app:sllRadius="10">
 
     <TextView
         android:id="@+id/tv_title"
@@ -92,7 +92,7 @@
         android:text="登陆"
         android:textColor="@color/white"
         android:textSize="@dimen/textSize_16sp"
-        app:oneBg="@color/ff4d4d"
-        app:radius="16"
-        app:state="pressed" />
+        app:stvOneBg="@color/ff4d4d"
+        app:stvRadius="16"
+        app:stvState="pressed" />
 </com.yinp.tools.shap_view.ShapeLinearLayout>

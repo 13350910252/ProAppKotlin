@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:oneBg="@color/white"
-    app:radius="10">
+    app:sllOneBg="@color/white"
+    app:sllRadius="10">
 
     <TextView
         android:id="@+id/tv_title"
@@ -55,9 +55,9 @@
             android:textColor="@color/_999"
             android:textSize="@dimen/textSize_16sp"
             android:textStyle="bold"
-            app:lb_radius="10"
-            app:oneBg="@color/white"
-            app:state="pressed" />
+            app:stvLbRadius="10"
+            app:stvOneBg="@color/white"
+            app:stvState="pressed" />
 
         <com.yinp.tools.shap_view.ShapeTextView
             android:id="@+id/tv_right"
@@ -71,8 +71,8 @@
             android:textColor="@color/ff4d4d"
             android:textSize="@dimen/textSize_16sp"
             android:textStyle="bold"
-            app:oneBg="@color/white"
-            app:rb_radius="10"
-            app:state="pressed" />
+            app:stvOneBg="@color/white"
+            app:stvRbRadius="10"
+            app:stvState="pressed" />
     </LinearLayout>
 </com.yinp.tools.shap_view.ShapeLinearLayout>

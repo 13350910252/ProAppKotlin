@@ -43,9 +43,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:oneBg="@color/ff4d4d"
-            app:radius="100"
-            app:state="pressed"
+            app:stvOneBg="@color/ff4d4d"
+            app:stvRadius="100"
+            app:stvState="pressed"
             tools:text="18" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

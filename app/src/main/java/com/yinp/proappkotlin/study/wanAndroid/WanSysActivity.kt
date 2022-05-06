@@ -13,7 +13,6 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
  */
 class WanSysActivity : BaseActivity<ActivityWanSysBinding>() {
     override fun initViews() {
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         initClick(bd.header.headerBackImg)
         bindData()
     }

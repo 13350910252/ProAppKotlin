@@ -7,6 +7,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.yinp.tools.R
+import com.yinp.tools.dpToPx
 import com.yinp.tools.utils.ToolsUtils
 
 /**
@@ -72,10 +73,10 @@ class TriangleLinearLayout : LinearLayout {
             contentCorners = getInteger(R.styleable.TriangleLinearLayout_content_corners, 0)
             recycle()
         }
-        triangleWidth = ToolsUtils.dpToPx(triangleWidth)
-        triangleHeight = ToolsUtils.dpToPx(triangleHeight) as Int
-        contentCorners = ToolsUtils.dpToPx(contentCorners)
-        distance = ToolsUtils.dpToPx(distance)
+        triangleWidth = triangleWidth.dpToPx()
+        triangleHeight = triangleHeight.dpToPx()
+        contentCorners = contentCorners.dpToPx()
+        distance = distance.dpToPx()
         if (triangleColor == 0) {
             triangleColor = contentColor
         }

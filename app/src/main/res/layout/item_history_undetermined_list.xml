@@ -8,9 +8,9 @@
     android:layout_marginTop="@dimen/_10dp"
     android:layout_marginEnd="@dimen/_14dp"
     android:orientation="vertical"
-    app:oneBg="@color/white"
-    app:radius="10"
-    app:state="pressed">
+    app:sllOneBg="@color/white"
+    app:sllRadius="10"
+    app:sllState="pressed">
 
     <TextView
         android:id="@+id/tv_title"
@@ -74,8 +74,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:oneBg="@color/_15fb5c5c"
-            app:radius="10">
+            app:sllOneBg="@color/_15fb5c5c"
+            app:sllRadius="10">
 
             <com.yinp.tools.view.ColorCircleView
                 android:id="@+id/ccv_point"

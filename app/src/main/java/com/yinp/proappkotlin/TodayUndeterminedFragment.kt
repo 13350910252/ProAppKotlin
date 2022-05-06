@@ -74,9 +74,9 @@ class TodayUndeterminedFragment : BaseFragment<FragmentTodayUndeterminedBinding>
             override fun getIndicator(context: Context): IPagerIndicator {
                 return LinePagerIndicator(context).apply {
                     mode = LinePagerIndicator.MODE_EXACTLY
-                    lineHeight = AppUtils.dpToPx(4.0f)
-                    lineWidth = AppUtils.dpToPx(56f)
-                    roundRadius = AppUtils.dpToPx(2f)
+                    lineHeight = 4.0f.dpToPx()
+                    lineWidth = 56f.dpToPx()
+                    roundRadius = 2f.dpToPx()
                     startInterpolator = AccelerateInterpolator()
                     endInterpolator = DecelerateInterpolator(2.0f)
                     setColors(ContextCompat.getColor(context, R.color.ff4d4d))

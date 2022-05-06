@@ -10,8 +10,8 @@
     android:paddingTop="@dimen/_8dp"
     android:paddingEnd="@dimen/_14dp"
     android:paddingBottom="@dimen/_8dp"
-    app:oneBg="@color/white"
-    app:state="pressed">
+    app:sllOneBg="@color/white"
+    app:sllState="pressed">
 
     <LinearLayout
         android:id="@+id/ll_address"

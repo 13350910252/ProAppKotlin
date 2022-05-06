@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import com.yinp.tools.dpToPx
 import com.yinp.tools.utils.ToolsUtils
 
 /**
@@ -38,13 +39,13 @@ class TwoSelectView : View {
     private val paintTextOne by lazy {
         Paint().apply {
             color = Color.WHITE
-            textSize = ToolsUtils.dpToPx(20f)
+            textSize = 20f.dpToPx()
         }
     }
     private val paintTextTwo by lazy {
         Paint().apply {
             color = Color.WHITE
-            textSize = ToolsUtils.dpToPx(20f)
+            textSize = 20f.dpToPx()
         }
     }
     private var textHeight = 0f

@@ -20,9 +20,9 @@
         android:padding="@dimen/_10dp"
         android:text="开始"
         android:textColor="@color/white"
-        app:oneBg="@color/ff4d4d"
-        app:radius="5"
-        app:state="pressed" />
+        app:stvOneBg="@color/ff4d4d"
+        app:stvRadius="5"
+        app:stvState="pressed" />
 
 <!--    <com.yinp.showview.view.CircleLoopView-->
 <!--        android:id="@+id/clv_one"-->

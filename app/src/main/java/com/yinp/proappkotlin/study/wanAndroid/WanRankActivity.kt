@@ -41,7 +41,6 @@ class WanRankActivity : BaseActivity<ActivityWanRankBinding>() {
     }
 
     override fun initViews() {
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         bd.header.headerCenterTitle.text = "积分排行榜"
         bd.header.headerEnd.setImageResource(R.mipmap.ic_guize)
         initClick(bd.header.headerBackImg, bd.header.headerEnd)

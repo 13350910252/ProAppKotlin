@@ -9,7 +9,7 @@
     android:layout_marginTop="@dimen/_10dp"
     android:layout_marginEnd="@dimen/_14dp"
     android:orientation="vertical"
-    app:radius="5">
+    app:sllRadius="5">
 
     <TextView
         android:id="@+id/tv_content"

@@ -12,9 +12,9 @@
     android:paddingTop="@dimen/_12dp"
     android:paddingEnd="@dimen/_14dp"
     android:paddingBottom="@dimen/_16dp"
-    app:oneBg="@color/white"
-    app:radius="10"
-    app:state="pressed">
+    app:sllOneBg="@color/white"
+    app:sllRadius="10"
+    app:sllState="pressed">
 
     <TextView
         android:id="@+id/tv_title"

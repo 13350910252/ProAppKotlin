@@ -9,9 +9,9 @@
     android:layout_marginTop="@dimen/_10dp"
     android:layout_marginEnd="@dimen/_14dp"
     android:orientation="vertical"
-    app:oneBg="@color/white"
-    app:radius="10"
-    app:state="pressed">
+    app:sllOneBg="@color/white"
+    app:sllRadius="10"
+    app:sllState="pressed">
 
     <TextView
         android:id="@+id/tv_title"

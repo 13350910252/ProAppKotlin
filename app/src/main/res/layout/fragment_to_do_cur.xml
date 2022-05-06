@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:lt_radius="10"
-    app:oneBg="@color/fafafa"
-    app:rt_radius="10">
+    app:sllLtRadius="10"
+    app:sllOneBg="@color/fafafa"
+    app:sllRtRadius="10">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"

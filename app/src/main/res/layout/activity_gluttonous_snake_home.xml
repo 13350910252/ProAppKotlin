@@ -23,7 +23,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/textSize_16sp"
         android:textStyle="bold"
-        app:oneBg="@color/ff4d4d"
-        app:radius="10"
-        app:state="pressed" />
+        app:stvOneBg="@color/ff4d4d"
+        app:stvRadius="10"
+        app:stvState="pressed" />
 </LinearLayout>

@@ -12,7 +12,7 @@ interface ICommon {
     /**
      * 初始化以后才能使用
      */
-    fun startCommon(activity: FragmentActivity, vararg method: () -> Unit)
+    fun startCommon(activity: FragmentActivity, vararg methods: () -> Unit)
 
     /**
      * 沉浸式

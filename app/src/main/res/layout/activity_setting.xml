@@ -13,8 +13,8 @@
         android:layout_height="@dimen/_52dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:oneBg="@color/white"
-        app:state="pressed">
+        app:sllOneBg="@color/white"
+        app:sllState="pressed">
 
         <ImageView
             android:layout_width="@dimen/_20dp"

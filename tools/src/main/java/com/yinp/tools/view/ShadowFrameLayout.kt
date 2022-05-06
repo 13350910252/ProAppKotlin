@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.annotation.AttrRes
 import com.yinp.tools.R
+import com.yinp.tools.dpToPx
 import com.yinp.tools.utils.ToolsUtils
 
 
@@ -79,8 +80,8 @@ class ShadowFrameLayout : FrameLayout {
             isWidgetBorder = getBoolean(R.styleable.ShadowFrameLayout_sl_widget_border, true)
             recycle()
         }
-        mShadowLimit = ToolsUtils.dpToPx(mShadowLimit)
-        mCornerRadius = ToolsUtils.dpToPx(mCornerRadius) //决定边角的圆角
+        mShadowLimit = mShadowLimit.dpToPx()
+        mCornerRadius = mCornerRadius.dpToPx() //决定边角的圆角
 
         setPad()
     }

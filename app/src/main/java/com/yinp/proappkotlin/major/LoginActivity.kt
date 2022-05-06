@@ -13,7 +13,6 @@ import com.yinp.proappkotlin.utils.StatusBarUtil
  */
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun initViews() {
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         initClick(bd.stvLogin)
     }
 

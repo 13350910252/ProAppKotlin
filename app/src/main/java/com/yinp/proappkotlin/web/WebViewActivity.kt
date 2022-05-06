@@ -48,7 +48,6 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
 
     private var mUrl: String? = null
     override fun initViews() {
-        setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext))
         initClick(bd.header.headerBackImg)
         val intent = intent
         intent?.let {
