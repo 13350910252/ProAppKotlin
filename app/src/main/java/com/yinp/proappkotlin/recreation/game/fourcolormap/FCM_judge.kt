@@ -1,4 +1,4 @@
-package com.yinp.proappkotlin.recreation
+package com.yinp.proappkotlin.recreation.game.fourcolormap
 
 import android.graphics.Color
 

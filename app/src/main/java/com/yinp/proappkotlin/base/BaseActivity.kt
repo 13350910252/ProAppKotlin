@@ -66,17 +66,4 @@ abstract class BaseActivity<VB : ViewBinding> : SkipActivity(), View.OnClickList
     protected fun hideLoading() {
         loadingUtils.closeAll()
     }
-
-
-    /**
-     * 显示加载
-     */
-
-    protected fun showToast(text: String?) {
-        ToastUtil.initToast(mContext, text)
-    }
-
-    protected fun showToast(@StringRes id: Int) {
-        ToastUtil.initToast(mContext, id)
-    }
 }

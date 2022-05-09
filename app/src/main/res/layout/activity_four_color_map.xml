@@ -22,7 +22,7 @@
         android:textSize="@dimen/textSize_16sp"
         android:textStyle="bold" />
 
-    <com.yinp.proappkotlin.recreation.MapView
+    <com.yinp.proappkotlin.recreation.game.fourcolormap.MapView
         android:id="@+id/mv_main"
         android:layout_width="match_parent"
         android:layout_height="400dp"

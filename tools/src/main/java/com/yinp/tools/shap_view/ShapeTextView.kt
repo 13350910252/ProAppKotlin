@@ -8,9 +8,9 @@ import android.graphics.Shader
 import android.graphics.drawable.*
 import android.graphics.drawable.shapes.RoundRectShape
 import android.util.AttributeSet
+import android.util.Log
 import androidx.appcompat.widget.AppCompatTextView
 import com.yinp.tools.*
-import com.yinp.tools.utils.ToolsUtils
 
 
 /**
@@ -109,13 +109,13 @@ class ShapeTextView : AppCompatTextView {
                     initState(one, two, color, color2)
                     setMBackGround(stateListDrawable)
                 }
-                oneD == null && twoD != null -> {
+                twoD != null -> {
                     if (twoD is ColorDrawable)
                         one = setBg(Color.parseColor(getHexString((twoD).color)))
                     initState(one, two, color, color2)
                     setMBackGround(stateListDrawable)
                 }
-                oneD != null && twoD == null -> {
+                oneD != null -> {
                     if (oneD is ColorDrawable)
                         two = setBg(Color.parseColor(getHexString((oneD).color)))
                     initState(one, two, color, color2)
@@ -180,7 +180,7 @@ class ShapeTextView : AppCompatTextView {
                 addTextColorState(color, color2, state_focused)
             }
         }
-        stateListDrawable.addState(intArrayOf(state_checked), drawable1)
+        stateListDrawable.addState(intArrayOf(state_enabled), drawable1)
     }
 
     private fun addSate(drawable: Drawable?, state: Int) {

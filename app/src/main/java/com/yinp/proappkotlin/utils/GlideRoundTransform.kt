@@ -14,12 +14,13 @@ import java.security.MessageDigest
  * package   :com.yinp.proappkotlin.utils
  * describe  :
  */
-class GlideRoundTransform : BitmapTransformation {
+class GlideRoundTransform(mDp: Int) : BitmapTransformation() {
     private var radius = 0f
     private val ID = "com. bumptech.glide.transformations.FillSpace"
     private val ID_ByTES = ID.toByteArray(CHARSET)
-    constructor(dp: Int) {
-        radius = Resources.getSystem().displayMetrics.density * dp
+
+    init {
+        radius = Resources.getSystem().displayMetrics.density * mDp
     }
 
     override fun transform(
@@ -64,7 +65,6 @@ class GlideRoundTransform : BitmapTransformation {
 
     override fun updateDiskCacheKey(messageDigest: MessageDigest) {
         messageDigest.update(ID_ByTES)
-        val radiusData = ByteBuffer.allocate(4).putInt(radius.toInt()).array()
-        messageDigest.update(radiusData)
+        messageDigest.update(ByteBuffer.allocate(4).putInt(radius.toInt()).array())
     }
 }

@@ -1,9 +1,7 @@
 package com.yinp.proappkotlin.major
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationBarView
 import com.yinp.proappkotlin.R
@@ -12,7 +10,7 @@ import com.yinp.proappkotlin.databinding.ActivityMajorBinding
 import com.yinp.proappkotlin.home.activity.AddUndeterminedActivity
 import com.yinp.proappkotlin.major.fragment.*
 import com.yinp.proappkotlin.me.AddLabelActivity
-import com.yinp.proappkotlin.utils.StatusBarUtil
+import com.yinp.tools.MNONE
 
 /**
  * @Author: yinp
@@ -27,7 +25,9 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
     private var meFragment: MeFragment? = null
 
     private var curFragment: Fragment? = null
-    private lateinit var fragmentManager: FragmentManager
+    private val fragmentManager by lazy(MNONE) {
+        supportFragmentManager
+    }
     private lateinit var fragmentTransaction: FragmentTransaction
     override fun initViews() {
         bd.header.headerBackImg.visibility = View.GONE
@@ -62,7 +62,6 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
         bd.bottomNavigationView.itemIconSize = resources.getDimension(R.dimen._28dp).toInt()
         bd.bottomNavigationView.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
 
-        fragmentManager = supportFragmentManager
         chooseFragment(0)
         initClick(bd.header.ivImg)
     }
@@ -109,9 +108,8 @@ class MajorActivity : BaseActivity<ActivityMajorBinding>() {
                 fragmentTransaction.commitNow()
             }
             1 -> {
-                studyFragment ?: let {
-                    studyFragment = StudyFragment()
-                    fragmentTransaction.add(R.id.fl_content, studyFragment!!)
+                studyFragment = studyFragment ?: StudyFragment().apply {
+                    fragmentTransaction.add(R.id.fl_content, this)
                 }
                 curFragment?.let {
                     fragmentTransaction.hide(it)

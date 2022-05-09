@@ -61,7 +61,7 @@ class StudyFragment : BaseFragment<FragmentStudyBinding>() {
                     viewBinding: ViewBinding
                 ) {
                     mDialogFragment = dialogFragment as CommonDialogFragment
-                    (viewBinding as? ItemTwoSelectBinding)?.tsvSelect?.setcLickListener(object :
+                    (viewBinding as ItemTwoSelectBinding).tsvSelect.setcLickListener(object :
                         TwoSelectView.CLickListener() {
                         override fun click(isLeft: Boolean) {
                             if (isLeft) {

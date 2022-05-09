@@ -49,19 +49,19 @@ class SelectTakePhoto {
                     dialogFragment: BaseDialogFragment,
                     viewBinding: ViewBinding
                 ) {
-                    val binding: DialogSelectTakePhotoBinding =
-                        viewBinding as DialogSelectTakePhotoBinding
-                    binding.tvTakePhoto.setOnClickListener { v ->
-                        getPermission(activity, TAKE_PHOTO.also {
-                            type = it
-                        }, requestCode, dialogFragment)
+                    (viewBinding as DialogSelectTakePhotoBinding).apply {
+                        tvTakePhoto.setOnClickListener { v ->
+                            getPermission(activity, TAKE_PHOTO.also {
+                                type = it
+                            }, requestCode, dialogFragment)
+                        }
+                        tvPicture.setOnClickListener { v ->
+                            getPermission(activity, SELECT_PHOTO.also {
+                                type = it
+                            }, requestCode, dialogFragment)
+                        }
+                        tvCancel.setOnClickListener { v -> dialogFragment.dismiss() }
                     }
-                    binding.tvPicture.setOnClickListener { v ->
-                        getPermission(activity, SELECT_PHOTO.also {
-                            type = it
-                        }, requestCode, dialogFragment)
-                    }
-                    binding.tvCancel.setOnClickListener { v -> dialogFragment.dismiss() }
                 }
             }).setAnimStyle(R.style.BottomDialogAnimation).setGravity(BOTTOM)
             .setPercent(true, false)
@@ -82,19 +82,19 @@ class SelectTakePhoto {
                     dialogFragment: BaseDialogFragment,
                     viewBinding: ViewBinding
                 ) {
-                    val binding: DialogSelectTakePhotoBinding =
-                        viewBinding as DialogSelectTakePhotoBinding
-                    binding.tvTakePhoto.setOnClickListener { v ->
-                        getPermission(fragment, TAKE_PHOTO.also {
-                            type = it
-                        }, requestCode, dialogFragment)
+                    (viewBinding as DialogSelectTakePhotoBinding).apply {
+                        tvTakePhoto.setOnClickListener { v ->
+                            getPermission(fragment, TAKE_PHOTO.also {
+                                type = it
+                            }, requestCode, dialogFragment)
+                        }
+                        tvPicture.setOnClickListener { v ->
+                            getPermission(fragment, SELECT_PHOTO.also {
+                                type = it
+                            }, requestCode, dialogFragment)
+                        }
+                        tvCancel.setOnClickListener { v -> dialogFragment.dismiss() }
                     }
-                    binding.tvPicture.setOnClickListener { v ->
-                        getPermission(fragment, SELECT_PHOTO.also {
-                            type = it
-                        }, requestCode, dialogFragment)
-                    }
-                    binding.tvCancel.setOnClickListener { v -> dialogFragment.dismiss() }
                 }
             }).setAnimStyle(R.style.BottomDialogAnimation).setGravity(BOTTOM)
             .setPercentSize(0f, 0f).show(fragment.childFragmentManager)
@@ -218,9 +218,9 @@ class SelectTakePhoto {
         } else {
             Uri.fromFile(file)
         }
-        val intent = Intent("android.media.action.IMAGE_CAPTURE")
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        fragment.startActivityForResult(intent, requestCode)
+        fragment.startActivityForResult(Intent("android.media.action.IMAGE_CAPTURE").apply {
+            putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        }, requestCode)
         dialogFragment.dismiss()
     }
 

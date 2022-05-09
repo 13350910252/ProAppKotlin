@@ -5,6 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import com.yinp.proappkotlin.utils.AppUtils
+import com.yinp.tools.MNONE
 import java.util.*
 
 /**
@@ -26,7 +27,7 @@ class GluttonousSnakeView : View {
         init()
     }
 
-    private val aLinkList by lazy {
+    private val aLinkList by lazy(MNONE) {
         ALinkList()
     }
 

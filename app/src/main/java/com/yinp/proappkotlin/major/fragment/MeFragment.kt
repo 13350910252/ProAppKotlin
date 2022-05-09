@@ -65,7 +65,6 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
         }
     }
 
-
     override fun getBinding(inflater: LayoutInflater, parent: ViewGroup?) =
         FragmentMeBinding.inflate(inflater, parent, false)
 }

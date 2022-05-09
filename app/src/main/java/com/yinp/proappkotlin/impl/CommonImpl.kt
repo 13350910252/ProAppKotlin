@@ -1,6 +1,8 @@
 package com.yinp.proappkotlin.impl
 
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.yinp.proappkotlin.R
 import com.yinp.proappkotlin.interfaces.ICommon
@@ -16,6 +18,7 @@ class CommonImpl : ICommon {
     private lateinit var mActivity: FragmentActivity
     override fun startCommon(activity: FragmentActivity, vararg methods: () -> Unit) {
         mActivity = activity
+        Log.d("abcd", "startCommon: ${activity}")
         for (method in methods) {
             method.invoke()
         }
@@ -26,7 +29,7 @@ class CommonImpl : ICommon {
      */
     override fun initImmersion() {
         StatusBarUtil.setTranslucentStatus(mActivity)
-        mActivity.findViewById<View>(R.id.view_status).apply {
+        mActivity.findViewById<View>(R.id.view_status)?.apply {
             layoutParams.height = StatusBarUtil.getStatusBarHeight(mActivity)
         }
     }
@@ -38,6 +41,10 @@ class CommonImpl : ICommon {
         LoadingUtils(mActivity.supportFragmentManager).apply {
             mActivity.lifecycle.addObserver(this)
         }
+    }
+
+    override fun showToast(text: String, duration: Int) {
+        Toast.makeText(mActivity, text, duration).show()
     }
 
 }

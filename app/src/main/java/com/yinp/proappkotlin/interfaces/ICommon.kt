@@ -1,5 +1,6 @@
 package com.yinp.proappkotlin.interfaces
 
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.yinp.tools.utils.LoadingUtils
 
@@ -20,4 +21,6 @@ interface ICommon {
     fun initImmersion()
 
     val loadingUtils: LoadingUtils
+
+    fun showToast(text: String, duration: Int= Toast.LENGTH_SHORT)
 }

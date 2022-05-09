@@ -34,16 +34,9 @@ class AddLabelActivity : BaseActivity<ActivityAddLabelBinding>() {
         initIndicator();
     }
 
-    private val todayUndeterminedFragment by lazy {
-        TodayUndeterminedFragment.getInstance()
-    }
-    private val labelFragment by lazy {
-        LabelFragment.getInstance()
-    }
-
     private fun initIndicator() {
-        fragments.put(0, todayUndeterminedFragment)
-        fragments.put(1, labelFragment)
+        fragments.put(0, TodayUndeterminedFragment.getInstance())
+        fragments.put(1, LabelFragment.getInstance())
         bd.materialViewPager.adapter = ViewPager2Utils.getAdapter(this, fragments)
 
         val titleList = mutableListOf("今日待做", "标签")

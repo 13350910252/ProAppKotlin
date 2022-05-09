@@ -17,17 +17,18 @@ import com.yinp.tools.R
  * package   :com.yinp.myapplication.show
  * describe  :
  */
-class LoadingUtils(val mManager: FragmentManager, val tag: String = "") : DefaultLifecycleObserver {
+class LoadingUtils(val mManager: FragmentManager, val mTag: String = "LoadingUtils") :
+    DefaultLifecycleObserver {
     private lateinit var mDialogFragment: LoadingDialog
     private val dialogList = mutableListOf<LoadingDialog>()
 
-    fun show(text: String, tag: String = "") {
+    fun show(text: String, tag: String = "LoadingUtils") {
         mDialogFragment = LoadingDialog(text)
         dialogList.add(mDialogFragment)
         mDialogFragment.show(mManager, tag)
     }
 
-    fun close(tag: String = "") {
+    fun close(tag: String = "LoadingUtils") {
         for (item in dialogList) {
             if (item.tag == tag) {
                 item.dismiss()
@@ -44,6 +45,14 @@ class LoadingUtils(val mManager: FragmentManager, val tag: String = "") : Defaul
 
     override fun onStop(owner: LifecycleOwner) {
         closeAll()
+    }
+
+    fun fIsCancelable(isCan: Boolean, tag: String = "LoadingUtils") {
+        for (item in dialogList) {
+            if (item.tag == tag) {
+                item.isCancelable = isCan
+            }
+        }
     }
 
     class LoadingDialog(var text: String) : DialogFragment() {
